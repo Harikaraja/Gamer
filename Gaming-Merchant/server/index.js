@@ -22,6 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/auth',authRoutes)
 app.use('/api/profile',profileRoutes)
 app.use('/api/wallet',walletRoutes)
+
 connectDB() //DB connection
 
 app.listen(port,()=>{

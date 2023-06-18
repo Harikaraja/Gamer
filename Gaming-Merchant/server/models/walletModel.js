@@ -11,9 +11,7 @@ const walletSchema = new Schema({
     num_of_tokens:{
         type: Number
     },
-    add_token:{
-        type: Number
-    }
+    
     
 });
 

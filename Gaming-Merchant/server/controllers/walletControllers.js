@@ -8,10 +8,21 @@ exports.wallet = async (req, res) => {
   
       const createwallet =await wallet.create({userId,gamerId,num_of_tokens})
   
-      res.status(200).send({msg:"wallet created Successful"})
+      res.status(200).send({msg:"wallet creation Successful"})
   
       }
-  catch (error) {
-    console.log(error);
+      catch (error) {
+        console.log(error);
+      }
   }
+
+  exports.getCoins = async (req, res) => {
+    try {
+      const user = await User.findById(req.query.id).select("gamerId");
+      res.status(200).json({ msg: "snap coins displayed successfully.." });
+    }
+    catch (err) {
+      console.error(err);
+      return res.status(500).json({ status: false, msg: "Internal Server Error" });
+    }
   }
