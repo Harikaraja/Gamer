@@ -1,8 +1,10 @@
 const wallet = require("../models/walletModel");
-
+const User = require("../models/gamerModel");
 exports.wallet = async (req, res) => {
     try {
-      const {userId,gamerId,num_of_tokens} = req.body;
+      const {gamerId,num_of_tokens} = req.body;
+
+      const {userId} = await User.findById(req.query.uid)
   
       const createwallet =await wallet.create({userId,gamerId,num_of_tokens})
   
