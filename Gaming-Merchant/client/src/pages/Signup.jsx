@@ -5,7 +5,8 @@ import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { Link, useNavigate} from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 import bg from '../assets/images/bg.png';
-import logo from '../assets/images/logo-light-mode.svg'
+import logo from '../assets/images/logo-light-mode.svg';
+import '../assets/styles/signup.css';
 const Signup = () => {
   const [formData, setFormData] = useState({
     userName: "",
