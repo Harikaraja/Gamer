@@ -35,6 +35,7 @@ figure{
 .button{
     background-color:#ff0071;
     width: 315px;
+    color: white;
     margin-left: 2.1rem;
 }
 .button:hover{
@@ -42,7 +43,7 @@ figure{
 }
 .navigate{
     text-decoration: none;
-    color: black;
+    color: rgb(9, 165, 72);
 }
 
 .form-control{

@@ -80,7 +80,7 @@ const Signup = () => {
             <button type="button" className="btn button btn-lg" onClick={handleSubmit} >Register Now!</button>
 
             <div className='pt-4'>
-              <Link to="/login" className='navigate'><center>Already have an account? Login here</center></Link>
+              <Link to="/login" className='navigate'><center>Already have an account? Sign In</center></Link>
             </div>
 
           </form>
