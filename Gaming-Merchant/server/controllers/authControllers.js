@@ -48,28 +48,27 @@ exports.sendVerificationEmail= async(req,res)=>{
 
 exports.signup = async (req, res) => {
   try {
-    const { firstName, lastName, dob, password ,email, phoneNumber ,  gender } = req.body;
-
+    const { userName, password ,email, confirmpassword } = req.body;
+    console.log(req.body)
     const user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({success:false, msg: "This email is already registered" });
     }
-
+    else if(password != confirmpassword){
+      return res.status(400).json({success:false, msg: "password and confirm password must be same" });
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const createuser =await User.create({ firstName,lastName, dob,password: hashedPassword ,email,phoneNumber,gender})
+    const createuser =await User.create({ userName,email,password: hashedPassword})
 
     res.status(200).send({userId:createuser._id, email , msg:"Registration Successful"})
 
     }
 catch (error) {
-  if (error.code === 11000 && error.name === 'MongoServerError') {
-    // Duplicate key error
-    res.status(400).json({ error: 'Phone number already exists' });
-  }
-  else{
+  
+  
     res.status(500).json({ error: `Internal server error ${error}` });
-  }
+  
 }
 }
 

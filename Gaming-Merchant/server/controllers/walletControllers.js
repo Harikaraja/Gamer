@@ -19,7 +19,7 @@ exports.wallet = async (req, res) => {
   exports.getCoins = async (req, res) => {
     try {
       const user = await User.findById(req.query.id).select("gamerId");
-      res.status(200).json({ msg: "snap coins displayed successfully.." });
+      res.status(200).json({ msg: "snap coins displayed successfully..",num_of_tokens });
     }
     catch (err) {
       console.error(err);

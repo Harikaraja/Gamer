@@ -17,9 +17,9 @@ const useFetch = () => {
       return Promise.resolve(data);   
     }
     catch (error) {
-      //const msg = error.response?.data?.msg || error.message || "error";
+      const msg = error.response?.data?.msg || error.message || "error";
       console.log(error);
-      const msg = "404 error"
+      //const msg = "404 error"
       if (showErrorToast) toast.error(msg);
       return Promise.reject();
     }

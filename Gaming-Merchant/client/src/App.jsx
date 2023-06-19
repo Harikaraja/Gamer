@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Verify from './pages/Verify';
+import './assets/styles/signup.css';
 function App() {
 
   return (

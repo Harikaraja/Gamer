@@ -2,17 +2,9 @@ const {Schema, model} =   require("mongoose");
 const bcrypt = require("bcrypt");
 
 const gamerSchema = new Schema({
-   firstName:{
+   userName:{
       type: String,
       
-   },
-   lastName:{
-    type: String,
-    
-   },
-   dob:{
-     type:Date,
-    
    },
    password: {
       type: String,
@@ -22,14 +14,6 @@ const gamerSchema = new Schema({
         type: String,
        
         unique:true
-    },
-    phoneNumber: {
-        type: String,
-       
-        unique:true,
-    },
-    gender: {
-        type: String,
     },
     verified:{
         type:Boolean,

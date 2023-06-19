@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faFacebook } from "@fortawesome/free-brands-svg-icons"
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { Link, useNavigate} from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
-
+import bg from '../assets/images/bg.png';
+import logo from '../assets/images/logo-light-mode.svg'
 const Signup = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    dob:"",
+    userName: "",
     email: "",
     password: "",
-    phoneNumber:"",
-    gender:"",
+    confirmpassword: "",
    
   });
 
@@ -42,55 +43,54 @@ const Signup = () => {
 
 
   return (
-    <div>
-      <div className='container shadow'>
+    <>
+   
+    <div className='box'>
+        
         <div className='form-wrapper'>
+       
           <form className='shadow p-5'>
-            <h1 className='mb-5'>Signup </h1>
-            <div className="mb-3">
-              <label className="form-label">First Name</label>
-              <input type="text" className="form-control" name='firstName' value={formData.firstName} autoComplete='off' onChange={handleChange} autoFocus />
+            <figure>
+              <a href="/" className="logo_account">
+                <img src={logo} alt="" width="140" height="35" className="light"/>
+              </a>
+            </figure>
+            <div className="access_social">
+              <a href="#0" className="social_bt facebook"><FontAwesomeIcon icon={faFacebook}style={{marginRight:1+'rem'}} />  Register with Facebook</a>
+              <a href="#0" className="social_bt google"><FontAwesomeIcon icon={faGoogle}style={{marginRight:1.5+'rem'}} /> Register with Google</a>
+            </div>
+            <div className="divider">
+              <span>Or</span>
             </div>
             <div className="mb-3">
-              <label className="form-label">Last Name</label>
-              <input type="text" className="form-control" name='lastName' value={formData.lastName} autoComplete='off' onChange={handleChange} />
+              <input type="text" className="form-control" name='userName' value={formData.userName} autoComplete='off' onChange={handleChange} autoFocus placeholder='username' />
             </div>
             <div className="mb-3">
-              <label className="form-label">Date of Birth</label>
-              <input type="date" className="form-control" name='dob' value={formData.dob} onChange={handleChange} />
-            </div>
-            
-            <div className="mb-3">
-              <label className="form-label">Password</label>
-              <input type="text" className="form-control" name='password' value={formData.password} autoComplete='off' onChange={handleChange} />
+              
+              <input type="text" className="form-control" name='email' value={formData.email} autoComplete='off' onChange={handleChange} placeholder='Email'/>
             </div>
             <div className="mb-3">
-              <label className="form-label">Email Address</label>
-              <input type="text" className="form-control" name='email' value={formData.email} autoComplete='off' onChange={handleChange} />
+             
+              <input type="text" className="form-control" name='password' value={formData.password} autoComplete='off' onChange={handleChange} placeholder='Password'/>
             </div>
             <div className="mb-3">
-              <label className="form-label">Phone Number</label>
-              <input type="text" className="form-control" name='phoneNumber' value={formData.phoneNumber} autoComplete='off' onChange={handleChange} />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Gender</label>
-              <select className='form-control' name='gender' value={formData.gender} onChange={handleChange}>
-                <option>Select</option>
-                <option>Male</option>
-                <option>Female</option>
-              </select>
-            </div>
-            
-            <button type="button" className="btn btn-primary btn-lg" onClick={handleSubmit} >Submit</button>
+              
+              <input type="text" className="form-control" name='confirmpassword' value={formData.confirmpassword} autoComplete='off' onChange={handleChange} placeholder='Confirm Password'/>
+            </div>  
+            <button type="button" className="btn button btn-lg" onClick={handleSubmit} >Register Now!</button>
 
             <div className='pt-4'>
-              <Link to="/login" className='text-blue-400'>Already have an account? Login here</Link>
+              <Link to="/login" className='navigate'><center>Already have an account? Login here</center></Link>
             </div>
 
           </form>
         </div>
-      </div >
+        <div className='image-wrapper'>
+            <img src={bg} alt='loading' width={100+'%'} height={740+'px'}/>
+        </div>
+      
     </div>
+    </>
   )
 }
 
