@@ -28,7 +28,7 @@ const Verify = () => {
   }
   // console.log(otp)
 
-   localStorage.removeItem('token')
+   
 
   const handlesendOtp = async(e) =>{
     e.preventDefault();
@@ -48,6 +48,8 @@ const Verify = () => {
     });
     token?navigate('/'):navigate('/login')
   }
+
+  localStorage.removeItem('token')
 
   return (
     <div>
