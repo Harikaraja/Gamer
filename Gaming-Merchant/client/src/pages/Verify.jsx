@@ -11,7 +11,7 @@ const Verify = () => {
   const location = useLocation();
   const { id, email } = location.state;
   const token = localStorage.getItem('token')
-
+  console.log(token);
   const handleChange = e => {
     const { value, id } = e.target;
     const nextInput = parseInt(id.substring(3)) + 1;
@@ -28,7 +28,7 @@ const Verify = () => {
   }
   // console.log(otp)
 
-  // localStorage.removeItem('token')
+   localStorage.removeItem('token')
 
   const handlesendOtp = async(e) =>{
     e.preventDefault();
