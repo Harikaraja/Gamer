@@ -9,6 +9,8 @@ const authRoutes = require('./routes/auth.route');
 const walletRoutes = require('./routes/wallet.route');
 const profileRoutes = require('./routes/profile.route');
 const merchantDisplatRoutes = require('./routes/merchandiseDisplay.route');
+const transaction = require('./routes/transHistory.route');
+
 const port = process.env.PORT || 5000
 
 app.use(express.json());
@@ -23,6 +25,7 @@ app.use('/api/auth',authRoutes)
 app.use('/api/profile',profileRoutes)
 app.use('/api/wallet',walletRoutes)
 app.use('/api/merchant',merchantDisplatRoutes);
+app.use('/api/transaction',transaction);
 
 connectDB() //DB connection
 

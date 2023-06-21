@@ -1,0 +1,32 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const transHistorySchema = new Schema({
+
+   transactionDate:{
+    
+     type:Date,
+     default:Date.now
+
+   },
+    
+   transactionId:{
+     
+     type:String,
+     default: "ID 20220325"
+     
+   },
+   orderStatus:{
+
+     type:String,
+     require:true
+
+   }
+    
+},{
+    timestamp:true
+});
+
+const transHistory = new mongoose.model('transHistory',transHistorySchema);
+
+module.exports = transHistory;
