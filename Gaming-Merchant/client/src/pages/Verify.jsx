@@ -49,7 +49,7 @@ const Verify = () => {
     token?navigate('/'):navigate('/login')
   }
 
-  localStorage.removeItem('token')
+  //localStorage.removeItem('token')
 
   return (
     <div>

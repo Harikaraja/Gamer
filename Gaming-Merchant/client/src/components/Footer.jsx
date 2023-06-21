@@ -1,93 +1,134 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
 
-const Footer = () => {
+export default function Footer({ darkMode }) {
   return (
-    <footer className="footer bg-light pt-5 pb-5">
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-3 col-md-6 col-sm-6">
-            <h3>Quick Links</h3>
-            <div className="links">
-              <ul>
-                <li>
-                  <Link className="nav-link" to="/">Explore</Link>
-                </li>
-                <li>
-                  <Link className="nav-link" to="/login">Login</Link>
-                </li>
-                <li>
-                  <Link className="nav-link" to="/signup">Register</Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="col-lg-3 col-md-6 col-sm-6">
-            <h3>Snappcoins</h3>
-            <div className="links">
-              <ul>
-                <li>
-                  <Link className="nav-link">Connect Wallet</Link>
-                </li>
-                <li>
-                  <Link className="nav-link">Faq</Link>
-                </li>
-                <li>
-                  <Link className="nav-link">Become a Partner</Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="col-lg-3 col-md-6 col-sm-6">
-            <h3>Resources</h3>
-            <div className="links">
-              <ul>
-                <li>
-                  <Link className="nav-link" >Community</Link>
-                </li>
-                <li>
-                  <Link className="nav-link" >How it Works</Link>
-                </li>
-                <li>
-                  <Link className="nav-link" >Latest Products</Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="col-lg-3 col-md-6 col-sm-6">
-            <h3>Keep in touch</h3>
-            <div id="newsletter">
-              <div id="message-newsletter"></div>
-              <form method="post" name="newsletter_form" id="newsletter_form">
-                <div className="input-group mb-3">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Email"
-                    aria-label="Example text with button addon"
-                    aria-describedby="button-addon1"
-                  />
-                  <button
-                    className="btn btn-outline-secondary"
-                    type="button"
-                    id="button-addon1"
-                  >
-                    <i className="fa-solid fa-paper-plane"></i>
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
+    <div>
+        <div className='margin my-4'>
+
+    <footer className={`footer ${darkMode ? 'dark-mode' : ''}`}>
+      <div className="row">
+        <div className="col-6 col-md-2 mb-3">
+          <h5>Quick Links</h5>
+          <ul className="nav flex-column">
+            <li className="nav-item mb-2">
+              <a href="/" className="nav-link p-0 text-muted">
+                Explore
+              </a>
+            </li>
+            <li className="nav-item mb-2">
+              <a href="/" className="nav-link p-0 text-muted">
+                Login
+              </a>
+            </li>
+            <li className="nav-item mb-2">
+              <a href="/" className="nav-link p-0 text-muted">
+                Register
+              </a>
+            </li>
+          </ul>
         </div>
-        <hr />
-        <div className="row add_bottom_25 text-center">
-          <div className="col">
-            <p>Terms and Conditions © 2023 Snappcoins</p>
-          </div>
+
+        <div className="col-6 col-md-2 mb-3">
+          <h5>Snappcoins</h5>
+          <ul className="nav flex-column">
+            <li className="nav-item mb-2">
+              <a href="/" className="nav-link p-0 text-muted">
+                Connect Wallet
+              </a>
+            </li>
+            <li className="nav-item mb-2">
+              <a href="/" className="nav-link p-0 text-muted">
+                FAQ
+              </a>
+            </li>
+            <li className="nav-item mb-2">
+              <a href="/" className="nav-link p-0 text-muted">
+                Become a Partner
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div className="col-6 col-md-2 mb-3">
+          <h5>Resources</h5>
+          <ul className="nav flex-column">
+            <li className="nav-item mb-2">
+              <a href="/" className="nav-link p-0 text-muted">
+                Community
+              </a>
+            </li>
+            <li className="nav-item mb-2">
+              <a href="/" className="nav-link p-0 text-muted">
+                How it works
+              </a>
+            </li>
+            <li className="nav-item mb-2">
+              <a href="/" className="nav-link p-0 text-muted">
+                Latest Products
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div className="col-md-4 offset-md-1 mb-3">
+          <form>
+            <h6>Keep in touch</h6>
+            <div className="d-flex flex-column flex-sm-row w- gap-2">
+              <input
+                id="newsletter1"
+                type="text"
+                className="form-control"
+                placeholder="Your Email"
+                fdprocessedid="fphmjs"
+              />
+              <button className="btn btn-primary" type="button" fdprocessedid="9hghoh">
+                {'>'}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-    </footer>
-  );
-};
 
-export default Footer;
+      <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center py-4 my-4 border-top">
+        <ul className="list-unstyled d-flex">
+          <li className="me-3">
+            <a className="link-dark" href="/">
+              <svg className="bi" width="24" height="24">
+                <use xlinkHref="/twitter"></use>
+              </svg>
+            </a>
+          </li>
+          <li className="me-3">
+            <a className="link-dark" href="/">
+              <svg className="bi" width="24" height="24">
+                <use xlinkHref="/instagram"></use>
+              </svg>
+            </a>
+          </li>
+          <li className="me-3">
+            <a className="link-dark" href="/">
+              <svg className="bi" width="24" height="24">
+                <use xlinkHref="/facebook"></use>
+              </svg>
+            </a>
+          </li>
+        </ul>
+        <ul className="list-unstyled d-flex ms-auto">
+          <li className="me-3">
+            <a className="link-dark" href="/terms">
+              Terms &amp; Conditions
+            </a>
+          </li>
+          <li>
+            <span className="mx-3">|</span>
+          </li>
+          <li>
+            <p className="mb-0">&copy; 2023 Snappcoins</p>
+          </li>
+        </ul>
+      </div>
+    </footer>
+        </div>
+    </div>
+  );
+}
