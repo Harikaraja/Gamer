@@ -10,7 +10,7 @@ export default function Home() {
   const [activeContent, setActiveContent] = useState('recommendations');
   const [darkMode, setDarkMode] = useState(false);
   const [user,setUser] = useState();
-  const [merchandise,setMerchandise]=useState();
+  
 
   const token = localStorage.getItem('token');
   const fetchData = useFetch();
@@ -33,29 +33,7 @@ export default function Home() {
     fetchUser();
   }, [fetchUser]);
 
-  const fetchMerchandise = useCallback(() => {
-
-    const config = { url: "/display", method: "get"};
-
-    fetchData(config, { showSuccessToast: false })
-    .then(data => setMerchandise())
-    .catch((err)=>{ 
-
-      console.log(err);
-
-    });
-
-  } //end of call back function
-  , 
-  //params
-  [fetchData]);
-
-  useEffect(() => {   
-
-    fetchMerchandise();
-
-  }, [fetchMerchandise]);
-
+  
   const handleRecommendationsClick = () => {
     setActiveContent('recommendations');
   };
