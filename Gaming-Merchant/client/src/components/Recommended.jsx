@@ -1,6 +1,8 @@
 import React from 'react'
 
 export default function Recommended() {
+
+  
   return (
     <div>
       <div className="card" style={{ height: "375px", zIndex: "2" ,margin:"-2px"}}>

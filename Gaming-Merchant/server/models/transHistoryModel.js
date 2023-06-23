@@ -27,6 +27,6 @@ const transHistorySchema = new Schema({
     timestamp:true
 });
 
-const transHistory = new mongoose.model('transHistory',transHistorySchema);
+const transHistory = new mongoose.model('GamertransactionHistory',transHistorySchema);
 
 module.exports = transHistory;

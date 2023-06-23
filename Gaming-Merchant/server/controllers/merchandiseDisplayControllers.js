@@ -9,10 +9,10 @@ exports.merchantDisplay = async (req, res) => {
   
       res.status(200).send({msg:"Products Displayed Successful"})
   
-      }
-  catch (error) {
-    
-      res.status(500).json({ error: `Internal server error ${error}` });
-    
-  }
+    }
+    catch (error) {
+      
+        res.status(500).json({ error: `Internal server error ${error}` });
+      
+    }
 }

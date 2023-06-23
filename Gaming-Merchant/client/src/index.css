@@ -186,4 +186,15 @@ code {
   margin-top: 1.5rem;
 }
 
-
+.author_number {
+  color: var(--heading-color);
+  font-weight: 500;
+}
+.author_number a {
+  color: #777;
+  font-size: 18px;
+  font-size: 1.125rem;
+}
+ .author_number a:hover {
+  color: var(--color-3);
+}

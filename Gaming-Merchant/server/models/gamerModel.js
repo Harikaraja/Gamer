@@ -11,14 +11,26 @@ const gamerSchema = new Schema({
       
    },
     email: {
-        type: String,
-       
+        type: String,   
         unique:true
+        
+    },
+    walletMoney: {
+      type: Number,
+      default: 0
+
+    },
+    joiningTime: {
+      type: Date,
+      default: Date.now
+
     },
     verified:{
         type:Boolean,
         default:false
-    }
+
+    },
+    
    },
    {timestamp:true}
    )
