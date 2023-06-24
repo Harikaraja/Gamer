@@ -10,7 +10,7 @@ export default function Home() {
   const [activeContent, setActiveContent] = useState('recommendations');
   const [darkMode, setDarkMode] = useState(false);
   const [user,setUser] = useState();
-  
+  const [merchant,setMerchant] = useState();
 
   const token = localStorage.getItem('token');
   const fetchData = useFetch();
@@ -33,7 +33,26 @@ export default function Home() {
     fetchUser();
   }, [fetchUser]);
 
+  const fetchMerchandise = useCallback(()=>{
+     
+      const config = {url: '/merchant/display',method: "get",headers: { Authorization: token }};
+      fetchData(config,{showSuccessToast: false})
+      .then(data => 
   
+        setMerchant(data.merchant)
+        )
+      .catch((err)=>{ 
+        console.log(err)
+      });
+
+  },
+  [fetchData]);
+
+  useEffect(() => {
+
+    fetchMerchandise();
+  }, [fetchMerchandise]);
+
   const handleRecommendationsClick = () => {
     setActiveContent('recommendations');
   };
@@ -52,14 +71,16 @@ export default function Home() {
       <div className="banner">
         <img src="https://distil.in/demo/snappcoins/img/hero_general.jpg" alt="" className="card-img-top w-100" style={{ height: "275px" }} />
       </div>
-      { user && 
-          (<div className="container py-5">
+      
+          <div className="container py-5">
             <div className="row">
+            { user && (
               <div className="col-md-6">
                 <Card gamerName = {user.userName}
                       walletMoney = {user.walletMoney}
                       memberSince = {user.joiningTime} />
-              </div>
+              </div> )
+              }
               <div className="col-md-6" style={{marginLeft:"-10em"}}>
                 <div className="content mt-4">
                   <div className="btn-group d-flex" role="group" aria-label="Content Navigation">
@@ -72,11 +93,23 @@ export default function Home() {
                   </div>
 
                   <div className="mt-4">
-                    {activeContent === 'recommendations' && (
-                      <div className="mb-4">
-                        <Recommended />
-                      </div>
-                    )}
+                  <div className="mb-4">
+                    <div className="row">
+                      {merchant &&
+                        activeContent === 'recommendations' &&
+                        merchant.map((product, index) => (
+                          <div key={index} className="col-md-6 col-lg-5 mb-3">
+                            <Recommended
+                              title={product.title}
+                              desc={product.description}
+                              brand={product.brand}
+                              price={product.price}
+                            />
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+
                     {activeContent === 'transactionHistory' && (
                       <div className="mb-4">
                         <TransactionHistory />
@@ -86,8 +119,8 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>)
-      }
+          </div>
+      
       <Footer darkMode={darkMode} />
     </div>
   );

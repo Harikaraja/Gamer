@@ -20,7 +20,7 @@ exports.displayitem = async (req, res) => {
     const allTransactions = await transaction.find();
     console.log(allTransactions);
   
-    res.status(200).send({ msg: "Products displayed successfully" });
+    res.status(200).send({allTransactions,status:true, msg: "Products displayed successfully" });
   } catch (error) {
     res.status(500).json({ error: `Internal server error ${error}` });
   }

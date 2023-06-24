@@ -4,10 +4,10 @@ const Merchandise = require("../models/merchandiseDisplayModel");
 exports.merchantDisplay = async (req, res) => {
     try {
         
-      const allMerchandise = await Merchandise.find();
-      console.log(allMerchandise);
+      const merchant = await Merchandise.find();
+      console.log(merchant);
   
-      res.status(200).send({msg:"Products Displayed Successful"})
+      res.status(200).send({merchant,status:true,msg:"Products Displayed Successful"})
   
     }
     catch (error) {
