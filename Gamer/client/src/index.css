@@ -9,14 +9,15 @@ body {
   overflow-x: hidden;
 }
 
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 .footer{
   background-color: white;
-  padding-left: 10%;
-  padding-top: 4%;
+  padding: 5%;
+  padding-bottom: 0px;
 }
 .card-overlay {
   position: fixed;
@@ -36,7 +37,8 @@ code {
   background-color: white;
   padding: 10px;
   border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   margin-left: 0;
 }
 
@@ -189,6 +191,7 @@ code {
 .author_number {
   color: var(--heading-color);
   font-weight: 500;
+  margin-top: -10px;
 }
 .author_number a {
   color: #777;
@@ -198,3 +201,102 @@ code {
  .author_number a:hover {
   color: var(--color-3);
 }
+
+
+.disfle{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-direction: row-reverse;
+  padding-left: 10px;
+}
+
+.fs{
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.hg:hover{
+  color: green;
+}
+.zoom-image{
+  transition: transform 0.3s;
+}
+
+.image-container:hover .zoom-image {
+  transform: scale(1.1);
+}
+.snap-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.61);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  visibility: hidden;
+  transition: background-color 0.3s;
+}
+
+.image-container:hover .snap-button {
+  visibility: visible;
+  
+}
+
+.image-container img{
+  height: 400px;
+	width: 100%;
+	object-fit: cover;
+}
+
+.snap-button:hover {
+  background-color: #D63384;
+}
+
+.mr-10{
+  margin-right: 100px;
+}
+.footertext h5{
+  font-size: 18px;
+}
+.footertext a{
+  font-size: 14px;
+}
+
+.ml--3{
+  margin-left: -30px;
+}
+
+.bgpink{
+  background-color: #D63384;
+}
+.badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background-color: #D63384;
+  padding: 5px;
+  z-index: 10;
+}
+
+.badge-text {
+  color: white;
+}
+
+.items-cont{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.mr-2{
+  margin-right: 20px;
+}
+.item{
+  margin: 5px;
+}
+

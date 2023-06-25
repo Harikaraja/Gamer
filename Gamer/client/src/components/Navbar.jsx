@@ -8,6 +8,7 @@ import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 
+
 export default function Navbar(props) {
   
   const [showDropdown, setShowDropdown] = useState(false);
@@ -18,8 +19,8 @@ export default function Navbar(props) {
 
   return (
     <div>
-      <nav className={`navbar navbar-expand-lg navbar-light ${props.darkMode ? 'dark-mode' : ''}`}>
-        <div className="container-fluid">
+      <nav style={{height:'77px'}} className={`navbar navbar-expand-lg navbar-light ${props.darkMode ? 'dark-mode' : ''}` }>
+        <div className="container">
           <div className="navbar-brand">
             <Link to="/">
             {props.darkMode ? (

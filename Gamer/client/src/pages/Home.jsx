@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import TransactionHistory from '../components/TransactionHistory';
 import Recommended from '../components/Recommended';
 import useFetch from '../hooks/useFetch';
+import "../assets/styles/home.css";
 
 export default function Home() {
   const [activeContent, setActiveContent] = useState('recommendations');
