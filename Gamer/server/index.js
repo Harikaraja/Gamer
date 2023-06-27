@@ -22,7 +22,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/auth',authRoutes)
-app.use('/api/profile',profileRoutes)
+app.use('/api/profile',profileRoutes);
 app.use('/api/wallet',walletRoutes)
 app.use('/api/merchant',merchantDisplatRoutes);
 app.use('/api/transaction',transaction);

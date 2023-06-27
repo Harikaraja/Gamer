@@ -57,11 +57,13 @@ const Signup = () => {
               </a>
             </figure>
             <div className="access_social">
-              <a href="#0" className="social_bt facebook"><FontAwesomeIcon icon={faFacebook}style={{marginRight:1+'rem'}} />  Register with Facebook</a>
-              <a href="#0" className="social_bt google"><FontAwesomeIcon icon={faGoogle}style={{marginRight:1.5+'rem'}} /> Register with Google</a>
+            <div className="access_social">
+							<a href="#0" className="social_bt facebook">Login with Facebook</a>
+							<a href="#0" className="social_bt google">Login with Google</a>
+						</div>
             </div>
             <div className="divider">
-              <span>Or</span>
+              <center><span>Or</span></center>
             </div>
             <div className="mb-3">
               <input type="text" className="form-control" name='userName' value={formData.userName} autoComplete='off' onChange={handleChange} autoFocus placeholder='username' />

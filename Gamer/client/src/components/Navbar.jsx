@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import Brightness7OutlinedIcon from '@mui/icons-material/Brightness7Outlined';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
-
+import { logout,updateGamer } from "../redux/actions/gamerAction";
 
 export default function Navbar(props) {
   
@@ -17,6 +18,17 @@ export default function Navbar(props) {
     setShowDropdown(!showDropdown);
   };
 
+
+  const gamerState = useSelector(state => state.gamerReducer)
+	const gamer = gamerState.gamer
+	const dispatch = useDispatch();
+
+	const handleLogoutClick = () => {
+		dispatch(logout());
+	  }
+  const handleEditProfile = () =>{
+    dispatch(updateGamer());
+  }
   return (
     <div>
       <nav style={{height:'77px'}} className={`navbar navbar-expand-lg navbar-light ${props.darkMode ? 'dark-mode' : ''}` }>
@@ -64,15 +76,15 @@ export default function Navbar(props) {
         <ul className={`dropdown-menu show ${props.darkMode ? 'dark-mode-dropdown' : ''}`} style={{ position: "fixed", top: "60px", left: "calc(75% + 150px)", transform: "translateX(-50%)", width: "250px", height: "500px", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", borderRadius: "4px", padding: "10px" }}>
           <img src="https://distil.in/demo/snappcoins/img/hero_general.jpg" alt="" style={{ height: "100px", width: "100%", objectFit: "cover", marginTop: "0" }} />
           <hr />
-          <li style={{ marginBottom: "10px" }}><h5>@{props.name}</h5></li>
+          <li style={{ marginBottom: "10px" }}><h5>@{props.gamerName}</h5></li>
           <li style={{ marginBottom: "10px" }}><p>Balance</p></li>
-          <li style={{ marginBottom: "10px" }}><p>{props.Balance} snapps</p></li>
+          <li style={{ marginBottom: "10px" }}><p>{props.walletMoney} snapps</p></li>
           <li><hr className="dropdown-divider" /></li>
-          <li style={{ marginBottom: "10px" }}><Link to="/profile" style={{ textDecoration: "none", color: "inherit" }}><AccountCircleOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>My Profile</span></Link></li>
-          <li style={{ marginBottom: "10px" }}><Link to="/edit-profile" style={{ textDecoration: "none", color: "inherit" }}><EditOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>Edit Profile</span></Link></li>
-          <li style={{ marginBottom: "10px" }}><Link to="/account" style={{ textDecoration: "none", color: "inherit" }}><AccountBoxOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>Account</span></Link></li>
-          <li style={{ marginBottom: "10px" }}><Link to="/items" style={{ textDecoration: "none", color: "inherit" }}><ShoppingBagOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>My Items</span></Link></li>
-          <li><Link to="/logout" style={{ textDecoration: "none", color: "inherit" }}><ExitToAppOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>Log Out</span></Link></li>
+          <li style={{ marginBottom: "10px" }}><Link to="#" style={{ textDecoration: "none", color: "inherit" }}><AccountCircleOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>My Profile</span></Link></li>
+          <li style={{ marginBottom: "10px" }}><Link onClick={handleEditProfile} to="/profile" style={{ textDecoration: "none", color: "inherit" }}><EditOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>Edit Profile</span></Link></li>
+          <li style={{ marginBottom: "10px" }}><Link to="#" style={{ textDecoration: "none", color: "inherit" }}><AccountBoxOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>Account</span></Link></li>
+          <li style={{ marginBottom: "10px" }}><Link to="/" style={{ textDecoration: "none", color: "inherit" }}><ShoppingBagOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>My Items</span></Link></li>
+          <li onClick={handleLogoutClick}><Link  style={{ textDecoration: "none", color: "inherit" }}><ExitToAppOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>Log Out</span></Link></li>
         </ul>
       )}
     </div>

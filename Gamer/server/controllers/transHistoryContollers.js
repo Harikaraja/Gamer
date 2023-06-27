@@ -17,10 +17,11 @@ exports.additem = async (req, res) => {
 
 exports.displayitem = async (req, res) => {
   try {
-    const allTransactions = await transaction.find();
-    console.log(allTransactions);
+    const transactions = await transaction.find();
+    console.log("transaction is:")
+    console.log(transactions);
   
-    res.status(200).send({allTransactions,status:true, msg: "Products displayed successfully" });
+    res.status(200).send({transactions,status:true, msg: "Products displayed successfully" });
   } catch (error) {
     res.status(500).json({ error: `Internal server error ${error}` });
   }

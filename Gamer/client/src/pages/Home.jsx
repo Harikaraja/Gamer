@@ -8,51 +8,57 @@ import useFetch from '../hooks/useFetch';
 import "../assets/styles/home.css";
 
 export default function Home() {
+  
   const [activeContent, setActiveContent] = useState('recommendations');
   const [darkMode, setDarkMode] = useState(false);
-  const [user,setUser] = useState();
-  const [merchant,setMerchant] = useState();
-
+  const [user, setUser] = useState();
+  const [merchant, setMerchant] = useState();
+  const [transactions, setTransactions] = useState([]); // Initialize with null or an empty array
+  //console.log("transaction is : ".transactions)
   const token = localStorage.getItem('token');
   const fetchData = useFetch();
 
   const fetchUser = useCallback(() => {
-
     const config = { url: "/profile", method: "get", headers: { Authorization: token } };
     fetchData(config, { showSuccessToast: false })
-    .then(data => setUser(data.user))
-    .catch((err)=>{ 
-      console.log(err)
-    });
-
-  } //end of call back function
-  , 
-  //params
-  [fetchData,token]);
+      .then(data => setUser(data.user))
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [fetchData, token]);
 
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
 
-  const fetchMerchandise = useCallback(()=>{
-     
-      const config = {url: '/merchant/display',method: "get",headers: { Authorization: token }};
-      fetchData(config,{showSuccessToast: false})
-      .then(data => 
-  
-        setMerchant(data.merchant)
-        )
-      .catch((err)=>{ 
-        console.log(err)
+  const fetchMerchandise = useCallback(() => {
+    const config = { url: '/merchant/display', method: "get", headers: { Authorization: token } };
+    fetchData(config, { showSuccessToast: false })
+      .then(data => setMerchant(data.merchant))
+      .catch((err) => {
+        console.log(err);
       });
-
-  },
-  [fetchData]);
+  }, [fetchData, token]);
 
   useEffect(() => {
-
     fetchMerchandise();
   }, [fetchMerchandise]);
+
+  const fetchTransactions = useCallback(() => {
+    const config = { url: '/transaction/displayItems', method: "get", headers: { Authorization: token } };
+    fetchData(config, { showSuccessToast: false })
+      .then(data => 
+         setTransactions(data.transactions)
+         //console.log("data: ",data)
+         )
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [fetchData, token]);
+
+  useEffect(() => {
+    fetchTransactions();
+  }, [fetchTransactions]);
 
   const handleRecommendationsClick = () => {
     setActiveContent('recommendations');
@@ -68,60 +74,86 @@ export default function Home() {
 
   return (
     <div className={`home ${darkMode ? 'dark-mode' : ''}`}>
-      <Navbar darkMode={darkMode} onDarkModeToggle={handleDarkModeToggle} />
+      {user && (
+        <Navbar
+          darkMode={darkMode}
+          onDarkModeToggle={handleDarkModeToggle}
+          gamerName={user.userName}
+          walletMoney={user.walletMoney}
+          memberSince={user.joiningTime}
+        />
+      )}
       <div className="banner">
         <img src="https://distil.in/demo/snappcoins/img/hero_general.jpg" alt="" className="card-img-top w-100" style={{ height: "275px" }} />
       </div>
-      
-          <div className="container py-5">
-            <div className="row">
-            { user && (
-              <div className="col-md-6">
-                <Card gamerName = {user.userName}
-                      walletMoney = {user.walletMoney}
-                      memberSince = {user.joiningTime} />
-              </div> )
-              }
-              <div className="col-md-6" style={{marginLeft:"-10em"}}>
-                <div className="content mt-4">
-                  <div className="btn-group d-flex" role="group" aria-label="Content Navigation">
-                    <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'recommendations' ? 'active' : ''}`} onClick={handleRecommendationsClick} style={{border:"none"}}>
-                      Recommended 
-                    </button>
-                    <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'transactionHistory' ? 'active' : ''}`} onClick={handleTransactionHistoryClick}>
-                      Transaction History
-                    </button>
-                  </div>
 
-                  <div className="mt-4">
-                  <div className="mb-4">
-                    <div className="row">
-                      {merchant &&
-                        activeContent === 'recommendations' &&
-                        merchant.map((product, index) => (
-                          <div key={index} className="col-md-6 col-lg-5 mb-3">
-                            <Recommended
-                              title={product.title}
-                              desc={product.description}
-                              brand={product.brand}
-                              price={product.price}
-                            />
-                          </div>
-                        ))}
-                    </div>
-                  </div>
+      <div className="container py-5">
+        <div className="row">
+          {user && (
+            <div className="col-md-6">
+              <Card
+                gamerName={user.userName}
+                walletMoney={user.walletMoney}
+                memberSince={user.joiningTime}
+              />
+            </div>
+          )}
+          <div className="col-md-6" style={{ marginLeft: "-20em" }}>
+            <div className="content mt-4">
+              <div className="btn-group d-flex" role="group" aria-label="Content Navigation">
+                <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'recommendations' ? 'active' : ''}`} onClick={handleRecommendationsClick} style={{ border: "none" }}>
+                  Recommended
+                </button>
+                <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'transactionHistory' ? 'active' : ''}`} onClick={handleTransactionHistoryClick}>
+                  Transaction History
+                </button>
+              </div>
 
-                    {activeContent === 'transactionHistory' && (
-                      <div className="mb-4">
-                        <TransactionHistory />
-                      </div>
-                    )}
+              <div className="mt-4">
+                <div className="mb-4">
+                  <div className="row">
+                    {merchant &&
+                      activeContent === 'recommendations' &&
+                      merchant.map((product, index) => (
+                        <div key={index} className="col-md-6 col-lg-5 mb-3">
+                          <Recommended
+                            title={product.title}
+                            desc={product.description}
+                            brand={product.brand}
+                            price={product.price}
+                          />
+                        </div>
+                      ))}
                   </div>
                 </div>
+                {transactions !== null && activeContent === 'transactionHistory' && (
+                  <div className="d-flex justify-content-center mb-4">
+                    <input
+                      className="form-control me-2 w-100 bg-white text-dark"
+                      type="search"
+                      placeholder="Search in here..."
+                      aria-label="Search"
+                    />
+                    <button className="btn text-white bg-danger inside">Search</button>
+                  </div>
+                )}
+                {transactions !== null && activeContent === 'transactionHistory' && 
+                
+                transactions.map((transactions, index) => (
+                        
+                          <TransactionHistory tdate={transactions.transactionDate}
+                                      tId={transactions.transactionId}
+                                      status={transactions.orderStatus}
+                          />
+                        
+                      ))}
+                
               </div>
             </div>
           </div>
-      
+        </div>
+      </div>
+
       <Footer darkMode={darkMode} />
     </div>
   );
