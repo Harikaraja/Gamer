@@ -36,6 +36,7 @@ exports.sendVerificationEmail= async(req,res)=>{
     //     console.log(info.messageId);
     //   }  
     // });
+    
 
     res.status(201).send({ msg: "Otp Sent"});
     
