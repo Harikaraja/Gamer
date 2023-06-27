@@ -8,7 +8,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
-import { logout,updateGamer } from "../redux/actions/gamerAction";
+import { logout } from "../redux/actions/gamerAction";
 
 export default function Navbar(props) {
   
@@ -18,16 +18,14 @@ export default function Navbar(props) {
     setShowDropdown(!showDropdown);
   };
 
-
-  const gamerState = useSelector(state => state.gamerReducer)
-	const gamer = gamerState.gamer
 	const dispatch = useDispatch();
 
 	const handleLogoutClick = () => {
 		dispatch(logout());
 	  }
   const handleEditProfile = () =>{
-    dispatch(updateGamer());
+    // dispatch(());
+
   }
   return (
     <div>

@@ -6,6 +6,8 @@ import TransactionHistory from '../components/TransactionHistory';
 import Recommended from '../components/Recommended';
 import useFetch from '../hooks/useFetch';
 import "../assets/styles/home.css";
+import { useDispatch } from 'react-redux';
+import { gamerProfile } from '../redux/actions/gamerAction';
 
 export default function Home() {
   
@@ -18,14 +20,19 @@ export default function Home() {
   const token = localStorage.getItem('token');
   const fetchData = useFetch();
 
+  const dispatch = useDispatch()
+
   const fetchUser = useCallback(() => {
     const config = { url: "/profile", method: "get", headers: { Authorization: token } };
     fetchData(config, { showSuccessToast: false })
-      .then(data => setUser(data.user))
+      .then(data => {
+        setUser(data.user)
+        dispatch(gamerProfile(data.user))
+      })
       .catch((err) => {
         console.log(err);
       });
-  }, [fetchData, token]);
+  }, [fetchData, token,dispatch]);
 
   useEffect(() => {
     fetchUser();
