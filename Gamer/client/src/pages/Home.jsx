@@ -14,6 +14,8 @@ export default function Home() {
   const [user, setUser] = useState();
   const [merchant, setMerchant] = useState();
   const [transactions, setTransactions] = useState([]); // Initialize with null or an empty array
+  const [searchKeyword, setSearchKeyword] = useState('');
+
   //console.log("transaction is : ".transactions)
   const token = localStorage.getItem('token');
   const fetchData = useFetch();
@@ -127,26 +129,35 @@ export default function Home() {
                   </div>
                 </div>
                 {transactions !== null && activeContent === 'transactionHistory' && (
-                  <div className="d-flex justify-content-center mb-4">
-                    <input
-                      className="form-control me-2 w-100 bg-white text-dark"
-                      type="search"
-                      placeholder="Search in here..."
-                      aria-label="Search"
-                    />
-                    <button className="btn text-white bg-danger inside">Search</button>
-                  </div>
-                )}
-                {transactions !== null && activeContent === 'transactionHistory' && 
-                
-                transactions.map((transactions, index) => (
-                        
-                          <TransactionHistory tdate={transactions.transactionDate}
-                                      tId={transactions.transactionId}
-                                      status={transactions.orderStatus}
-                          />
-                        
-                      ))}
+              <div className="d-flex justify-content-center mb-4">
+                <input
+                  className="form-control me-2 w-100 bg-white text-dark"
+                  type="search"
+                  placeholder="Search here..."
+                  aria-label="Search"
+                  value={searchKeyword}
+                  onChange={(e) => setSearchKeyword(e.target.value)} style={{width:'20px'}}
+                />
+                <button className="btn text-white bg-danger inside">Search</button>
+              </div>
+            )}
+
+            {transactions !== null && activeContent === 'transactionHistory' &&
+              transactions
+                .filter((transaction) => {
+                  if (searchKeyword === '') return true;
+                  return transaction.orderStatus.toLowerCase().includes(searchKeyword.toLowerCase());
+                })
+                .map((transaction, index) => (
+                  <TransactionHistory
+                    key={index}
+                    tdate={transaction.transactionDate}
+                    tId={transaction.transactionId}
+                    status={transaction.orderStatus}
+                  />
+                ))
+            }
+
                 
               </div>
             </div>

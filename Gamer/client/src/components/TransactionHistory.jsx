@@ -16,7 +16,7 @@ export default function TransactionHistory(props) {
 						<div className="transaction-details">
 							<p className="transaction-date">{props.tdate}</p>
 							<p className="transaction-id">{props.tId}</p>
-							<p className="transaction-status bgy mb-0">{props.status}</p>
+							<p className="transaction-status bgy mb-0">{props.status}</p> 
 						</div>
 					</div>
 				</li>
@@ -26,3 +26,5 @@ export default function TransactionHistory(props) {
 		</div>
 	);
 }
+
+                            
