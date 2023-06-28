@@ -121,7 +121,7 @@ export default function Home() {
           <div className="col-md-9 col-xl-9" >
             <div className="content mt-4">
               <div className="btn-group d-flex" role="group" aria-label="Content Navigation">
-                <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'recommendations' ? 'active' : ''}`} onClick={handleRecommendationsClick} style={{ border: "none" }}>
+                <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'recommendations' ? 'active' : ''}`} onClick={handleRecommendationsClick} style={{ border: "none",textDecoration:"none",border: '0px' }}>
                   Recommended
                 </button>
                 <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'transactionHistory' ? 'active' : ''}`} onClick={handleTransactionHistoryClick}>
