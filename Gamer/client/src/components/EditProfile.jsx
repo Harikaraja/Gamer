@@ -7,7 +7,7 @@ const EditProfile = () => {
 
     const gaming = useSelector(state => state.gamerReducer)
 
-    console.log(gaming);
+    console.log("gaming is: ",gaming);
     const profile = gaming.gamer
 
     console.log("profile is: ",profile)
@@ -18,6 +18,7 @@ const EditProfile = () => {
        
         userName : profile.userName,
         email: profile.email,
+   
         
     };
 
@@ -55,18 +56,19 @@ const EditProfile = () => {
   return (
     <div className="col-6 shadow p-3 mb-5 bg-black rounded" style={{width:'55rem',marginTop:'1rem',marginLeft:'14rem'}}>
     <center><h5 className="card-title text-muted">Gamer Profile</h5></center>
-    <div className="form-group" style={{marginLeft:'12rem',marginBottom:'3rem',marginTop:'4rem'}}>
-        <label htmlFor="name" style={{marginBottom:'1rem'}}>User Name</label><br/>
+    <div className="form-group" style={{marginLeft:'12rem',marginBottom:'1rem',marginTop:'4rem'}}>
+        <label htmlFor="name" style={{marginBottom:'0rem'}}>User Name</label><br/>
         <input type="text" name='userName'  id="fname" className="form-control" value={formData.userName} onChange={handleChange}/>
     </div>
     
-    {/* <div className="form-group">
-        <label htmlFor="password">Change Password</label>
-        <input type="password" id="password" className="form-control" value="********"/>
-        <button>Change Password</button>
-    </div> */}
-    <div className="form-group" style={{marginLeft:'12rem',marginBottom:'3rem'}}>
-        <label htmlFor="email" style={{marginBottom:'1rem'}}>Email</label><br/>
+     <div className="form-group" style={{marginLeft:'12rem',marginBottom:'1rem',marginTop:'4rem'}}>
+        <label htmlFor="password" style={{marginBottom:'0rem'}}>Change Password</label>
+        <input type="password" id="password" className="form-control" value=""/>
+        <button style={{margin:'1rem',marginLeft:'7rem',padding:'0.5rem'}}>Change Password</button>
+    </div> 
+
+    <div className="form-group" style={{marginLeft:'12rem',marginBottom:'1rem'}}>
+        <label htmlFor="email" style={{marginBottom:'0rem'}}>Email</label><br/>
         <input type="email" id="email" className="form-control" name="email" value={formData.email}  onChange={handleChange}/>
     </div>
     

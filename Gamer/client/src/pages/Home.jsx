@@ -18,7 +18,8 @@ export default function Home() {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [merchant, setMerchant] = useState([]);
   const [perpage, setPerpage] = useState([]);
-
+  
+  //console.log(merchant)
   const pageHandler = (pageNumber) =>{
 
     const startIndex = (pageNumber - 1) * 3;
@@ -134,8 +135,10 @@ export default function Home() {
                   <div className="row">
                     {perpage.map((product, index) => (
                       <div key={index} className="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+                      
                         <Recommended
                           title={product.title}
+                          img={product.image}
                           desc={product.description}
                           brand={product.brand}
                           price={product.price}

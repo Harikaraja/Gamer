@@ -1,11 +1,22 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import icon from '../assets/images/icon.png';
 
-export default function Recommended() {
+export default function Recommended(props) {
   const [isLiked, setIsLiked] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageSrc, setImageSrc] = useState("");
+
+    useEffect(() => {
+      // Assuming you receive the image URL from props
+      setImageSrc(
+        props.img
+          ? `${process.env.REACT_APP_URL}/api/merchant/img/${props.img}`
+          : "default-prod.png"
+      );
+  }, [props.img]);
 
   const handleLikeClick = () => {
     setIsLiked(!isLiked);
@@ -27,13 +38,20 @@ export default function Recommended() {
               overflow: "hidden",
             }}
           >
-            <img
-              src="https://distil.in/demo/snappcoins/img/items/item-1.jpg"
-              alt=""
-              className="zoom-image"
-            />
+                    <figure>
+                        {!imageLoaded && <div className="loading-spinner"></div>}
+                        <img
+                        src={imageSrc}
+                        data-src="img/items/item-4.jpg"
+                        className={`lazy ${imageLoaded ? "" : "hidden"}`}
+                        alt=""
+                        height="50px"
+                        onLoad={() => setImageLoaded(true)}
+                        onError={() => setImageLoaded(false)}
+                        />
+                    </figure>
             <div className="badge">
-              <span className="badge-text">3.25 snaps</span>
+              <span className="badge-text">{props.price} snaps</span>
             </div>
             <div
               style={{
