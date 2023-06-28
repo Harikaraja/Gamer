@@ -16,6 +16,7 @@ const Card = (props) => {
 					marginTop: "-145px",
 					marginLeft: "-20px",
 					zIndex: "2",
+			        
 				}}>
 				<div className="card-body text-center">
 					<img
@@ -35,10 +36,11 @@ const Card = (props) => {
 							borderRadius: "50%",
 							justifyContent: "center",
 							alignItems: "center",
+							
 						}}>
 						<span style={{ color: "white", fontSize: "15px" }}>&#10003;</span>
 					</div>
-					<h1 className="card-text" style={{ fontSize: "24px" }}>
+					<h1 className="card-text" style={{ fontSize: "24px"}}>
 						@{props.gamerName}
 					</h1>
 

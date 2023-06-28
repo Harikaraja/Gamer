@@ -18,9 +18,8 @@ export default function Home() {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [merchant, setMerchant] = useState([]);
   const [perpage, setPerpage] = useState([]);
-  
-  //console.log(merchant)
-  const pageHandler = (pageNumber) =>{
+
+  const pageHandler = (pageNumber) => {
 
     const startIndex = (pageNumber - 1) * 3;
     const endIndex = pageNumber * 3;
@@ -111,7 +110,7 @@ export default function Home() {
       <div className="container py-5">
         <div className="row">
           {user && (
-            <div className="col-md-6">
+            <div className="col-md-3 col-xl-3">
               <Card
                 gamerName={user.userName}
                 walletMoney={user.walletMoney}
@@ -119,7 +118,7 @@ export default function Home() {
               />
             </div>
           )}
-          <div className="col-md-6" style={{ marginLeft: "-20em" }}>
+          <div className="col-md-9 col-xl-9" >
             <div className="content mt-4">
               <div className="btn-group d-flex" role="group" aria-label="Content Navigation">
                 <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'recommendations' ? 'active' : ''}`} onClick={handleRecommendationsClick} style={{ border: "none" }}>
@@ -132,31 +131,29 @@ export default function Home() {
 
               <div className="mt-4">
                 {activeContent === 'recommendations' && perpage.length > 0 ? (
-                  <div className="row">
+                  <div className="row ">
                     {perpage.map((product, index) => (
-                      <div key={index} className="col-xl-4 col-lg-6 col-md-6 col-sm-6">
-                      
+                      <div className='col-xl-4 col-lg-6 col-md-6 col-sm-12'>
                         <Recommended
                           title={product.title}
                           img={product.image}
                           desc={product.description}
                           brand={product.brand}
                           price={product.price}
-                         
+                          index={index}
                         />
-                       
                       </div>
                     ))}
-                    <br/>
-                    <div style={{ display: 'flex', justifyContent: 'center',flexDirection: 'row' }}>
-                      
-                    </div>
+                    <br />
+                    <Pagination data={merchant} pageHandler={pageHandler} />
 
                   </div>
                 ) : (
                   <p>No products available</p>
-                )}
-               
+                )
+                
+                }
+
 
                 {transactions !== null && activeContent === 'transactionHistory' && (
                   <div className="d-flex justify-content-center mb-4">
@@ -187,7 +184,7 @@ export default function Home() {
                       />
                     ))}
               </div>
-              <Pagination data={merchant} pageHandler={pageHandler}/>
+             
             </div>
           </div>
         </div>

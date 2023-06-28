@@ -38,18 +38,17 @@ export default function Recommended(props) {
               overflow: "hidden",
             }}
           >
-                    <figure>
-                        {!imageLoaded && <div className="loading-spinner"></div>}
+            {!imageLoaded && <div className="loading-spinner"></div>}
                         <img
                         src={imageSrc}
                         data-src="img/items/item-4.jpg"
                         className={`lazy ${imageLoaded ? "" : "hidden"}`}
                         alt=""
-                        height="50px"
+                        height="50px" width="100%"
                         onLoad={() => setImageLoaded(true)}
                         onError={() => setImageLoaded(false)}
                         />
-                    </figure>
+                   
             <div className="badge">
               <span className="badge-text">{props.price} snaps</span>
             </div>
