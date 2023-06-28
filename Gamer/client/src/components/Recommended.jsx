@@ -13,6 +13,8 @@ export default function Recommended() {
 
   return (
     <div className="items-cont">
+    
+    <div className='img-fluid'>
       {/* item begins here */}
       <div className="item">
         <div className="card" style={{ zIndex: "2", padding: "0px" }}>
@@ -84,7 +86,7 @@ export default function Recommended() {
         </div>
       </div>
 
-      
+    </div>
     </div>
   );
 }

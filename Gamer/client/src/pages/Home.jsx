@@ -4,37 +4,45 @@ import Navbar from '../components/Navbar';
 import Card from '../components/Card';
 import TransactionHistory from '../components/TransactionHistory';
 import Recommended from '../components/Recommended';
+import Pagination from '../components/pagination';
 import useFetch from '../hooks/useFetch';
 import "../assets/styles/home.css";
 import { useDispatch } from 'react-redux';
 import { gamerProfile } from '../redux/actions/gamerAction';
 
 export default function Home() {
-  
   const [activeContent, setActiveContent] = useState('recommendations');
   const [darkMode, setDarkMode] = useState(false);
   const [user, setUser] = useState();
-  const [merchant, setMerchant] = useState();
-  const [transactions, setTransactions] = useState([]); // Initialize with null or an empty array
+  const [transactions, setTransactions] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [merchant, setMerchant] = useState([]);
+  const [perpage, setPerpage] = useState([]);
 
-  //console.log("transaction is : ".transactions)
+  const pageHandler = (pageNumber) =>{
+
+    const startIndex = (pageNumber - 1) * 3;
+    const endIndex = pageNumber * 3;
+    console.log(startIndex);
+    console.log(endIndex);
+    setPerpage(merchant.slice(startIndex, endIndex));
+  }
+
   const token = localStorage.getItem('token');
   const fetchData = useFetch();
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const fetchUser = useCallback(() => {
     const config = { url: "/profile", method: "get", headers: { Authorization: token } };
     fetchData(config, { showSuccessToast: false })
       .then(data => {
-        setUser(data.user)
-        dispatch(gamerProfile(data.user))
+        setUser(data.user);
+        dispatch(gamerProfile(data.user));
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [fetchData, token,dispatch]);
+  }, [fetchData, token, dispatch]);
 
   useEffect(() => {
     fetchUser();
@@ -56,10 +64,7 @@ export default function Home() {
   const fetchTransactions = useCallback(() => {
     const config = { url: '/transaction/displayItems', method: "get", headers: { Authorization: token } };
     fetchData(config, { showSuccessToast: false })
-      .then(data => 
-         setTransactions(data.transactions)
-         //console.log("data: ",data)
-         )
+      .then(data => setTransactions(data.transactions))
       .catch((err) => {
         console.log(err);
       });
@@ -80,6 +85,12 @@ export default function Home() {
   const handleDarkModeToggle = () => {
     setDarkMode(!darkMode);
   };
+
+  useEffect(() => {
+    if (activeContent === 'recommendations' && merchant.length > 0) {
+      setPerpage(merchant.slice(0, 3));
+    }
+  }, [activeContent, merchant]);
 
   return (
     <div className={`home ${darkMode ? 'dark-mode' : ''}`}>
@@ -119,54 +130,61 @@ export default function Home() {
               </div>
 
               <div className="mt-4">
-                <div className="mb-4">
+                {activeContent === 'recommendations' && perpage.length > 0 ? (
                   <div className="row">
-                    {merchant &&
-                      activeContent === 'recommendations' &&
-                      merchant.map((product, index) => (
-                        <div key={index} className="col-md-6 col-lg-5 mb-3">
-                          <Recommended
-                            title={product.title}
-                            desc={product.description}
-                            brand={product.brand}
-                            price={product.price}
-                          />
-                        </div>
-                      ))}
+                    {perpage.map((product, index) => (
+                      <div key={index} className="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+                        <Recommended
+                          title={product.title}
+                          desc={product.description}
+                          brand={product.brand}
+                          price={product.price}
+                         
+                        />
+                       
+                      </div>
+                    ))}
+                    <br/>
+                    <div style={{ display: 'flex', justifyContent: 'center',flexDirection: 'row' }}>
+                      
+                    </div>
+
                   </div>
-                </div>
+                ) : (
+                  <p>No products available</p>
+                )}
+               
+
                 {transactions !== null && activeContent === 'transactionHistory' && (
-              <div className="d-flex justify-content-center mb-4">
-                <input
-                  className="form-control me-2 w-100 bg-white text-dark"
-                  type="search"
-                  placeholder="Search here..."
-                  aria-label="Search"
-                  value={searchKeyword}
-                  onChange={(e) => setSearchKeyword(e.target.value)} style={{width:'20px'}}
-                />
-                <button className="btn text-white bg-danger inside">Search</button>
-              </div>
-            )}
+                  <div className="d-flex justify-content-center mb-4">
+                    <input
+                      className="form-control me-2 w-100 bg-white text-dark"
+                      type="search"
+                      placeholder="Search here..."
+                      aria-label="Search"
+                      value={searchKeyword}
+                      onChange={(e) => setSearchKeyword(e.target.value)}
+                    />
+                    <button className="btn text-white bg-danger inside">Search</button>
+                  </div>
+                )}
 
-            {transactions !== null && activeContent === 'transactionHistory' &&
-              transactions
-                .filter((transaction) => {
-                  if (searchKeyword === '') return true;
-                  return transaction.orderStatus.toLowerCase().includes(searchKeyword.toLowerCase());
-                })
-                .map((transaction, index) => (
-                  <TransactionHistory
-                    key={index}
-                    tdate={transaction.transactionDate}
-                    tId={transaction.transactionId}
-                    status={transaction.orderStatus}
-                  />
-                ))
-            }
-
-                
+                {transactions !== null && activeContent === 'transactionHistory' &&
+                  transactions
+                    .filter((transaction) => {
+                      if (searchKeyword === '') return true;
+                      return transaction.orderStatus.toLowerCase().includes(searchKeyword.toLowerCase());
+                    })
+                    .map((transaction, index) => (
+                      <TransactionHistory
+                        key={index}
+                        tdate={transaction.transactionDate}
+                        tId={transaction.transactionId}
+                        status={transaction.orderStatus}
+                      />
+                    ))}
               </div>
+              <Pagination data={merchant} pageHandler={pageHandler}/>
             </div>
           </div>
         </div>
