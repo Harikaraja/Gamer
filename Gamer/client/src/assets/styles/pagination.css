@@ -1,0 +1,31 @@
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+}
+
+.pagebutton {
+  margin: 0.5em;
+  display: inline-block;
+  
+  border: 1px solid black;
+  border-radius: 10%;
+  width: 50px;
+  height: 29px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagebutton:hover {
+  background-color: #333;
+  color: #f0f0f0;
+}
+
+.pagebutton.active {
+  background-color: #333;
+  color: #f0f0f0;
+}

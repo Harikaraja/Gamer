@@ -79,7 +79,7 @@ export default function Recommended(props) {
                 alt="Icon"
                 style={{ width: "20px", height: "20px", marginRight: "5px" }}
               />
-              <span>JBL PODS</span>
+              <span>{props.title}</span>
             </div>
 
             <div

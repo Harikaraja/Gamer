@@ -92,6 +92,8 @@ export default function Home() {
     }
   }, [activeContent, merchant]);
 
+  
+
   return (
     <div className={`home ${darkMode ? 'dark-mode' : ''}`}>
       {user && (
@@ -121,10 +123,10 @@ export default function Home() {
           <div className="col-md-9 col-xl-9" >
             <div className="content mt-4">
               <div className="btn-group d-flex" role="group" aria-label="Content Navigation">
-                <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'recommendations' ? 'active' : ''}`} onClick={handleRecommendationsClick} style={{ border: "none",textDecoration:"none",border: '0px' }}>
+                <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'recommendations' ? 'active' : ''}`} onClick={handleRecommendationsClick} style={{padding:'0px',margin:'0',width:'-2px'}}>
                   Recommended
                 </button>
-                <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'transactionHistory' ? 'active' : ''}`} onClick={handleTransactionHistoryClick}>
+                <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'transactionHistory' ? 'active' : ''}`} onClick={handleTransactionHistoryClick} >
                   Transaction History
                 </button>
               </div>
@@ -149,13 +151,14 @@ export default function Home() {
 
                   </div>
                 ) : (
-                  <p>No products available</p>
+                  <p></p>
                 )
                 
                 }
 
 
-                {transactions !== null && activeContent === 'transactionHistory' && (
+              {transactions !== null && activeContent === 'transactionHistory' && (
+                <>
                   <div className="d-flex justify-content-center mb-4">
                     <input
                       className="form-control me-2 w-100 bg-white text-dark"
@@ -167,14 +170,13 @@ export default function Home() {
                     />
                     <button className="btn text-white bg-danger inside">Search</button>
                   </div>
-                )}
 
-                {transactions !== null && activeContent === 'transactionHistory' &&
-                  transactions
+                  {transactions
                     .filter((transaction) => {
                       if (searchKeyword === '') return true;
                       return transaction.orderStatus.toLowerCase().includes(searchKeyword.toLowerCase());
                     })
+                    .slice(0, 3) // Display only three transactions
                     .map((transaction, index) => (
                       <TransactionHistory
                         key={index}
@@ -182,7 +184,14 @@ export default function Home() {
                         tId={transaction.transactionId}
                         status={transaction.orderStatus}
                       />
-                    ))}
+                      
+                    ))
+                    
+                    }
+                    
+                </>
+              )}
+
               </div>
              
             </div>

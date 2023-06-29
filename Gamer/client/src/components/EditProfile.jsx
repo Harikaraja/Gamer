@@ -81,7 +81,7 @@ const EditProfile = () => {
       <div className="form-group text-center" style={{ marginBottom: '3rem' }}>
         <label htmlFor="email" style={{ textAlign: 'left', marginLeft: '-15rem', marginBottom: '1rem' }}>Email</label><br />
         <div className="d-inline-block">
-          <input type="text" name="email" id="fname" className="form-control" value={formData.userName} onChange={handleChange} />
+          <input type="text" name="email" id="fname" className="form-control" value={formData.email} onChange={handleChange} />
         </div>
       </div>
       <center>
