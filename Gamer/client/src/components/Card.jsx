@@ -108,8 +108,9 @@ const Card = (props) => {
 									whiteSpace: "nowrap",
 									verticalAlign: "baseline",
 									borderRadius: "0.25rem",
+									
 								}}>
-								30 
+								{props.inTransitCount} 
 							</div>
 							<div className="bordered-label text-start fs">Pending Orders</div>
 						</div>

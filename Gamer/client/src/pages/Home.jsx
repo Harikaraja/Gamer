@@ -17,16 +17,10 @@ export default function Home() {
   const [transactions, setTransactions] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [merchant, setMerchant] = useState([]);
-  const [perpage, setPerpage] = useState([]);
-
-  const pageHandler = (pageNumber) => {
-
-    const startIndex = (pageNumber - 1) * 3;
-    const endIndex = pageNumber * 3;
-    console.log(startIndex);
-    console.log(endIndex);
-    setPerpage(merchant.slice(startIndex, endIndex));
-  }
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(3);
+  const [inTransitCount, setInTransitCount] = useState(0);
+  const [currentPageTransactions, setCurrentPageTransactions] = useState([]);
 
   const token = localStorage.getItem('token');
   const fetchData = useFetch();
@@ -74,6 +68,11 @@ export default function Home() {
     fetchTransactions();
   }, [fetchTransactions]);
 
+  useEffect(() => {
+    const count = transactions.filter(transaction => transaction.orderStatus === 'In Transit').length;
+    setInTransitCount(count);
+  }, [transactions]);
+
   const handleRecommendationsClick = () => {
     setActiveContent('recommendations');
   };
@@ -88,11 +87,29 @@ export default function Home() {
 
   useEffect(() => {
     if (activeContent === 'recommendations' && merchant.length > 0) {
-      setPerpage(merchant.slice(0, 3));
+      setCurrentPage(1);
     }
   }, [activeContent, merchant]);
 
-  
+  useEffect(() => {
+    if (activeContent === 'transactionHistory' && transactions.length > 0) {
+      setCurrentPage(1);
+    }
+  }, [activeContent, transactions]);
+
+  const pageHandler = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    if (activeContent === 'recommendations') {
+      setCurrentPageTransactions(merchant.slice(startIndex, endIndex));
+    } else if (activeContent === 'transactionHistory') {
+      setCurrentPageTransactions(transactions.slice(startIndex, endIndex));
+    }
+  }, [currentPage, itemsPerPage, activeContent, merchant, transactions]);
 
   return (
     <div className={`home ${darkMode ? 'dark-mode' : ''}`}>
@@ -117,13 +134,14 @@ export default function Home() {
                 gamerName={user.userName}
                 walletMoney={user.walletMoney}
                 memberSince={user.joiningTime}
+                inTransitCount={inTransitCount}
               />
             </div>
           )}
-          <div className="col-md-9 col-xl-9" >
+          <div className="col-md-9 col-xl-9">
             <div className="content mt-4">
               <div className="btn-group d-flex" role="group" aria-label="Content Navigation">
-                <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'recommendations' ? 'active' : ''}`} onClick={handleRecommendationsClick} style={{padding:'0px',margin:'0',width:'-2px'}}>
+                <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'recommendations' ? 'active' : ''}`} onClick={handleRecommendationsClick} style={{ padding: '0px', margin: '0', width: '-2px' }}>
                   Recommended
                 </button>
                 <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'transactionHistory' ? 'active' : ''}`} onClick={handleTransactionHistoryClick} >
@@ -132,10 +150,10 @@ export default function Home() {
               </div>
 
               <div className="mt-4">
-                {activeContent === 'recommendations' && perpage.length > 0 ? (
-                  <div className="row ">
-                    {perpage.map((product, index) => (
-                      <div className='col-xl-4 col-lg-6 col-md-6 col-sm-12'>
+                {activeContent === 'recommendations' && currentPageTransactions.length > 0 ? (
+                  <div className="row">
+                    {currentPageTransactions.map((product, index) => (
+                      <div className='col-xl-4 col-lg-6 col-md-6 col-sm-12' key={index}>
                         <Recommended
                           title={product.title}
                           img={product.image}
@@ -146,54 +164,46 @@ export default function Home() {
                         />
                       </div>
                     ))}
-                    <br />
-                    <Pagination data={merchant} pageHandler={pageHandler} />
-
                   </div>
-                ) : (
-                  <p></p>
-                )
-                
-                }
-
-
-              {transactions !== null && activeContent === 'transactionHistory' && (
-                <>
-                  <div className="d-flex justify-content-center mb-4">
-                    <input
-                      className="form-control me-2 w-100 bg-white text-dark"
-                      type="search"
-                      placeholder="Search here..."
-                      aria-label="Search"
-                      value={searchKeyword}
-                      onChange={(e) => setSearchKeyword(e.target.value)}
-                    />
-                    <button className="btn text-white bg-danger inside">Search</button>
-                  </div>
-
-                  {transactions
-                    .filter((transaction) => {
-                      if (searchKeyword === '') return true;
-                      return transaction.orderStatus.toLowerCase().includes(searchKeyword.toLowerCase());
-                    })
-                    .slice(0, 3) // Display only three transactions
-                    .map((transaction, index) => (
-                      <TransactionHistory
-                        key={index}
-                        tdate={transaction.transactionDate}
-                        tId={transaction.transactionId}
-                        status={transaction.orderStatus}
+                ) : activeContent === 'transactionHistory' && currentPageTransactions.length > 0 ? (
+                  <>
+                    <div className="d-flex justify-content-center mb-4">
+                      <input
+                        className="form-control me-2 w-100 bg-white text-dark"
+                        type="search"
+                        placeholder="Search here..."
+                        aria-label="Search"
+                        value={searchKeyword}
+                        onChange={(e) => setSearchKeyword(e.target.value)}
                       />
-                      
-                    ))
-                    
-                    }
-                    
-                </>
-              )}
+                      <button className="btn text-white bg-danger inside">Search</button>
+                    </div>
 
+                    {currentPageTransactions
+                      .filter((transaction) => {
+                        if (searchKeyword === '') return true;
+                        return transaction.orderStatus.toLowerCase().includes(searchKeyword.toLowerCase());
+                      })
+                      .map((transaction, index) => (
+                        <TransactionHistory
+                          key={index}
+                          tdate={transaction.transactionDate}
+                          tId={transaction.transactionId}
+                          status={transaction.orderStatus}
+                        />
+                      ))}
+                  </>
+                ) : (
+                  <p>No transactions to display.</p>
+                )}
               </div>
-             
+
+              <Pagination
+                data={activeContent === 'recommendations' ? merchant : transactions}
+                itemsPerPage={itemsPerPage}
+                currentPage={currentPage}
+                onPageChange={pageHandler}
+              />
             </div>
           </div>
         </div>

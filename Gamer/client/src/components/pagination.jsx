@@ -1,52 +1,43 @@
-import React, { useState } from 'react';
-import '../assets/styles/pagination.css';
+import React from 'react';
+import '../assets/styles/pagination.css'
 
-const Pagination = ({ data, pageHandler }) => {
-  const [currentPage, setCurrentPage] = useState(1);
+const Pagination = ({ data, itemsPerPage, currentPage, onPageChange }) => {
+  const totalPages = Math.ceil(data.length / itemsPerPage);
 
-  let pageNumbers = [];
+  const handleClick = (pageNumber) => {
+    onPageChange(pageNumber);
+  };
 
-  for (let i = 1; i < Math.ceil(data.length / 3) + 1; i++) {
-    pageNumbers.push(i);
-  }
-
-  const handlePageClick = (page) => {
-    if (page === '<' && currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      pageHandler(currentPage - 1);
-    } else if (page === '>' && currentPage < pageNumbers.length) {
-      setCurrentPage(currentPage + 1);
-      pageHandler(currentPage + 1);
-    } else if (typeof page === 'number') {
-      setCurrentPage(page);
-      pageHandler(page);
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(
+        <li key={i} className={`page-item ${currentPage === i ? 'active' : ''}`}>
+          <button className="page-link" onClick={() => handleClick(i)}>
+            {i}
+          </button>
+        </li>
+      );
     }
+    return pageNumbers;
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }} className='pagination-container'>
-      <div
-        className={`pagebutton${currentPage === 1 ? ' disabled' : ''}`}
-        onClick={() => handlePageClick('<')}
-      >
-        {'<'}
-      </div>
-      {pageNumbers.map((page) => (
-        <div
-          key={page}
-          className={`pagebutton${currentPage === page ? ' active' : ''}`}
-          onClick={() => handlePageClick(page)}
-        >
-          {page}
-        </div>
-      ))}
-      <div
-        className={`pagebutton${currentPage === pageNumbers.length ? ' disabled' : ''}`}
-        onClick={() => handlePageClick('>')}
-      >
-        {'>'}
-      </div>
-    </div>
+    <nav aria-label="Page navigation">
+      <ul className="pagination justify-content-center">
+        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+          <button className="page-link" onClick={() => handleClick(currentPage - 1)}>
+            Prev
+          </button>
+        </li>
+        {renderPageNumbers()}
+        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+          <button className="page-link" onClick={() => handleClick(currentPage + 1)}>
+            Next
+          </button>
+        </li>
+      </ul>
+    </nav>
   );
 };
 
