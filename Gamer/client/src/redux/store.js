@@ -20,4 +20,6 @@ const store = createStore(persistedReducer,
   composeEnhancers(applyMiddleware(...middleware))
 );
 
-export default store;
+export default store; 
+
+
