@@ -30,7 +30,10 @@ const gamerSchema = new Schema({
         default:false
 
     },
-    
+    image:{
+      type:String
+    }
+    ,
    },
    {timestamp:true}
    )

@@ -134,7 +134,6 @@ export default function Home() {
               />
             </div>
           )}
-
           <div className="col-md-9 col-xl-9">
             <div className="content mt-4">
               <div role="group" aria-label="Content Navigation">

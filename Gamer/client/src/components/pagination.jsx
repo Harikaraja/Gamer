@@ -1,42 +1,44 @@
 import React from 'react';
+import '../assets/styles/pagination.css'
 
-const Pagination = ({data,pageHandler}) => {
+const Pagination = ({ data, itemsPerPage, currentPage, onPageChange }) => {
+  const totalPages = Math.ceil(data.length / itemsPerPage);
 
- // let pageNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
- //console.log(data.length)
+  const handleClick = (pageNumber) => {
+    onPageChange(pageNumber);
+  };
 
- let pageNumbers = []
-
- for(let i=1;i< Math.ceil(data.length/3)+1;i++ ){
-
-    pageNumbers.push(i);
- }
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(
+        <li key={i} className={`page-item ${currentPage === i ? 'active' : ''}`}>
+          <button className="page-link" onClick={() => handleClick(i)}>
+            {i}
+          </button>
+        </li>
+      );
+    }
+    return pageNumbers;
+  };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      {pageNumbers.map((page) => (
-        <div key={page} className='pagebutton' onClick={ () => pageHandler(page)} 
-
-        style={{ 
-            margin: '0.5em',
-            display: 'inline-block',
-            padding: '1.5em',
-            border: '1px solid black',
-            borderRadius: '10%',
-            width: '30px',
-            height: '30px',
-            textAlign: 'center',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            backgroundColor: '#f0f0f0',
-            color: '#333',
-          }}>
-
-          {page}
-        </div>
-      ))}
-    </div>
+    <nav aria-label="Page navigation">
+      <ul className="pagination justify-content-center">
+        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+          <button className="page-link" onClick={() => handleClick(currentPage - 1)}>
+            Prev
+          </button>
+        </li>
+        {renderPageNumbers()}
+        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+          <button className="page-link" onClick={() => handleClick(currentPage + 1)}>
+            Next
+          </button>
+        </li>
+      </ul>
+    </nav>
   );
-}
+};
 
-export default Pagination
+export default Pagination;
