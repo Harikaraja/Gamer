@@ -81,7 +81,7 @@ export default function Navbar(props) {
           <li style={{ marginBottom: "10px" }}><Link to="#" style={{ textDecoration: "none", color: "inherit" }}><AccountCircleOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>My Profile</span></Link></li>
           <li style={{ marginBottom: "10px" }}><Link onClick={handleEditProfile} to="/profile" style={{ textDecoration: "none", color: "inherit" }}><EditOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>Edit Profile</span></Link></li>
           <li style={{ marginBottom: "10px" }}><Link to="#" style={{ textDecoration: "none", color: "inherit" }}><AccountBoxOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>Account</span></Link></li>
-          <li style={{ marginBottom: "10px" }}><Link to="/" style={{ textDecoration: "none", color: "inherit" }}><ShoppingBagOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>My Items</span></Link></li>
+          <li style={{ marginBottom: "10px" }}><Link to="/myitems" style={{ textDecoration: "none", color: "inherit" }}><ShoppingBagOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>My Items</span></Link></li>
           <li onClick={handleLogoutClick}><Link  style={{ textDecoration: "none", color: "inherit" }}><ExitToAppOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>Log Out</span></Link></li>
         </ul>
       )}
