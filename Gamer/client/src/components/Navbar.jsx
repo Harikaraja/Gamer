@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import Brightness7OutlinedIcon from '@mui/icons-material/Brightness7Outlined';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
@@ -25,8 +25,13 @@ export default function Navbar(props) {
 	  }
   const handleEditProfile = () =>{
     // dispatch(());
-
+    
   }
+  const handleDarkModeToggle = () => {
+    props.onDarkModeToggle();
+    const rootElement = document.documentElement;
+    rootElement.classList.toggle('dark-mode');
+  };
   return (
     <div>
       <nav style={{height:'77px'}} className={`navbar navbar-expand-lg navbar-light ${props.darkMode ? 'dark-mode' : ''}` }>
@@ -53,7 +58,7 @@ export default function Navbar(props) {
               </li>
             </ul>
             <div className="navbar-divider"></div>
-            <div className="btn bg-white text-success mx-2" onClick={props.onDarkModeToggle}>
+            <div className="btn bg-white text-success mx-2" onClick={handleDarkModeToggle}>
             {props.darkMode ? (
                 <Brightness7OutlinedIcon />
               ) : (

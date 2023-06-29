@@ -61,13 +61,10 @@ code {
   color: gray;
 }
 
-.btn-link.active {
-  color: black;
-}
 
 .btn-link:focus,
 .btn-link:hover {
-  color: green;
+  color: #45C291;
 }
 .btn-link {
   margin-bottom: 10px;
@@ -90,6 +87,22 @@ code {
   font-size: 16px;
   font-weight: bold;
   cursor: default;
+}
+.separator-container {
+  display: flex;
+  align-items: center;
+  
+}
+
+.separator {
+  flex-grow: 1;
+  height: 1px;
+  margin-top: -4.2rem;
+  background-color:#DDDDDD;
+}
+.dark-mode .separator{
+  background-color:#36313D;
+  height: 2px;
 }
 .divider {
   display: inline-block;
@@ -119,6 +132,16 @@ code {
 
 .dark-mode .btn {
   color: #ffffff;
+}
+.dark-mode .btn-link:focus,
+.dark-mode .btn-link:hover {
+  color: #45C291;
+}
+.dark-mode .btn-link.active {
+  color:white;
+}
+.dark-mode .text-gray {
+  color: gray;
 }
 .dark-mode .margin{
   color: white;
@@ -158,7 +181,7 @@ code {
 .dropdown-menu li a:hover,
 .dropdown-menu li a:focus,
 .dropdown-menu li a:active {
-  color: green;
+  color: #45C291;
 }
 .transaction-item {
   margin-bottom: 5px; /* Increase the gap between transaction items */
@@ -217,7 +240,7 @@ code {
 }
 
 .hg:hover{
-  color: green;
+  color:#45C291;
 }
 .zoom-image{
   transition: transform 0.3s;
