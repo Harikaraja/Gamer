@@ -113,7 +113,7 @@ export default function Home() {
 
   return (
     <div className={`home ${darkMode ? 'dark-mode' : ''}`}>
-      {user && (
+      {/*{user && (
         <Navbar
           darkMode={darkMode}
           onDarkModeToggle={handleDarkModeToggle}
@@ -121,7 +121,10 @@ export default function Home() {
           walletMoney={user.walletMoney}
           memberSince={user.joiningTime}
         />
-      )}
+      )}*/}
+      <Navbar
+          darkMode={darkMode}
+          onDarkModeToggle={handleDarkModeToggle}/>
       <div className="banner">
         <img src="https://distil.in/demo/snappcoins/img/hero_general.jpg" alt="" className="card-img-top w-100" style={{ height: "275px" }} />
       </div>

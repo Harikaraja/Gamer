@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Verify from './pages/Verify';
 import Profile from './pages/profile';
-import myItems from './components/myItems';
+import MyItems from './pages/MyItems';
 import { useSelector } from 'react-redux';
 
 
@@ -24,7 +24,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path='/verify' element={<Verify />}/>
-          <Route path='/myitems' element={<myItems />} />
+          <Route path='/myitems' element={<MyItems/>}/>
         </Routes>
       </BrowserRouter>
     </>
