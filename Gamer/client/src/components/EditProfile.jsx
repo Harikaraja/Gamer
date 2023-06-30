@@ -11,81 +11,156 @@ const EditProfile = () => {
   const fetchData = useFetch();
   const dispatch = useDispatch();
 
-  const initialFormData = {
-    userName: profile.userName,
-    email: profile.email,
-  };
+   
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageSrc, setImageSrc] = useState("");
 
-  const [formData, setFormData] = useState(initialFormData);
-  const [selectedImage, setSelectedImage] = useState(null);
-
-  const handleChange = e => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleImageChange = e => {
-    setSelectedImage(e.target.files[0]);
-  };
 
   useEffect(() => {
-    setFormData({
-      userName: profile.userName,
-      email: profile.email
-    });
-  }, [profile, setFormData]);
+    if (profile) {
+      setImageSrc(
+        profile.image
+          ? `${process.env.REACT_APP_URL}/api/profile/img/${profile.image}`
+          : "https://distil.in/demo/snappcoins/img/avatar-user.jpg"
+      );
+    }
+  }, [profile]);
+  
 
-  const handleUpdate = async e => {
+
+  console.log("profile: ", profile)
+
+  const initialFormData = {
+    userName: profile ? profile.userName : '',
+    email: profile ? profile.email : '',
+    image: profile ? profile.image : '',
+  };
+
+  console.log("initialfdata: ", initialFormData)
+
+  const [formData, setFormData] = useState(initialFormData);
+
+  console.log(typeof (formData.image))
+  console.log("form data is: ", formData)
+
+  
+
+  const handleChange = async (e) => {
+    if (e.target.name === "image") {
+      if (e.target.files.length > 0) {
+        setFormData({
+          ...formData,
+          [e.target.name]: e.target.files[0],
+        });
+      }
+    } else {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+      });
+    }
+  };
+  
+
+  useEffect(() => {
+    if (profile) {
+      setFormData({
+        userName: profile.userName,
+        email: profile.email,
+        image: profile.image,
+      });
+    }
+  }, [profile,setFormData]);
+
+  
+
+
+  const handleUpdate = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
+    const updatedFormData = new FormData();
+  
+    updatedFormData.append('userName', formData.userName);
+    updatedFormData.append('email', formData.email);
+  
+    
+      if (typeof formData.image !== 'string') {
+        updatedFormData.append('image', formData.image, formData.image.name);
+      }
+    
+  
+    const params = {
+      id: profile ? profile._id : '',
+      prevImgId: profile ? profile.image : '',
+    };
+    
     const config = {
       url: `/profile/update`,
-      method: "put",
-      data: formData,
-      headers: { Authorization: token },
-      params: { id: profile._id }
-    };
-    await fetchData(config)
-      .then(data => {
-        dispatch(gamerProfile(data.user));
-      })
-      .catch(error => {
-        console.error('Error fetching Gamer data:', error);
-      });
+      method: 'put',
+      data: updatedFormData,
+      headers: { Authorization: token, 'Content-Type': 'multipart/form-data' },
+      params: params,
+    }
+  
+    try {
+      const data = await fetchData(config);
+      console.log('Response from API:', data);
+      dispatch(gamerProfile(data.user));
+      //gamerFetch(gaming);
+    } catch (error) {
+      console.error('Error fetching Gamer data:', error);
+    }
   };
+  
 
   return (
     <div className="col-6 shadow p-3 mb-5 bg-black rounded" style={{ width: '55rem', margin: '2rem auto' }}>
-      <center><h5 className="card-title text-muted">Gamer Profile</h5></center>
-      <div className="form-group text-center">
-        <div className="profile-image-container d-inline-block position-relative">
-          {selectedImage ? (
-            <img src={URL.createObjectURL(selectedImage)} alt="Profile" className="profile-image rounded-circle" style={{ width: '100px', height: '100px', marginBottom: '3rem', marginTop: '2rem' }} />
-          ) : (
-            <img src="https://distil.in/demo/snappcoins/img/avatar-user.jpg" alt="Dummy Profile" className="profile-image rounded-circle" style={{ width: '100px', height: '100px', marginBottom: '3rem', marginTop: '2rem' }} />
-          )}
-          <label htmlFor="image" className="camera-icon" style={{ position: 'absolute', bottom: '10%', right: '-5%', transform: 'translate(-50%, -50%)', color: '#ff0071', background: '#ffffff', borderRadius: '100%', padding: '8px' }}>
-            <FontAwesomeIcon icon={faCamera} />
-          </label>
-          <input type="file" id="image" accept="image/*" onChange={handleImageChange} style={{ display: 'none' }} />
-        </div>
-      </div>
+      <center>
+        <h5 className="card-title text-muted">Gamer Profile</h5>
+      </center>
+      
+            {/* <!-- Profile picture card--> */}
+           
+                
+                <div className="card-body text-center" style={{ textAlign: 'left', marginLeft: '1rem', marginBottom: '1rem' }}>
+                    {/* <!-- Profile picture image--> */}
+                    {!imageLoaded && <div className="loading-spinner"></div>}
+                    <img 
+                        className={`img-account rounded-circle mb-4 ${imageLoaded ? "" : "hidden"}`}
+                        src={imageSrc}
+                        alt=""
+                        height="154.375rem"
+                        width="154.375rem"
+                        onLoad={() => setImageLoaded(true)}
+                        onError={() => setImageLoaded(false)}
+                    />
+                    {/* <button class="btn btn-primary" type="button">Upload new image</button><label className="form-label fs-6 text-white" htmlFor="inputGroupFile01">Image</label> */}
+                    <input type="file" className="form-control" name="image"  id="inputGroupFile01" accept='.jpeg, .png, .jpg' onChange={handleChange} style={{ textAlign: 'left', marginLeft: '1rem', marginBottom: '1rem' }}/>
+                </div>
+            
+       
       <div className="form-group text-center" style={{ marginBottom: '1.5rem' }}>
-        <label htmlFor="name" style={{ textAlign: 'left', marginLeft: '-13rem', marginBottom: '1rem' }}>User Name</label><br />
+        <label htmlFor="name" style={{ textAlign: 'left', marginLeft: '-13rem', marginBottom: '1rem' }}>
+          User Name
+        </label>
+        <br />
         <div className="d-inline-block">
-          <input type="text" name="userName" id="fname" className="form-control" value={formData.userName} onChange={handleChange} />
+          <input type="text" name="userName" id="fname" className="form-control " value={formData.userName} onChange={handleChange} />
         </div>
       </div>
       <div className="form-group text-center" style={{ marginBottom: '3rem' }}>
-        <label htmlFor="email" style={{ textAlign: 'left', marginLeft: '-15rem', marginBottom: '1rem' }}>Email</label><br />
-        <div className="d-inline-block">
+        <label htmlFor="email" style={{ textAlign: 'left', marginLeft: '-15rem', marginBottom: '1rem' }}>
+          Email
+        </label>
+        <br />
+        <div className="d-inline-block  rounded-circle" >
           <input type="text" name="email" id="fname" className="form-control" value={formData.email} onChange={handleChange} />
         </div>
       </div>
       <center>
-        <button type="button" className="content-h2 text-white btn-lg" onClick={handleUpdate} style={{ margin: '0 10px' }}>Save Changes</button>
+        <button type="button" className="content-h2 text-white btn-lg" onClick={handleUpdate} style={{ margin: '0 10px' }}>
+          Save Changes
+        </button>
       </center>
     </div>
   );

@@ -338,3 +338,15 @@ code {
   align-items: center;
   justify-content: center;
 }
+.separator-container {
+  display: flex;
+  align-items: center;
+  
+}
+
+.separator {
+  flex-grow: 1;
+  height: 1px;
+  margin-top: -0.8rem;
+  background-color:#DDDDDD;
+}

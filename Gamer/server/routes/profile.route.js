@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { getProfile, updateProfile } = require("../controllers/profileController");
+const { getProfile, updateProfile,getProfilePic } = require("../controllers/profileController");
 const { verifyToken} = require("../middleware/auth.js")
+const { imageMiddleware } = require("../middleware/imageMiddleware");
+
 
 router.get("/",verifyToken,getProfile)
-router.put("/update",verifyToken,updateProfile)
+router.put("/update",verifyToken,updateProfile,imageMiddleware);
+router.get('/img/:id',getProfilePic)
 
 module.exports = router;

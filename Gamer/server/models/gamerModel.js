@@ -31,7 +31,8 @@ const gamerSchema = new Schema({
 
     },
     image:{
-      type:String
+      type:String,
+      
     }
     ,
    },

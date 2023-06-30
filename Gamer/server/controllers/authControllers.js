@@ -50,6 +50,7 @@ exports.sendVerificationEmail= async(req,res)=>{
 exports.signup = async (req, res) => {
   try {
     const { userName, password ,email, confirmpassword } = req.body;
+    
     console.log(req.body)
     const user = await User.findOne({ email });
     if (user) {
@@ -104,7 +105,9 @@ exports.verifyOtp = async(req,res) =>{
       res.status(400).json({ status: false, msg: "otp mismatched" });
     }
   }
+
    catch (err) {
      console.error(err);
      return res.status(500).json({ status: false, msg: "Something went wrong !!!" }); }
 }
+
