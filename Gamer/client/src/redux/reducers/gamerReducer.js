@@ -8,8 +8,7 @@ const initialState = {
 
 const gamerReducer = (state=initialState,action) =>{
     switch(action.type){
-        case UPDATE_GAMER:
-            
+        case UPDATE_GAMER:   
             return {gamerprofile:action.payload.gamerprofile,gamer:{}, isLoggedIn: true};
         case GAMER_PROFILE:
             return {gamer:action.payload.gamer,gamerprofile:{}, isLoggedIn: true};

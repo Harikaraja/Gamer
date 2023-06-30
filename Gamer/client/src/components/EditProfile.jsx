@@ -4,27 +4,24 @@ import useFetch from '../hooks/useFetch';
 import { gamerProfile } from '../redux/actions/gamerAction';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const EditProfile = () => {
   const gaming = useSelector(state => state.gamerReducer);
   const profile = gaming.gamer;
   const fetchData = useFetch();
   const dispatch = useDispatch();
-
    
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageSrc, setImageSrc] = useState("");
 
-
   useEffect(() => {
-    if (profile) {
       setImageSrc(
         profile.image
           ? `${process.env.REACT_APP_URL}/api/profile/img/${profile.image}`
           : "https://distil.in/demo/snappcoins/img/avatar-user.jpg"
       );
-    }
-  }, [profile]);
+  }, [profile.image]);
   
 
 
@@ -71,9 +68,6 @@ const EditProfile = () => {
       });
     }
   }, [profile,setFormData]);
-
-  
-
 
   const handleUpdate = async (e) => {
     e.preventDefault();

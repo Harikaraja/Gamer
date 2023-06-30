@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import Brightness7OutlinedIcon from '@mui/icons-material/Brightness7Outlined';
 import { Link } from 'react-router-dom';
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
-import { logout } from "../redux/actions/gamerAction";
+import { gamerProfile, logout } from "../redux/actions/gamerAction";
 
 export default function Navbar(props) {
-  
+  const gamerState = useSelector(state => state.gamerReducer)
+	const gamer = gamerState.gamer
   const [showDropdown, setShowDropdown] = useState(false);
-
+  console.log(gamer)
   const handleClick = () => {
     setShowDropdown(!showDropdown);
   };
@@ -25,7 +26,7 @@ export default function Navbar(props) {
 	  }
   const handleEditProfile = () =>{
     // dispatch(());
-    
+    dispatch(gamerProfile(gamer));
   }
   const handleDarkModeToggle = () => {
     props.onDarkModeToggle();
