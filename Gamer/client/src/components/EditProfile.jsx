@@ -115,23 +115,31 @@ const EditProfile = () => {
       
             {/* <!-- Profile picture card--> */}
            
-                
-                <div className="card-body text-center" style={{ textAlign: 'left', marginLeft: '1rem', marginBottom: '1rem' }}>
-                    {/* <!-- Profile picture image--> */}
-                    {!imageLoaded && <div className="loading-spinner"></div>}
-                    <img 
-                        className={`img-account rounded-circle mb-4 ${imageLoaded ? "" : "hidden"}`}
-                        src={imageSrc}
-                        alt=""
-                        height="154.375rem"
-                        width="154.375rem"
-                        onLoad={() => setImageLoaded(true)}
-                        onError={() => setImageLoaded(false)}
-                    />
-                    {/* <button class="btn btn-primary" type="button">Upload new image</button><label className="form-label fs-6 text-white" htmlFor="inputGroupFile01">Image</label> */}
-                    <input type="file" className="form-control" name="image"  id="inputGroupFile01" accept='.jpeg, .png, .jpg' onChange={handleChange} style={{ textAlign: 'left', marginLeft: '1rem', marginBottom: '1rem' }}/>
-                </div>
-            
+            <div className="card-body text-center" style={{ textAlign: 'left', marginLeft: '1rem', marginBottom: '1rem', position: 'relative' }}>
+  {!imageLoaded && <div className="loading-spinner"></div>}
+  <img
+    className={`img-account rounded-circle mb-4 ${imageLoaded ? '' : 'hidden'}`}
+    src={imageSrc}
+    alt=""
+    height="154.375rem"
+    width="154.375rem"
+    onLoad={() => setImageLoaded(true)}
+    onError={() => setImageLoaded(false)}
+  />
+  <label htmlFor="inputGroupFile01" className="camera-icon" style={{ position: 'absolute', bottom: "16%", right: "42%" }}>
+    <FontAwesomeIcon icon={faCamera} style={{  cursor: 'pointer' }} />
+  </label>
+  <input
+    type="file"
+    className="form-control hidden-input"
+    name="image"
+    id="inputGroupFile01"
+    accept=".jpeg, .png, .jpg"
+    onChange={handleChange}
+    style={{ display: 'none' }}
+  />
+</div>
+
        
       <div className="form-group text-center" style={{ marginBottom: '1.5rem' }}>
         <label htmlFor="name" style={{ textAlign: 'left', marginLeft: '-13rem', marginBottom: '1rem' }}>
