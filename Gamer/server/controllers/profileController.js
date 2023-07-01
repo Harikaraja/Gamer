@@ -41,7 +41,7 @@ exports.updateProfile = async (req, res) => {
       fid = file.id;
     }
 
-    
+    console.log(req.body)
     const updatedProfileData = {
       ...req.body,
     };
@@ -52,14 +52,14 @@ exports.updateProfile = async (req, res) => {
     }
 
     // Update the user's profile data
-    await User.findByIdAndUpdate({ _id: id }, updatedProfileData, { new: true });
+    const user = await User.findByIdAndUpdate({ _id: id }, updatedProfileData, { new: true });
 
     
     if (fid && prevImgId) {
       deleteImage(prevImgId);
     }
 
-    res.status(200).json({ status: true, msg: "Profile Updated successfully" });
+    res.status(200).json({ status: true,user, msg: "Profile Updated successfully" });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ status: false, msg: "Internal Server Error" });

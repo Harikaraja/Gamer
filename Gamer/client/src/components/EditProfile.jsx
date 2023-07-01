@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const EditProfile = () => {
   const gaming = useSelector(state => state.gamerReducer);
   const profile = gaming.gamer;
+
   const fetchData = useFetch();
   const dispatch = useDispatch();
    
@@ -73,21 +74,22 @@ const EditProfile = () => {
     e.preventDefault();
     const token = localStorage.getItem('token');
     const updatedFormData = new FormData();
-  
-    updatedFormData.append('userName', formData.userName);
+    console.log(formData.userName)
+    
+    updatedFormData.append("userName", formData.userName);
     updatedFormData.append('email', formData.email);
   
-    
-      if (typeof formData.image !== 'string') {
+    console.log(formData)
+      if (formData.image !== undefined) {
         updatedFormData.append('image', formData.image, formData.image.name);
       }
-    
+    console.log(profile)
   
     const params = {
       id: profile ? profile._id : '',
       prevImgId: profile ? profile.image : '',
     };
-    
+    console.log(updatedFormData)
     const config = {
       url: `/profile/update`,
       method: 'put',
