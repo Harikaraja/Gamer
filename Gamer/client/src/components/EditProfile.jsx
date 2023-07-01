@@ -10,6 +10,8 @@ const EditProfile = () => {
   const gaming = useSelector(state => state.gamerReducer);
   const profile = gaming.gamer;
 
+  
+
   const fetchData = useFetch();
   const dispatch = useDispatch();
    
@@ -38,7 +40,7 @@ const EditProfile = () => {
 
   const [formData, setFormData] = useState(initialFormData);
 
-  console.log(typeof (formData.image))
+  //console.log(typeof (formData.image))
   console.log("form data is: ", formData)
 
   
@@ -74,12 +76,14 @@ const EditProfile = () => {
     e.preventDefault();
     const token = localStorage.getItem('token');
     const updatedFormData = new FormData();
-    console.log(formData.userName)
+    //console.log(formData.userName)
     
     updatedFormData.append("userName", formData.userName);
+    //console.log("updated form Name: ",updatedFormData.get(userName));
     updatedFormData.append('email', formData.email);
+    //console.log("updated form email: ",updatedFormData.get(email));
   
-    console.log(formData)
+    console.log("from data is: ",formData)
       if (formData.image !== undefined) {
         updatedFormData.append('image', formData.image, formData.image.name);
       }
@@ -89,14 +93,20 @@ const EditProfile = () => {
       id: profile ? profile._id : '',
       prevImgId: profile ? profile.image : '',
     };
-    console.log(updatedFormData)
+
+    console.log("updated form:");
+      for (let [key, value] of updatedFormData.entries()) {
+        console.log(key, value);
+      }
     const config = {
       url: `/profile/update`,
       method: 'put',
       data: updatedFormData,
-      headers: { Authorization: token, 'Content-Type': 'multipart/form-data' },
+      headers: { Authorization: token},
       params: params,
     }
+
+    console.log("config: ",config);
   
     try {
       const data = await fetchData(config);

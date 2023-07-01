@@ -33,7 +33,7 @@ exports.updateProfile = async (req, res) => {
   try {
     const { id, prevImgId } = req.query;
 
-    console.log("ID: ",id);
+    console.log("ID: ",prevImgId);
     const file = req.file;
     let fid;
 
@@ -41,7 +41,7 @@ exports.updateProfile = async (req, res) => {
       fid = file.id;
     }
 
-    console.log(req.body)
+    console.log("body ",req.body)
     const updatedProfileData = {
       ...req.body,
     };
