@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import TransactionHistory from '../components/TransactionHistory';
 import Recommended from '../components/Recommended';
 import Pagination from '../components/pagination';
+import MyItems from '../components/myItems';
 import useFetch from '../hooks/useFetch';
 import "../assets/styles/home.css";
 import { useDispatch } from 'react-redux';
@@ -15,6 +16,7 @@ export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
   const [user, setUser] = useState();
   const [transactions, setTransactions] = useState([]);
+  const [snaphistory,setSnaphistory] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [merchant, setMerchant] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -68,6 +70,23 @@ export default function Home() {
     fetchTransactions();
   }, [fetchTransactions]);
 
+  const fetchhistory = useCallback(() => {
+    const config = { url: '/transaction/displayItems', method: "get", headers: { Authorization: token } };
+    fetchData(config, { showSuccessToast: false })
+      .then(data => {
+        console.log("data: ", data);
+        setSnaphistory(data.transactions); // Set the retrieved data to the snaphistory state
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [fetchData, token]);
+  
+
+  useEffect(() => {
+    fetchhistory();
+  }, [fetchhistory]);
+
   useEffect(() => {
     const count = transactions.filter(transaction => transaction.orderStatus === 'In Transit').length;
     setInTransitCount(count);
@@ -80,6 +99,11 @@ export default function Home() {
   const handleTransactionHistoryClick = () => {
     setActiveContent('transactionHistory');
   };
+
+  const handlesnapHistoryClick = () => {
+    setActiveContent('snaphistory');
+  };
+  
 
   const handleDarkModeToggle = () => {
     setDarkMode(!darkMode);
@@ -97,6 +121,12 @@ export default function Home() {
     }
   }, [activeContent, transactions]);
 
+  useEffect(() => {
+    if (activeContent === 'snaphistory' && snaphistory.length > 0) {
+      setCurrentPage(1);
+    }
+  }, [activeContent, snaphistory]);
+
   const pageHandler = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -108,12 +138,14 @@ export default function Home() {
       setCurrentPageTransactions(merchant.slice(startIndex, endIndex));
     } else if (activeContent === 'transactionHistory') {
       setCurrentPageTransactions(transactions.slice(startIndex, endIndex));
+    } else if (activeContent === 'snaphistory') {
+      setCurrentPageTransactions(snaphistory.slice(startIndex, endIndex));
     }
-  }, [currentPage, itemsPerPage, activeContent, merchant, transactions]);
-
+  }, [currentPage, itemsPerPage, activeContent, merchant, transactions, snaphistory]);
+  
   return (
     <div className={`home ${darkMode ? 'dark-mode' : ''}`}>
-      {user && (
+      {/*{user && (
         <Navbar
           darkMode={darkMode}
           onDarkModeToggle={handleDarkModeToggle}
@@ -121,7 +153,10 @@ export default function Home() {
           walletMoney={user.walletMoney}
           memberSince={user.joiningTime}
         />
-      )}
+      )}*/}
+      <Navbar
+          darkMode={darkMode}
+          onDarkModeToggle={handleDarkModeToggle}/>
       <div className="banner">
         <img src="https://distil.in/demo/snappcoins/img/hero_general.jpg" alt="" className="card-img-top w-100" style={{ height: "275px" }} />
       </div>
@@ -140,6 +175,7 @@ export default function Home() {
           )}
           <div className="col-md-9 col-xl-9">
             <div className="content mt-4">
+          
               <div  role="group" aria-label="Content Navigation">
                 <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'recommendations' ? 'active' : ''}`} onClick={handleRecommendationsClick} 
                 style={{
@@ -175,6 +211,29 @@ export default function Home() {
                 >
                   Transaction History
                   {activeContent === "transactionHistory" && (
+                    <span
+                      className="active-line"
+                      style={{
+                        position: "absolute",
+                        bottom: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "2px",
+                        backgroundColor: darkMode ? "white" : "black",
+                      }}
+                    />
+                  )}
+                </button>
+                <button className={`btn btn-link text-gray font-size-lg ${activeContent === 'snaphistory' ? 'active' : ''}`} onClick={handlesnapHistoryClick} 
+                style={{
+                    border: "none",
+                    textDecoration: "none",
+                    boxShadow: "none",
+                    position: "relative",
+                  }}
+>
+                  Snap History
+                  {activeContent === "snaphistory" && (
                     <span
                       className="active-line"
                       style={{
@@ -262,9 +321,35 @@ export default function Home() {
                         />
                       ))}
                   </>
-                ) : (
-                  <p>No transactions to display.</p>
-                )}
+                ) : activeContent === 'snaphistory' && (
+                  <span
+                    className="active-line"
+                    style={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "2px",
+                      backgroundColor: darkMode ? "white" : "black",
+                    }}
+                  />
+                )&& currentPageTransactions.length > 0 ? (
+                  <div className="row">
+                  {currentPageTransactions.map((transaction, index) => (
+                    <div className='col-xl-4 col-lg-6 col-md-6 col-sm-12' key={index}>
+                      <MyItems key={index}
+                          tdate={transaction.transactionDate}
+                          tId={transaction.transactionId}
+                          status={transaction.orderStatus}/>
+                    </div>
+                  ))}
+                </div>
+                ) :(
+                  <></>
+                )
+                
+                }
+
               </div>
 
               <Pagination
