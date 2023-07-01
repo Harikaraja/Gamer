@@ -1,6 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+
+
+
 
 const Card = (props) => {
+
+
+	const gaming = useSelector(state => state.gamerReducer);
+    const profile = gaming.gamer;
+
+	const [imageLoaded, setImageLoaded] = useState(false);
+    const [imageSrc, setImageSrc] = useState("");
+
+    useEffect(() => {
+        setImageSrc(
+          profile.image
+            ? `${process.env.REACT_APP_URL}/api/profile/img/${profile.image}`
+            : "https://distil.in/demo/snappcoins/img/avatar-user.jpg"
+        );
+      }, [profile.image]);
+
 
     const dateString = props.memberSince;
     const date = new Date(dateString);
@@ -19,15 +39,19 @@ const Card = (props) => {
 			        
 				}}>
 				<div className="card-body text-center">
-					<img
-						src="https://distil.in/demo/snappcoins/img/avatar-user.jpg"
-						alt=""
-						style={{ height: "110px", width: "110px" }}
-					/>
+				{!imageLoaded && <div className="loading-spinner"></div>}
+					<img  className={`img-account  mb-4 ${imageLoaded ? "" : "hidden"}`}
+						  src={imageSrc}
+						  alt=""
+						  height="100.375rem"
+						  width="110.375rem"
+						  onLoad={() => setImageLoaded(true)}
+						  onError={() => setImageLoaded(false)}/>
+
 					<div
 						style={{
 							position: "relative",
-							top: "-15px",
+							top: "-10px",
 							right: "-162px",
 							backgroundColor: "#3dbf8c",
 							width: "20px",

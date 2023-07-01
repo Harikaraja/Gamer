@@ -10,6 +10,8 @@ const EditProfile = () => {
   const gaming = useSelector(state => state.gamerReducer);
   const profile = gaming.gamer;
 
+  
+
   const fetchData = useFetch();
   const dispatch = useDispatch();
    
@@ -38,7 +40,7 @@ const EditProfile = () => {
 
   const [formData, setFormData] = useState(initialFormData);
 
-  console.log(typeof (formData.image))
+  //console.log(typeof (formData.image))
   console.log("form data is: ", formData)
 
   
@@ -76,7 +78,9 @@ const EditProfile = () => {
     const updatedFormData = new FormData();
     
     updatedFormData.append("userName", formData.userName);
+    //console.log("updated form Name: ",updatedFormData.get(userName));
     updatedFormData.append('email', formData.email);
+    //console.log("updated form email: ",updatedFormData.get(email));
   
       if (formData.image !== undefined) {
         updatedFormData.append('image', formData.image, formData.image.name);
@@ -92,9 +96,11 @@ const EditProfile = () => {
       url: `/profile/update`,
       method: 'put',
       data: updatedFormData,
-      headers: { Authorization: token, 'Content-Type': 'multipart/form-data' },
+      headers: { Authorization: token},
       params: params,
     }
+
+    console.log("config: ",config);
   
     try {
       const data = await fetchData(config);
