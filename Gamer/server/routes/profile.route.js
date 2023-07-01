@@ -6,7 +6,7 @@ const { imageMiddleware } = require("../middleware/imageMiddleware");
 
 
 router.get("/",verifyToken,getProfile)
-router.put("/update",verifyToken,updateProfile,imageMiddleware);
+router.put("/update",verifyToken,imageMiddleware,updateProfile);
 router.get('/img/:id',getProfilePic)
 
 module.exports = router;

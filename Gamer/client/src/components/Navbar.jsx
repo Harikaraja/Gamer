@@ -14,7 +14,7 @@ export default function Navbar(props) {
   const gamerState = useSelector(state => state.gamerReducer)
 	const gamer = gamerState.gamer
   const [showDropdown, setShowDropdown] = useState(false);
-  console.log(gamer)
+
   const handleClick = () => {
     setShowDropdown(!showDropdown);
   };
