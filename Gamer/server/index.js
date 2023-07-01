@@ -10,7 +10,7 @@ const walletRoutes = require('./routes/wallet.route');
 const profileRoutes = require('./routes/profile.route');
 const merchantDisplatRoutes = require('./routes/merchandiseDisplay.route');
 const transaction = require('./routes/transHistory.route');
-
+//const snapcoinbank = require('./routes/snapcoin.route')
 const port = process.env.PORT || 5000
 
 app.use(express.json());
@@ -26,6 +26,7 @@ app.use('/api/profile',profileRoutes);
 app.use('/api/wallet',walletRoutes)
 app.use('/api/merchant',merchantDisplatRoutes);
 app.use('/api/transaction',transaction);
+//app.use('/api/snappcoin',snapcoinbank);
 
 connectDB() //DB connection
 
