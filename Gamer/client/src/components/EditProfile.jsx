@@ -76,28 +76,22 @@ const EditProfile = () => {
     e.preventDefault();
     const token = localStorage.getItem('token');
     const updatedFormData = new FormData();
-    //console.log(formData.userName)
     
     updatedFormData.append("userName", formData.userName);
     //console.log("updated form Name: ",updatedFormData.get(userName));
     updatedFormData.append('email', formData.email);
     //console.log("updated form email: ",updatedFormData.get(email));
   
-    console.log("from data is: ",formData)
       if (formData.image !== undefined) {
         updatedFormData.append('image', formData.image, formData.image.name);
       }
-    console.log(profile)
+    // console.log(profile)
   
     const params = {
       id: profile ? profile._id : '',
       prevImgId: profile ? profile.image : '',
     };
 
-    console.log("updated form:");
-      for (let [key, value] of updatedFormData.entries()) {
-        console.log(key, value);
-      }
     const config = {
       url: `/profile/update`,
       method: 'put',

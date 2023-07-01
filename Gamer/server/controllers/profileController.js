@@ -41,7 +41,6 @@ exports.updateProfile = async (req, res) => {
       fid = file.id;
     }
 
-    console.log("body ",req.body)
     const updatedProfileData = {
       ...req.body,
     };
