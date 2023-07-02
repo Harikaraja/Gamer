@@ -51,9 +51,7 @@ const Signup = () => {
       });
   };
 
-  useEffect(() => {
-    // Disable scrolling when the component mounts
-    document.body.style.overflow = "hidden";
+  
 
   useEffect(() => {
     // Disable scrolling when the component mounts
