@@ -14,19 +14,19 @@ const Signup = () => {
     email: "",
     password: "",
     confirmpassword: "",
-   
   });
 
   const fetchData = useFetch();
   const navigate = useNavigate();
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setFormData({
-      ...formData, [e.target.name]: e.target.value
+      ...formData,
+      [e.target.name]: e.target.value,
     });
-  }
+  };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const config = { url: `/auth/register`, method: "post", data: formData };
    // console.log(config)
@@ -41,8 +41,19 @@ const Signup = () => {
       console.error('Error fetching tasks:', error);
     });
 
+    fetchData(config)
+      .then((data) => {
+        console.log(data.userId);
+        navigate("/verify", { state: { id: data.userId, email: data.email } });
+      })
+      .catch((error) => {
+        console.error("Error fetching tasks:", error);
+      });
+  };
 
-  }
+  useEffect(() => {
+    // Disable scrolling when the component mounts
+    document.body.style.overflow = "hidden";
 
   useEffect(() => {
     // Disable scrolling when the component mounts
@@ -64,8 +75,14 @@ const Signup = () => {
        
           <form className='p-5' style={{height:"40rem"}}>
             <figure>
-              <a href="/" className="logo_account">
-                <img src={logo} alt="" width="140" height="35" className="light"/>
+              <a href="/" className="logo_account custom-logo">
+                <img
+                  src={logo}
+                  alt=""
+                  width="140"
+                  height="35"
+                  className="light"
+                />
               </a>
             </figure>
             <div className="access_social">
@@ -115,16 +132,14 @@ const Signup = () => {
             <div className='pt-4' style={{marginTop:"0px"}}>
               <Link to="/login" className='navigate'><center>Already have an account? Sign In</center></Link>
             </div>
-
           </form>
         </div>
-        <div className='image-wrapper'>
-            <img src={bg} alt='loading' width={100+'%'} height={740+'px'}/>
+        <div className="image-wrapper">
+          <img src={bg} alt="loading" width={100 + "%"} height={740 + "px"} />
         </div>
-      
-    </div>
+      </div>
     </>
-  )
+  );
 }
 
-export default Signup
+export default Signup;

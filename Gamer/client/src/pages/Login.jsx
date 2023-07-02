@@ -71,7 +71,7 @@ const Login = () => {
            
             <input type="password" className="form-control grey-border" name='password' placeholder='Password' value={formData.password} id="exampleInputPassword1" autoComplete='off' onChange={handleChange} />
           </div>
-          <button type="submit" className="btn button btn-lg" onClick={handleSubmit} >Login</button>
+          <button type="submit" className="btn button btn-lg grey-border" onClick={handleSubmit} >Login</button>
         
           <div className='pt-4'>
               <Link to="/signup" className='navigate'><center>New To SnapCoins? Sign up!</center></Link>
