@@ -28,7 +28,7 @@ const Verify = () => {
   }
   // console.log(otp)
 
-   
+   //localStorage.removeItem('token')
 
   const handlesendOtp = async(e) =>{
     e.preventDefault();
@@ -46,16 +46,17 @@ const Verify = () => {
     fetchData(config).then().catch(err=>{
       console.log(err)
     });
+    //localStorage.removeItem('verify')
     token?navigate('/'):navigate('/login')
   }
 
-  //localStorage.removeItem('token')
+  
 
   return (
     <div>
-      <div className="d-flex container align-items-center justify-content-center otp-verify">
-            <div className="card text-center py-5 px-3 otp-card">
-                <div className="container-fluid">
+      <div className="d-flex container align-items-center justify-content-center otp-verify" >
+            <div className="card text-center otp-card" style={{width:"80rem"}}>
+                <div className="container-fluid" >
                     {token?<p className="fs-1">2 Step Verification</p>:<p className="fs-1">Email Verification</p>}
                 </div>
                 <div className="container-fluid">

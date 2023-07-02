@@ -295,7 +295,7 @@ export default function Home() {
                   />
                 )&& currentPageTransactions.length > 0 ? (
                   <>
-                    <div className="d-flex justify-content-center mb-4">
+                    <div className="d-flex justify-content-center mb-4 col-9">
                       <input
                         className="form-control me-2 w-100 bg-white text-dark"
                         type="search"
@@ -334,7 +334,7 @@ export default function Home() {
                     }}
                   />
                 )&& currentPageTransactions.length > 0 ? (
-                  <div className="row">
+                  <div className="row col-9">
                   {currentPageTransactions.map((transaction, index) => (
                     <div className='col-xl-4 col-lg-6 col-md-6 col-sm-12' key={index}>
                       <MyItems key={index}

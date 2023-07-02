@@ -43,15 +43,15 @@ const Card = (props) => {
 					<img  className={`img-account  mb-4 ${imageLoaded ? "" : "hidden"}`}
 						  src={imageSrc}
 						  alt=""
-						  height="100.375rem"
-						  width="110.375rem"
+						  height="54.375rem"
+						  width="54.375rem"
 						  onLoad={() => setImageLoaded(true)}
 						  onError={() => setImageLoaded(false)}/>
 
 					<div
 						style={{
 							position: "relative",
-							top: "-10px",
+							top: "-33px",
 							right: "-162px",
 							backgroundColor: "#3dbf8c",
 							width: "20px",
