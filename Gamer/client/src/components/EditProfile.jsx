@@ -17,7 +17,7 @@ const EditProfile = () => {
    
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageSrc, setImageSrc] = useState("");
-
+  const [isHovered, setIsHovered] = useState(false);
   useEffect(() => {
       setImageSrc(
         profile.image
@@ -61,6 +61,15 @@ const EditProfile = () => {
     }
   };
   
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  
 
   useEffect(() => {
     if (profile) {
@@ -73,6 +82,7 @@ const EditProfile = () => {
   }, [profile,setFormData]);
 
   const handleUpdate = async (e) => {
+   
     e.preventDefault();
     const token = localStorage.getItem('token');
     const updatedFormData = new FormData();
@@ -114,14 +124,14 @@ const EditProfile = () => {
   
 
   return (
-    <div className="col-6 shadow p-3 mb-5 bg-black rounded" style={{ width: '55rem', margin: '2rem auto' }}>
+    <div className="col-6 shadow p-3 mb-5 bg-black rounded" style={{ width: '45rem' ,marginLeft:'19rem',marginTop:'-10rem' }}>
       <center>
         <h5 className="card-title text-muted">Gamer Profile</h5>
       </center>
       
             {/* <!-- Profile picture card--> */}
            
-<div className="card-body text-center" style={{ textAlign: 'left', marginLeft: '1rem', marginBottom: '1rem', position: 'relative' }}>
+            <div className="card-body text-center" style={{ textAlign: 'left', marginLeft: '1rem', marginBottom: '1rem', position: 'relative' }}>
   {!imageLoaded && <div className="loading-spinner"></div>}
   <img
     className={`img-account rounded-circle mb-4 ${imageLoaded ? '' : 'hidden'}`}
@@ -148,25 +158,37 @@ const EditProfile = () => {
 
        
       <div className="form-group text-center" style={{ marginBottom: '1.5rem' }}>
-        <label htmlFor="name" style={{ textAlign: 'left', marginLeft: '-13rem', marginBottom: '1rem' }}>
+        <label htmlFor="name" style={{ textAlign: 'center',color:"gray", marginLeft: '-5.4rem', marginBottom: '1rem' }}>
           User Name
         </label>
-        <br />
+        
         <div className="d-inline-block">
-          <input type="text" name="userName" id="fname" className="form-control " value={formData.userName} onChange={handleChange} />
+          <input type="text" style={{borderColor: 'lightgray',width:"349px" }}name="userName" id="fname" className="form-control " value={formData.userName} onChange={handleChange} />
         </div>
       </div>
-      <div className="form-group text-center" style={{ marginBottom: '3rem' }}>
-        <label htmlFor="email" style={{ textAlign: 'left', marginLeft: '-15rem', marginBottom: '1rem' }}>
+
+      <div className="form-group text-center" style={{ marginBottom: '1.5rem' }}>
+        <label htmlFor="password" style={{ textAlign:"center",color:"gray", marginLeft: '-5rem', marginBottom: '1rem' }}>
+          Password
+        </label>
+        
+        <div className="d-inline-block">
+          <input type="text"style={{borderColor: 'lightgray',width:"350px" }} name="password" id="fname" className="form-control " value={formData.password} onChange={handleChange} />
+        </div>
+      </div>
+
+      <div className="form-group text-center" style={{ marginBottom: '1.5rem' }}>
+        <label htmlFor="email" style={{ textAlign: 'center',color:"gray", marginLeft: '-3.8rem', marginBottom: '1rem' }}>
           Email
         </label>
-        <br />
-        <div className="d-inline-block  rounded-circle" >
-          <input type="text" name="email" id="fname" className="form-control" value={formData.email} onChange={handleChange} />
+        
+        <div className="d-inline-block" >
+          <input type="text" style={{borderColor: 'lightgray', width:"350px"}} name="email" id="fname" className="form-control" value={formData.email} onChange={handleChange} />
         </div>
       </div>
       <center>
-        <button type="button" className="content-h2 text-white btn-lg" onClick={handleUpdate} style={{ margin: '0 10px' }}>
+        <button type="button" className="content-h2 text-white btn-lg" onClick={handleUpdate}   onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}  style={{ margin: '0 10px', backgroundColor: isHovered? '#3dbf8c' : '#ff0071',transition: 'background-color 0.3s ease',}}>
           Save Changes
         </button>
       </center>
