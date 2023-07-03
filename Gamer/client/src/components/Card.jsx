@@ -45,8 +45,8 @@ const Card = (props) => {
 					<img  className={`img-account  mb-4 ${imageLoaded ? "" : "hidden"}`}
 						  src={imageSrc}
 						  alt=""
-						  height="54.375rem"
-						  width="54.375rem"
+						  height="74.375rem"
+						  width="84.375rem"
 						  onLoad={() => setImageLoaded(true)}
 						  onError={() => setImageLoaded(false)}/>
 

@@ -65,11 +65,11 @@ const Login = () => {
             </div>
           <div className="mb-3">
            
-            <input type="email"  className="form-control grey-border" name='email' placeholder='Email' value={formData.email} id="exampleInputEmail1" aria-describedby="emailHelp" autoComplete='off' autoFocus onChange={handleChange} />
+            <input type="email"  className="form-control grey-border" name='email' placeholder='Email' value={formData.email} id="exampleInputEmail1" aria-describedby="emailHelp" autoComplete='off' autoFocus onChange={handleChange} style={{color:"black"}}/>
           </div>
           <div className="mb-3">
            
-            <input type="password" className="form-control grey-border" name='password' placeholder='Password' value={formData.password} id="exampleInputPassword1" autoComplete='off' onChange={handleChange} />
+            <input type="password" className="form-control grey-border" name='password' placeholder='Password' value={formData.password} id="exampleInputPassword1" autoComplete='off' onChange={handleChange} style={{color:"black"}}/>
           </div>
           <button type="submit" className="btn button btn-lg grey-border" onClick={handleSubmit} >Login</button>
         

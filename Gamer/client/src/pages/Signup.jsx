@@ -34,6 +34,7 @@ const Signup = () => {
       console.log(data.userId)
       // localStorage.setItem('tempuid',data.userId)
       localStorage.setItem('verify',true)
+      localStorage.removeItem('token')
       navigate("/verify",{ state: { id: data.userId, email: data.email } });
     })
     .catch(error => {
@@ -41,29 +42,10 @@ const Signup = () => {
       console.error('Error fetching tasks:', error);
     });
 
-    fetchData(config)
-      .then((data) => {
-        console.log(data.userId);
-        navigate("/verify", { state: { id: data.userId, email: data.email } });
-      })
-      .catch((error) => {
-        console.error("Error fetching tasks:", error);
-      });
+    
   };
 
   
-
-  useEffect(() => {
-    // Disable scrolling when the component mounts
-    document.body.style.overflow = "hidden";
-
-    // Re-enable scrolling when the component unmounts
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
-
-
   return (
     <>
    
@@ -111,19 +93,19 @@ const Signup = () => {
               <span>Or</span>
             </div>
             <div className="mb-3">
-              <input type="text" className="form-control grey-border" name='userName' value={formData.userName} autoComplete='off' onChange={handleChange} autoFocus placeholder='username' />
+              <input type="text" className="form-control grey-border" name='userName' defaultValue={formData.userName} autoComplete='off' onChange={handleChange} autoFocus placeholder='username' style={{color:"black"}}/>
             </div>
             <div className="mb-3">
               
-              <input type="text" className="form-control grey-border" name='email' value={formData.email} autoComplete='off' onChange={handleChange} placeholder='Email'/>
+              <input type="text" className="form-control grey-border" name='email' value={formData.email} autoComplete='off' onChange={handleChange} placeholder='Email' style={{color:"black"}}/>
             </div>
             <div className="mb-3">
              
-              <input type="text" className="form-control grey-border" name='password' value={formData.password} autoComplete='off' onChange={handleChange} placeholder='Password'/>
+              <input type="text" className="form-control grey-border" name='password' value={formData.password} autoComplete='off' onChange={handleChange} placeholder='Password' style={{color:"black"}}/>
             </div>
             <div className="mb-3">
               
-              <input type="text" className="form-control grey-border" name='confirmpassword' value={formData.confirmpassword} autoComplete='off' onChange={handleChange} placeholder='Confirm Password'/>
+              <input type="text" className="form-control grey-border" name='confirmpassword' value={formData.confirmpassword} autoComplete='off' onChange={handleChange} placeholder='Confirm Password' style={{color:"black"}}/>
             </div>  
             <button type="button" className="btn button btn-lg" onClick={handleSubmit} >Register Now!</button>
 

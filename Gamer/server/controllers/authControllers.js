@@ -1,6 +1,6 @@
 const User = require("../models/gamerModel");
 const bcrypt = require("bcrypt");
-const { createAccessToken } = require("../utils/token");
+const { createAccessToken } = require("../services/token");
 const nodemailer = require('nodemailer');
 const otpGenerator = require('otp-generator')
 
@@ -30,18 +30,18 @@ exports.sendVerificationEmail= async(req,res)=>{
     req.app.locals.OTP = hashedotp
 
 //testing
-    // transporter.sendMail(mailOptions,(err, info) => {
-    //   if(err){
-    //     console.log('err',err);
-    //     console.log(info.messageId);
-    //   }  
-    // });
+     transporter.sendMail(mailOptions,(err, info) => {
+       if(err){
+        console.log('err',err);
+         console.log(info.messageId);
+       }  
+    });
     
 
     res.status(201).send({ msg: "Otp Sent"});
     
   }catch(err){
-    console.log(err);
+    console.log("signup error is:  ",err);
     res.status(500).json({msg:err});
   }
 
@@ -53,9 +53,11 @@ exports.signup = async (req, res) => {
     
     console.log(req.body)
     const user = await User.findOne({ email });
+
     if (user) {
-      return res.status(400).json({success:false, msg: "This email is already registered" });
+      return res.status(400).json({ success: false, msg: "This email is already registered" });
     }
+    
     else if(password != confirmpassword){
       return res.status(400).json({success:false, msg: "password and confirm password must be same" });
     }
@@ -69,7 +71,8 @@ exports.signup = async (req, res) => {
 catch (error) {
   
   
-    res.status(500).json({ error: `Internal server error ${error}` });
+   res.status(500).json({ error: `Internal server error ${error.message}` });
+
   
 }
 }

@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import useFetch from '../hooks/useFetch';
 import { useLocation, useNavigate } from 'react-router-dom';
+import '../assets/styles/verify.css';
 
 const Verify = () => {
   const fetchData = useFetch();
@@ -28,7 +29,7 @@ const Verify = () => {
   }
   // console.log(otp)
 
-   //localStorage.removeItem('token')
+   
 
   const handlesendOtp = async(e) =>{
     e.preventDefault();
@@ -55,12 +56,10 @@ const Verify = () => {
     setVisibility(false)
   }
 
-  
-
   return (
-    <div>
-      <div className="d-flex container align-items-center justify-content-center otp-verify" >
-            <div className="card text-center otp-card" style={{width:"80rem"}}>
+   
+      <div className="d-flex container align-items-center justify-content-center otp-verify" style={{ width: "50rem" }}>
+            <div className="card text-center otp-card" >
                 <div className="container-fluid" >
                     {token?<p className="fs-1">2 Step Verification</p>:<p className="fs-1">Email Verification</p>}
                 </div>
@@ -78,13 +77,13 @@ const Verify = () => {
                 </div>}
                 {visible &&
                 <form action="/" method="post" onSubmit={handleVerifyOtp}>
-                    <div className="container-fluid d-flex flex-row justify-content-center align-items-center">
-                        <input type="text" maxLength="1" id="otp1" value={otp.otp1 || ''} className="form-control input1" required autoComplete="new"  autoFocus  onChange={handleChange}/>
-                        <input type="text" maxLength="1" id="otp2" value={otp.otp2 || ''} className="form-control input1" required autoComplete="new"  autoFocus onChange={handleChange} />
-                        <input type="text" maxLength="1" id="otp3" value={otp.otp3 || ''} className="form-control input1" required autoComplete="new"  autoFocus onChange={handleChange} />
-                        <input type="text" maxLength="1" id="otp4" value={otp.otp4 || ''} className="form-control input1" required autoComplete="new"  autoFocus onChange={handleChange} />
-                        <input type="text" maxLength="1" id="otp5" value={otp.otp5 || ''} className="form-control input1" required autoComplete="new"  autoFocus onChange={handleChange} />
-                        <input type="text" maxLength="1" id="otp6" value={otp.otp6 || ''} className="form-control input1" required autoComplete="new"  autoFocus onChange={handleChange} />
+                    <div className="container-fluid d-flex flex-row justify-content-center align-items-center" >
+                        <input type="text" maxLength="1" id="otp1" value={otp.otp1 || ''} className="form-control input1" required autoComplete="new"  autoFocus  onChange={handleChange} style={{color:"black"}}/>
+                        <input type="text" maxLength="1" id="otp2" value={otp.otp2 || ''} className="form-control input1" required autoComplete="new"  autoFocus onChange={handleChange} style={{color:"black"}}/>
+                        <input type="text" maxLength="1" id="otp3" value={otp.otp3 || ''} className="form-control input1" required autoComplete="new"  autoFocus onChange={handleChange} style={{color:"black"}}/>
+                        <input type="text" maxLength="1" id="otp4" value={otp.otp4 || ''} className="form-control input1" required autoComplete="new"  autoFocus onChange={handleChange} style={{color:"black"}}/>
+                        <input type="text" maxLength="1" id="otp5" value={otp.otp5 || ''} className="form-control input1" required autoComplete="new"  autoFocus onChange={handleChange} style={{color:"black"}}/>
+                        <input type="text" maxLength="1" id="otp6" value={otp.otp6 || ''} className="form-control input1" required autoComplete="new"  autoFocus onChange={handleChange} style={{color:"black"}}/>
                     </div>
                     <div className="container-fluid my-4">
                         <button className="btn btn-primary">Verify OTP</button>
@@ -101,7 +100,7 @@ const Verify = () => {
                 </form>}
             </div>
         </div>
-    </div>
+    
   )
 }
 
