@@ -26,6 +26,8 @@ const Card = (props) => {
     const date = new Date(dateString);
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     const localDate = date.toLocaleDateString(undefined, options);
+
+	
     
   return (
 		<div>

@@ -12,6 +12,8 @@ import { useDispatch } from 'react-redux';
 import { gamerProfile } from '../redux/actions/gamerAction';
 
 export default function Home() {
+
+
   const [activeContent, setActiveContent] = useState('recommendations');
   const [darkMode, setDarkMode] = useState(false);
   const [user, setUser] = useState();
@@ -161,7 +163,7 @@ export default function Home() {
         <img src="https://distil.in/demo/snappcoins/img/hero_general.jpg" alt="" className="card-img-top w-100" style={{ height: "275px" }} />
       </div>
 
-      <div className="container py-5">
+      <div className="container py-5" >
         <div className="row">
           {user && (
             <div className="col-md-3 col-xl-3">
@@ -335,16 +337,32 @@ export default function Home() {
                     }}
                   />
                 )&& currentPageTransactions.length > 0 ? (
-                  <div className="row col-9">
-                  {currentPageTransactions.map((transaction, index) => (
-                    <div className='col-xl-4 col-lg-6 col-md-6 col-sm-12' key={index}>
+                  <>
+                  <div className="d-flex justify-content-center mb-4 col-9">
+                    <input
+                      className="form-control me-2 w-100 bg-white text-dark"
+                      type="search"
+                      placeholder="Search here..."
+                      aria-label="Search"
+                      value={searchKeyword}
+                      onChange={(e) => setSearchKeyword(e.target.value)}
+                    />
+                    <button className="btn text-white bg-danger inside">Search</button>
+                  </div>
+
+                  {currentPageTransactions
+                    .filter((transaction) => {
+                      if (searchKeyword === '') return true;
+                      return transaction.orderStatus.toLowerCase().includes(searchKeyword.toLowerCase());
+                    })
+                    .map((transaction, index) => (
                       <MyItems key={index}
                           tdate={transaction.transactionDate}
                           tId={transaction.transactionId}
                           status={transaction.orderStatus}/>
-                    </div>
-                  ))}
-                </div>
+
+                    ))}
+                </>
                 ) :(
                   <></>
                 )

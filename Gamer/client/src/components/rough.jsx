@@ -1,3 +1,24 @@
+<div className="overflow-hidden">
+             
+											{/* <!-- Profile picture image--> */}
+											{!imageLoaded && <div className="loading-spinner"></div>}
+											<img 
+												className={`img-account rounded-circle mb-4 ${imageLoaded ? "" : "hidden"}`}
+												src={imageSrc}
+												alt=""
+												width="38rem"
+                        height="38rem"
+                        borderRadius="50%"
+                        marginTop="8rem"
+												onLoad={() => setImageLoaded(true)}
+												onError={() => setImageLoaded(false)}
+											/>
+										
+              </div>
+
+
+
+
 {selectedImage ? (
     <img
       src={URL.createObjectURL(selectedImage)}

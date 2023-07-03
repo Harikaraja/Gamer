@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import Brightness7OutlinedIcon from '@mui/icons-material/Brightness7Outlined';
 import { Link } from 'react-router-dom';
@@ -14,6 +14,19 @@ export default function Navbar(props) {
   const gamerState = useSelector(state => state.gamerReducer)
 	const gamer = gamerState.gamer
   const [showDropdown, setShowDropdown] = useState(false);
+
+  
+	const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageSrc, setImageSrc] = useState("");
+
+  useEffect(() => {
+      setImageSrc(
+        gamer.image
+          ? `${process.env.REACT_APP_URL}/api/profile/img/${gamer.image}`
+          : "https://distil.in/demo/snappcoins/img/avatar-user.jpg"
+      );
+    }, [gamer.image]);
+
 
   const handleClick = () => {
     setShowDropdown(!showDropdown);
@@ -67,8 +80,23 @@ export default function Navbar(props) {
               )}
             </div>
             <div className="d-flex justify-content-center">
-              <div className="rounded-circle overflow-hidden" style={{ width: "35px", height: "35px" }}>
-                <img src="https://distil.in/demo/snappcoins/img/avatar-user.jpg" alt="" style={{ objectFit: "cover", width: "100%", height: "100%" }} onClick={handleClick} />
+              <div className="overflow-hidden">
+             
+											{/* <!-- Profile picture image--> */}
+											{!imageLoaded && <div className="loading-spinner"></div>}
+											<img 
+												className={`img-account rounded-circle mb-4 ${imageLoaded ? "" : "hidden"}`}
+												src={imageSrc}
+												alt=""
+												width="38rem"
+                        height="38rem"
+                        borderRadius="50%"
+                        marginTop="8rem"
+												onLoad={() => setImageLoaded(true)}
+												onError={() => setImageLoaded(false)}
+                        onClick={handleClick}
+											/>
+										
               </div>
             </div>
             <Link className="mx-1" to="/" style={{textDecoration: "none",color:"green"}}>Balance</Link>
@@ -78,11 +106,28 @@ export default function Navbar(props) {
 
       {showDropdown && (
         <ul className={`dropdown-menu show ${props.darkMode ? 'dark-mode-dropdown' : ''}`} style={{ position: "fixed", top: "60px", left: "calc(75% + 150px)", transform: "translateX(-50%)", width: "250px", height: "500px", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", borderRadius: "4px", padding: "10px" }}>
-          <img src="https://distil.in/demo/snappcoins/img/hero_general.jpg" alt="" style={{ height: "100px", width: "100%", objectFit: "cover", marginTop: "0" }} />
+          <Link to="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<figure>
+											{/* <!-- Profile picture image--> */}
+											{!imageLoaded && <div className="loading-spinner"></div>}
+											<img 
+												className={`img-account rounded-circle mb-4 ${imageLoaded ? "" : "hidden"}`}
+												src={imageSrc}
+												alt=""
+												height="54.375rem"
+												width="54.375rem"
+                        
+												onLoad={() => setImageLoaded(true)}
+												onError={() => setImageLoaded(false)}
+											/>
+										</figure>
+										<div className="balance">
+											<h6 className="mb-0">Balance</h6>
+											<span>{gamer.walletMoney}  snapps</span>
+										</div>
+									</Link>
           <hr />
-          <li style={{ marginBottom: "10px" }}><h5>@{props.gamerName}</h5></li>
-          <li style={{ marginBottom: "10px" }}><p>Balance</p></li>
-          <li style={{ marginBottom: "10px" }}><p>{props.walletMoney} snapps</p></li>
+          
           <li><hr className="dropdown-divider" /></li>
           <li style={{ marginBottom: "10px" }}><Link to="#" style={{ textDecoration: "none", color: "inherit" }}><AccountCircleOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>My Profile</span></Link></li>
           <li style={{ marginBottom: "10px" }}><Link onClick={handleEditProfile} to="/profile" style={{ textDecoration: "none", color: "inherit" }}><EditOutlinedIcon fontSize="small" /> <span style={{ color: "inherit" }}>Edit Profile</span></Link></li>

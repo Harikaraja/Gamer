@@ -1,4 +1,5 @@
-import snapcoinbank from "../models/snapcoinbankModel";
+const snapcoinbank = require("../models/snapcoinbankModel");
+
 
 exports.snapcoinbank = async (req, res) => {
 
@@ -29,6 +30,7 @@ exports.snapcoinbank = async (req, res) => {
         .save()
         .then((savedTransaction) => {
             // Transaction saved successfully
+            //console.log("hello")
             res.status(201).json(savedTransaction);
         })
         .catch((error) => {
@@ -36,8 +38,6 @@ exports.snapcoinbank = async (req, res) => {
             console.log(error);
             res.status(500).json({ error: "Failed to add transaction" });
         });
-
-
 
 };
 

@@ -37,17 +37,22 @@ const Verify = () => {
       console.log(err)
     });
     setVisibility(true) 
+    setOtp('')
   }
 
   const handleVerifyOtp = async (e) =>{
     e.preventDefault();
     const finalOtp = Object.values(otp).join('');
     const config = { url: "/auth/verifyotp", method: "post", params:{ uid:id,otp:finalOtp } };
-    fetchData(config).then().catch(err=>{
+    fetchData(config).then(()=>{
+      localStorage.removeItem('verify')
+      token ? navigate('/') : navigate('/login')
+    }).catch(err => {
       console.log(err)
+      navigate('/verify',{ state: { id, email } })
     });
-    //localStorage.removeItem('verify')
-    token?navigate('/'):navigate('/login')
+    setOtp('')
+    setVisibility(false)
   }
 
   
