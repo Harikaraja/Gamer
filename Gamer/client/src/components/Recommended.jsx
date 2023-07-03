@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import icon from '../assets/images/icon.png';
-import { Modal, ModalHeader } from 'reactstrap';
+import { Modal, ModalBody, ModalHeader } from 'reactstrap';
+import '../assets/styles/recommended.css'
 
 export default function Recommended(props) {
   const [isLiked, setIsLiked] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageSrc, setImageSrc] = useState('');
-  //const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [showModal,setShowModal] = useState(false)
 
   useEffect(() => {
     // Assuming you receive the image URL from props
@@ -23,15 +25,46 @@ export default function Recommended(props) {
     setIsLiked(!isLiked);
   };
 
-  
+  const toggleModal = () => {
+    setModal(!modal);
+    setShowModal(!showModal);
+  };
+
   return (
-    <div className="items-cont ">
-    
-    <div className='img-fluid'>
-      {/* item begins here */}
-      <div className="item">
-        <div className="card" style={{ zIndex: "2", padding: "0px" }}>
+    <div className="{`items-cont ${showModal ? 'blur-background' : ''}`}" >
+      <Modal size="small" isOpen={modal} toggle={toggleModal}>
+        <ModalHeader toggle={toggleModal} >
           
+          <b style={{color:"black"}}>Snap Now!</b></ModalHeader>
+        <ModalBody>
+
+            <form method="POST">
+              <div className="modal-body">
+                <p style={{color:"black"}}>You are about to purchase "Amazing Art" <b>#304</b> from <b>George Lucas</b></p>
+                <p><b style={{ margin: "0px",color:"black",padding:"0px" }}>Redeem with</b></p>
+                <input type="text" className="form-control" placeholder="3.5 snapps" style={{ width: "100%", color: "black" ,marginTop:"0px"}} />
+                <br />
+                <ul style={{listStyle:"none",color:"black"}}>
+                   <li>
+                      Your balance <span style={{marginLeft:"14rem"}}>8.498  snapps</span>
+                    </li>
+                    <li>
+                      Service fee 1.5%<span style={{marginLeft:"13rem"}}>0.125  snapps</span>
+                    </li>
+                              
+                </ul>
+              </div>
+              <div className="modal-footer justify-content-center">
+                <button type="button" className="btn" style={{ width: "100%" ,background:"#ff0071",color:"white"}}>Snap It!</button>
+                <button type="button" className="btn btn-primary" data-bs-dismiss="modal" style={{ width: "100%" }}>Cancel</button>
+              </div>
+            </form>
+        </ModalBody>
+      </Modal>
+      <div className="img-fluid">
+        {/* item begins here */}
+        <div className="item">
+          <div className="card" style={{ zIndex: '2', padding: '0px' }}>
             <div
               className="image-container"
               style={{
@@ -68,7 +101,7 @@ export default function Recommended(props) {
                 }}
               ></div>
 
-              <button className="snap-button" >
+              <button className="snap-button" onClick={toggleModal}>
                 Snapp Now
               </button>
             </div>
@@ -111,6 +144,5 @@ export default function Recommended(props) {
         </div>
       </div>
     </div>
-    
   );
 }
