@@ -23,7 +23,7 @@ export default function Recommended(props) {
   };
 
   return (
-    <div className="items-cont">
+    <div className="items-cont ">
     
     <div className='img-fluid'>
       {/* item begins here */}

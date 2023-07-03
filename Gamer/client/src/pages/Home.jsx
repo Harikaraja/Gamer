@@ -163,7 +163,7 @@ export default function Home() {
         <img src="https://distil.in/demo/snappcoins/img/hero_general.jpg" alt="" className="card-img-top w-100" style={{ height: "275px" }} />
       </div>
 
-      <div className="container py-5" >
+      <div className="container-fluid py-5 px-5 mx-5 " >
         <div className="row">
           {user && (
             <div className="col-md-3 col-xl-3">
