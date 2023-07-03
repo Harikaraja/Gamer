@@ -364,7 +364,9 @@ export default function Home() {
                     ))}
                 </>
                 ) :(
-                  <></>
+                  <>
+                  <p>no products</p>
+                  </>
                 )
                 
                 }

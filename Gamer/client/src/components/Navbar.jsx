@@ -18,6 +18,10 @@ export default function Navbar(props) {
   
 	const [imageLoaded, setImageLoaded] = useState(false);
   const [imageSrc, setImageSrc] = useState("");
+  const [isHovered, setIsHovered] = useState(false);
+ 
+  
+   
 
   useEffect(() => {
       setImageSrc(
@@ -30,9 +34,20 @@ export default function Navbar(props) {
 
   const handleClick = () => {
     setShowDropdown(!showDropdown);
+   
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
   };
 
 	const dispatch = useDispatch();
+
+
 
 	const handleLogoutClick = () => {
 		dispatch(logout());
@@ -48,7 +63,7 @@ export default function Navbar(props) {
   };
   return (
     <div>
-      <nav style={{height:'77px'}} className={`navbar navbar-expand-lg navbar-light ${props.darkMode ? 'dark-mode' : ''}` }>
+      <nav style={{height:'77px',backgroundColor:"white"}} className={`navbar navbar-expand-lg navbar-light ${props.darkMode ? 'dark-mode' : ''}` }>
         <div className="container">
           <div className="navbar-brand">
             <Link to="/">
@@ -62,21 +77,26 @@ export default function Navbar(props) {
           <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/" style={{marginTop:"1rem"}}>Home</a>
+                <a className="nav-link active" aria-current="page" href="/" style={{marginTop:"1rem",color:"black",fontSize:"0.9rem",fontFamily:"Albert Sans', sans-serif"}}>Home</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/" style={{marginTop:"1rem"}}>Explore</a>
+                <a className="nav-link" href="/" style={{marginTop:"1rem",color:"black",fontSize:"0.9rem",fontFamily:"Albert Sans', sans-serif"}}>Explore</a>
               </li>
-              <li>
-                <span className="mx-3 divider"></span>
-              </li>
+
+     
+<li> 
+      <div style={{ borderLeft: '2px solid rgba(0, 0, 0, 0.2)', height: '34px',marginTop:"0.8rem",position:"absolute",right:"245px"}}></div>
+    </li>
+              
             </ul>
             <div className="navbar-divider"></div>
-            <div className="btn bg-white text-success mx-2" onClick={handleDarkModeToggle}>
+            <div className="btn bg-white text-success mx-2"  onClick={handleDarkModeToggle}>
             {props.darkMode ? (
-                <Brightness7OutlinedIcon />
+                <Brightness7OutlinedIcon style={{color:"black",marginTop:"0.5rem",backgroundColor: isHovered ? '#48e0a4' : '#eee', transition: 'background-color 0.3s ease',width:"40px",height:"34px",borderRadius:"3px"}} onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}/>
               ) : (
-                <DarkModeOutlinedIcon />
+                <DarkModeOutlinedIcon style={{color:"black",marginTop:"0.5rem",backgroundColor: isHovered ? '#48e0a4' : '#eee', transition: 'background-color 0.3s ease',width:"40px",height:"34px",borderRadius:"3px"}}  onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}/>
               )}
             </div>
             <div className="d-flex justify-content-center">
@@ -88,24 +108,27 @@ export default function Navbar(props) {
 												className={`img-account rounded-circle mb-4 ${imageLoaded ? "" : "hidden"}`}
 												src={imageSrc}
 												alt=""
-												width="38rem"
-                        height="38rem"
+												width="30.8px"
+                        height="30.8px"
                         borderRadius="50%"
-                        marginTop="8rem"
+                        marginTop="1rem"
+                        top="50%"
 												onLoad={() => setImageLoaded(true)}
 												onError={() => setImageLoaded(false)}
                         onClick={handleClick}
+                        style={{marginTop:"2rem",backfaceVisibility:"hidden"}}
 											/>
 										
               </div>
             </div>
-            <Link className="mx-1" to="/" style={{textDecoration: "none",color:"green"}}>Balance</Link>
+            <Link className="mx-1" to="/" style={{color:"black",marginTop:"-10px"}}>Balance</Link>
+            
           </div>
         </div>
       </nav>
 
       {showDropdown && (
-        <ul className={`dropdown-menu show ${props.darkMode ? 'dark-mode-dropdown' : ''}`} style={{ position: "fixed", top: "60px", left: "calc(75% + 150px)", transform: "translateX(-50%)", width: "250px", height: "500px", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", borderRadius: "4px", padding: "10px" }}>
+        <ul className={`dropdown-menu show ${props.darkMode ? 'dark-mode-dropdown' : ''}`} style={{ position: "fixed",top: "60px", left: "calc(75% + 150px)", transform: "translateX(-50%)", width: "250px", height: "500px", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", borderRadius: "4px", padding: "10px" }}>
           <Link to="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										<figure>
 											{/* <!-- Profile picture image--> */}
@@ -119,6 +142,7 @@ export default function Navbar(props) {
                         
 												onLoad={() => setImageLoaded(true)}
 												onError={() => setImageLoaded(false)}
+                       
 											/>
 										</figure>
 										<div className="balance">

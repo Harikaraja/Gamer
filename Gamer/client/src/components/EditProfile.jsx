@@ -121,7 +121,7 @@ const EditProfile = () => {
       
             {/* <!-- Profile picture card--> */}
            
-            <div className="card-body text-center" style={{ textAlign: 'left', marginLeft: '1rem', marginBottom: '1rem', position: 'relative' }}>
+<div className="card-body text-center" style={{ textAlign: 'left', marginLeft: '1rem', marginBottom: '1rem', position: 'relative' }}>
   {!imageLoaded && <div className="loading-spinner"></div>}
   <img
     className={`img-account rounded-circle mb-4 ${imageLoaded ? '' : 'hidden'}`}
