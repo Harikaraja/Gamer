@@ -8,7 +8,7 @@ export default function Recommended(props) {
   const [isLiked, setIsLiked] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageSrc, setImageSrc] = useState('');
-  const [modal, setModal] = useState(false);
+  //const [modal, setModal] = useState(false);
 
   useEffect(() => {
     // Assuming you receive the image URL from props
@@ -23,19 +23,15 @@ export default function Recommended(props) {
     setIsLiked(!isLiked);
   };
 
-  const toggleModal = () => {
-    setModal(!modal);
-  };
-
+  
   return (
-    <div className="items-cont">
-      <Modal size="lg" isOpen={modal} toggle={toggleModal}>
-        <ModalHeader toggle={toggleModal}>popup</ModalHeader>
-      </Modal>
-      <div className="img-fluid">
-        {/* item begins here */}
-        <div className="item">
-          <div className="card" style={{ zIndex: '2', padding: '0px' }}>
+    <div className="items-cont ">
+    
+    <div className='img-fluid'>
+      {/* item begins here */}
+      <div className="item">
+        <div className="card" style={{ zIndex: "2", padding: "0px" }}>
+          
             <div
               className="image-container"
               style={{
@@ -72,7 +68,7 @@ export default function Recommended(props) {
                 }}
               ></div>
 
-              <button className="snap-button" onClick={toggleModal}>
+              <button className="snap-button" >
                 Snapp Now
               </button>
             </div>
@@ -115,5 +111,6 @@ export default function Recommended(props) {
         </div>
       </div>
     </div>
+    
   );
 }

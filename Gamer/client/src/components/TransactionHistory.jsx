@@ -6,12 +6,12 @@ export default function TransactionHistory(props) {
 	console.log(props)
   return (
 	    
-		<div>
+		<div className=''>
 			
 			<ul style={{ listStyle: "none", padding: 0, marginLeft: "90px" }}>
 				{/* Item starts here */}
 				<li className="transaction-item">
-					<div className="d-flex align-items-center">
+					<div className="d-flex">
 						<img src={bg} alt="" className="transaction-image" />
 						<div className="transaction-details">
 							<p className="transaction-date">{props.tdate}</p>
