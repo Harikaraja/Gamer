@@ -5,20 +5,32 @@ const mongoose = require('mongoose');
 
 
 exports.merchantDisplay = async (req, res) => {
-    try {
-        
-      const merchant = await Merchandise.find();
-      console.log(merchant);
   
-      res.status(200).send({merchant,status:true,msg:"Products Displayed Successful"})
+  const pagenum = req.query.pagenum;
+  const size = req.query.size;
   
-    }
-    catch (error) {
-      
-        res.status(500).json({ error: `Internal server error ${error}` });
-      
-    }
+  const skip = size * (pagenum - 1);
+  const limit = size;
+  
+  try {
+
+    const merchant = await Merchandise.find({}, null, { skip, limit });
+    const count = await Merchandise.countDocuments();
+
+    //console.log(count)
+  
+    res.status(200).send({
+      merchant,
+      status: true,
+      msg: "Products Displayed Successfully",
+      total_count: count,
+    });
+  } catch (error) {
+    res.status(500).json({ error: `Internal server error ${error}` });
+  }
+  
 }
+
 
 exports.getImage = async (req, res) => {
   try {

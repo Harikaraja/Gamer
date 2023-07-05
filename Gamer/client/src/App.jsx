@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Verify from './pages/Verify';
 import Profile from './pages/profile';
+import DetailsPage from './pages/DetailsPage';
 
 import { useSelector } from 'react-redux';
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path='/verify' element={<Verify />}/>
+          <Route path='/details-page' element={<DetailsPage/>}/>
           
         </Routes>
       </BrowserRouter>

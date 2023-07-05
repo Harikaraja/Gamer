@@ -1,16 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import icon from '../assets/images/icon.png';
 import { Modal, ModalBody, ModalHeader } from 'reactstrap';
-import '../assets/styles/recommended.css'
+import '../assets/styles/recommended.css';
+import useFetch from '../hooks/useFetch';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { gamerProfile } from '../redux/actions/gamerAction';
+
 
 export default function Recommended(props) {
+
   const [isLiked, setIsLiked] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageSrc, setImageSrc] = useState('');
   const [modal, setModal] = useState(false);
-  const [showModal,setShowModal] = useState(false)
+  const [showModal,setShowModal] = useState(false);
+  
+
+  const [user, setUser] = useState();
+
+  console.log("user is: ",user)
+
+  const token = localStorage.getItem('token');
+  const fetchData = useFetch();
+  //const dispatch = useDispatch();
+
+  const fetchUser = useCallback(() => {
+    const config = { url: "/profile", method: "get", headers: { Authorization: token } };
+    fetchData(config, { showSuccessToast: false })
+      .then(data => {
+        setUser(data.user);
+        console.log("d is: ",data)
+        //dispatch(gamerProfile(data.user));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [fetchData, token]);
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
+  //console.log("ps: ".props.img)
 
   useEffect(() => {
     // Assuming you receive the image URL from props
@@ -19,6 +53,7 @@ export default function Recommended(props) {
         ? `${process.env.REACT_APP_URL}/api/merchant/img/${props.img}`
         : 'default-prod.png'
     );
+    //setImage(props.img); // Set the image state variable
   }, [props.img]);
 
   const handleLikeClick = () => {
@@ -30,8 +65,20 @@ export default function Recommended(props) {
     setShowModal(!showModal);
   };
 
+  const displayData = {
+
+    title:props.title,
+    desc:props.desc,
+    brand:props.brand,
+    price:props.price,
+    
+  }
+
+  console.log("dd: ",displayData)
+  
   return (
-    <div className="{`items-cont ${showModal ? 'blur-background' : ''}`}" >
+    <div className={`items-cont ${showModal ? 'blur-background' : ''}`} >
+
       <Modal size="small" isOpen={modal} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal} >
           
@@ -40,13 +87,12 @@ export default function Recommended(props) {
 
             <form method="POST">
               <div className="modal-body">
-                <p style={{color:"black"}}>You are about to purchase "Amazing Art" <b>#304</b> from <b>George Lucas</b></p>
-                <p><b style={{ margin: "0px",color:"black",padding:"0px" }}>Redeem with</b></p>
-                <input type="text" className="form-control" placeholder="3.5 snapps" style={{ width: "100%", color: "black" ,marginTop:"0px"}} />
-                <br />
+                <p style={{color:"black"}}>You are about to purchase <b>{props.title}</b> <b>#304</b> from <b>George Lucas</b></p>
+                <p><b style={{ margin: "0px",color:"black",paddingLeft:"16px"}}>Redeem with</b></p>
+                <input type="text" className="form-control" placeholder="3.5 snapps" style={{ width: "100%", color: "black" ,marginTop:"-20px",marginBottom:"1rem"}} value={`${props.price}`}/> 
                 <ul style={{listStyle:"none",color:"black"}}>
                    <li>
-                      Your balance <span style={{marginLeft:"14rem"}}>8.498  snapps</span>
+                      Your balance <span style={{marginLeft:"14rem"}}>{user && user.walletMoney} snapps</span>
                     </li>
                     <li>
                       Service fee 1.5%<span style={{marginLeft:"13rem"}}>0.125  snapps</span>
@@ -55,8 +101,13 @@ export default function Recommended(props) {
                 </ul>
               </div>
               <div className="modal-footer justify-content-center">
-                <button type="button" className="btn" style={{ width: "100%" ,background:"#ff0071",color:"white"}}>Snap It!</button>
-                <button type="button" className="btn btn-primary" data-bs-dismiss="modal" style={{ width: "100%" }}>Cancel</button>
+
+              <Link to='/details-page' state={{ displayData, imageSrc }} style={{ width: "100%" }}>
+                <button type="button" className="btn" style={{ width: "100%", background: "#ff0071", color: "white" }}>
+                  Snap It!
+                </button>
+              </Link>
+                <button type="button" className="btn" data-bs-dismiss="modal" style={{ width: "100%",background:"black",color:"white" }} onClick={toggleModal}>Cancel</button>
               </div>
             </form>
         </ModalBody>

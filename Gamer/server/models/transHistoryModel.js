@@ -3,6 +3,11 @@ const Schema = mongoose.Schema;
 
 const transHistorySchema = new Schema({
 
+   user_id:{
+     
+      type:String
+   },
+
    transactionDate:{
     
      type:Date,
