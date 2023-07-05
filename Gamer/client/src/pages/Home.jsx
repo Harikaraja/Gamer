@@ -24,6 +24,8 @@ export default function Home() {
   
   const [inTransitCount, setInTransitCount] = useState(0);
 
+  const [tottransactions,setTottransactions] = useState([]);
+
   
 
   const token = localStorage.getItem('token');
@@ -133,7 +135,7 @@ export default function Home() {
      }
  
    }
-
+ //---------------------------------------------------------------------------------------------------//
  //TRANSACTION HISTORY SECTION
   
 const [currentPage1, setCurrentPage1] = useState(1);
@@ -151,6 +153,7 @@ const fetchTransactions = useCallback(() => {
   return fetchData(config, { showSuccessToast: false })
     .then(data => {
       setTotaltransactions(data.total_counts);
+      setTottransactions(data.total_trans)
       return data;
     })
     .catch((err) => {
@@ -218,6 +221,7 @@ useEffect(() => {
       }
     };
     
+  //----------------------------------------------------------------------------------------------------//
   //SNAP HISTORY SECTION
  
   const [currentPage2, setCurrentPage2] = useState(1);
@@ -302,11 +306,16 @@ useEffect(() => {
     };
     
   //PAGINATIONS DONE
+  //------------------------------------------------------------------------------------------------------//
+
+  //pending orders
 
   useEffect(() => {
-    const count = transactions.filter(transaction => transaction.orderStatus === 'In Transit').length;
+    const count = tottransactions.filter(transaction => transaction.orderStatus === 'In Transit').length;
     setInTransitCount(count);
-  }, [transactions]);
+  }, [tottransactions]);
+
+  //-------------------------------------------------------------------------------------------------------//
 
   const handleRecommendationsClick = () => {
     setActiveContent('recommendations');
@@ -463,7 +472,7 @@ useEffect(() => {
               <div className='text-center'>
 								<div className="pagination_fg mb-4">
 									{pages.map((i) => {
-										return <PageComp key={i} pagenum={i} handleClick={handleClick} isActive={currentPage == i ? true : false} />
+										return <PageComp key={i} pagenum={i} handleClick={handleClick} isActive={currentPage === i ? true : false} />
 									})}
 								</div>
 	            </div>
@@ -501,7 +510,7 @@ useEffect(() => {
             <div className='text-center'>
               <div className="pagination_fg mb-4" >
                 {pages1.map((i) => {
-                  return <PageComp key={i} pagenum={i} handleClick={handleClick1} isActive={currentPage == i ? true : false} />
+                  return <PageComp key={i} pagenum={i} handleClick={handleClick1} isActive={currentPage === i ? true : false} />
                 })}
               </div>
             </div>
@@ -541,7 +550,7 @@ useEffect(() => {
             <div className='text-center'>
               <div className="pagination_fg mb-4">
                 {pages2.map((i) => {
-                  return <PageComp key={i} pagenum={i} handleClick={handleClick2} isActive={currentPage == i ? true : false} />
+                  return <PageComp key={i} pagenum={i} handleClick={handleClick2} isActive={currentPage === i ? true : false} />
                 })}
               </div>
             </div>

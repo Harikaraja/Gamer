@@ -31,6 +31,7 @@ exports.displayitem = async (req, res) => {
     const limit = parseInt(size); // Parse size to integer
 
     const count = await transaction.countDocuments({ user_id });
+    const totalTrans = await transaction.find();
    
     console.log(count);
 
@@ -44,6 +45,7 @@ exports.displayitem = async (req, res) => {
       status: true,
       msg: "Products displayed successfully",
       total_counts: count,
+      total_trans:totalTrans,
     });
   } catch (error) {
     res.status(500).json({ error: `Internal server error ${error}` });
