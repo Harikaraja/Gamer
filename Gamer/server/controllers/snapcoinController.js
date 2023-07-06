@@ -31,7 +31,10 @@ exports.snapcoinbank = async (req, res) => {
         .then((savedTransaction) => {
             // Transaction saved successfully
             //console.log("hello")
+            const id = req.query.id;
+            
             res.status(201).json(savedTransaction);
+
         })
         .catch((error) => {
             // Error occurred while saving the transaction

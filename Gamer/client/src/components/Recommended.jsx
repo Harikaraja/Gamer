@@ -3,11 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import icon from '../assets/images/icon.png';
 import { Modal, ModalBody, ModalHeader } from 'reactstrap';
-import '../assets/styles/recommended.css';
+
 import useFetch from '../hooks/useFetch';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
-import { gamerProfile } from '../redux/actions/gamerAction';
 
 
 export default function Recommended(props) {

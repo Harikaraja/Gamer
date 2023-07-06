@@ -142,6 +142,9 @@ const [currentPage1, setCurrentPage1] = useState(1);
 const [totaltransactions, setTotaltransactions] = useState();
 const itemsPerPage1 = 3; // change the value here sasi
 
+//const [searchKeyword, setSearchKeyword] = useState('');
+
+
 const fetchTransactions = useCallback(() => {
   const config = {
     url: `/transaction/displayItems?user_id=${user?._id}`,
@@ -157,6 +160,7 @@ const fetchTransactions = useCallback(() => {
       return data;
     })
     .catch((err) => {
+
       console.log(err);
     });
 }, [fetchData, token, user, currentPage1, itemsPerPage1]);

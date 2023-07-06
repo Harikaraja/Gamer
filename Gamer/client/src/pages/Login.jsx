@@ -42,7 +42,7 @@ const Login = () => {
         <form className='p-5'>
           <figure>
               <a href="/" className="logo_account">
-                <img src={logo} alt="" width="140" height="35" className="light"/>
+                <img src={logo} alt="" width="140" height="35" className="light" />
               </a>
           </figure>
           <div className="access_social">
@@ -80,7 +80,7 @@ const Login = () => {
         </form>
       </div>
       <div className='image-wrapper'>
-            <img src={bg} alt='loading' width={100+'%'} height={740+'px'}/>
+            <img src={bg} alt='loading' width={100+'%'} height={740+'px'} style={{marginTop:"-80rem"}}/>
       </div>
     </div >
   )

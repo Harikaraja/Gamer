@@ -45,3 +45,11 @@
     align-items: center;
   }
 }
+
+.dark-mode{
+  background-color: black;
+}
+
+.dark-mode .home{
+  background-color: black;
+}

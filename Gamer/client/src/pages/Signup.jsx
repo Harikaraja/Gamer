@@ -8,7 +8,7 @@ import '../assets/styles/signup.css';
 import FacebookIcon from "@mui/icons-material/Facebook";
 //import GoogleIcon from "@mui/icons-material/Google";
 
-const Signup = () => {
+const Signup = ({ darkMode }) => {
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
@@ -49,7 +49,7 @@ const Signup = () => {
   return (
     <>
    
-    <div className='box'>
+    <div className={`box ${darkMode ? 'dark-mode' : ''}`}>
         
         <div className='form-wrapper'>
        
