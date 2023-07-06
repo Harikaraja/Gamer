@@ -11,6 +11,7 @@ import "../assets/styles/home.css";
 import { useDispatch } from 'react-redux';
 import { gamerProfile } from '../redux/actions/gamerAction';
 import PreLoader from '../components/utils/PreLoader';
+import Loader from '../components/utils/Loader';
 
 export default function Home() {
 
@@ -30,7 +31,7 @@ export default function Home() {
   
 
   const token = localStorage.getItem('token');
-  const [fetchData, {loading}] = useFetch();
+  const [fetchData ,{loading}] = useFetch();
 
   const dispatch = useDispatch();
 
@@ -388,8 +389,8 @@ useEffect(() => {
                 />
               </div>
             )}
-
-            <div className="col-md-9 col-xl-9">
+            {/* default loader should be added */}
+            {loading ? <PreLoader /> :<div className="col-md-9 col-xl-9">
               <div className="content mt-4">
                 <div role="group" aria-label="Content Navigation">
                   <button
@@ -477,7 +478,7 @@ useEffect(() => {
                   <div className="separator"></div>
                 </div>
 
-                <div className="mt-4">
+                  <div className="mt-4">
                   {activeContent === "recommendations" && (
                     <div className="row">
                       {merchant.map((product, index) => (
@@ -593,7 +594,7 @@ useEffect(() => {
               
                 </div>
               </div>
-            </div>
+            </div>}
           </div>
       </div>
 
