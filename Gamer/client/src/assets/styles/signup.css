@@ -206,3 +206,6 @@ a.social_bt.google {
   flex-grow: 1;
   text-align: center;
 }
+.dark-mode .form-wrapper{
+  background-color: black;
+}

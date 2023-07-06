@@ -25,16 +25,13 @@ export default function DetailsPage() {
     setIsExtended(false);
   };
   const handleDarkModeToggle = () => {
-    setDarkMode(prevMode => !prevMode);
-    const rootElement = document.documentElement;
-    rootElement.classList.toggle('dark-mode');
+    setDarkMode((prevMode) => !prevMode);
   };
-
 
   const cardStyle = isExtended
     ? { height: "65rem", width: "53rem", marginTop: "4rem", marginLeft: "7rem" }
     : {
-        height: "68rem",
+        height: "60rem",
         width: "53rem",
         marginTop: "4rem",
         marginLeft: "7rem",
@@ -105,31 +102,31 @@ export default function DetailsPage() {
                   </span>
                   <br />
                   <br />
-                  <a href="#" onClick={handleReadLess}>
+                  <a href="#" onClick={handleReadLess} style={{ color: darkMode ? "lime" : "#48E0A4" }}>
                     Read Less
                   </a>
                 </span>
               ) : (
-                <a href="#" onClick={handleReadMore}>
+                <a href="#" onClick={handleReadMore} style={{ color: darkMode ? "lime" : "#48E0A4" }}>
                   <br />
                   <br />
                   <span>Read More</span>
                 </a>
               )}
             </p>
-            <div className="additional">
+            
+          </div>
+          <div className="additional">
               <h6>Additional Info</h6>
 
-              <div className="separator"></div>
+              <div className="separatorline"></div>
               <ul className="list-items">
                 <li>Size</li>
                 <li>Format</li>
                 <li>TokenID</li>
               </ul>
-            </div>
           </div>
-
-          <div className="col-xl-4 col-lg-5" id="sidebar_fixed">
+          
           <div className="col-xl-4 col-lg-5" id="sidebar_fixed">
   <div className="sidebar">
     <div className="sidebar-box">
@@ -174,10 +171,9 @@ export default function DetailsPage() {
       </div>
     </div>
   </div>
-</div>
 
            
-            <ul className="share-buttons" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', listStyle: 'none', padding: 0,marginTop:"-50%" }}>
+            <ul className="share-buttons" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', listStyle: 'none', padding: 0,marginTop:"-50%",marginRight:"-275%"}}>
   <div className="share-button-box" style={{ marginRight: '0.5rem', backgroundColor: 'white'}}>
     <li>
       <a href="#0" style={{ textDecoration: 'none', color: '#333', fontSize: '1.2rem' }}>
@@ -212,9 +208,6 @@ export default function DetailsPage() {
       </div>
       <div style={{ marginBottom: "5rem" }}></div>
       <Footer />
-      <div className="dark-mode-toggle">
-        <button onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
-      </div>
     </div>
   );
 }

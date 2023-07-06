@@ -70,12 +70,12 @@ const Card = (props) => {
 						@{props.gamerName}
 					</h1>
 
-					<p className="author_number">
+					<h6 className="author_number">
 						Ox465d53...9df5{" "}
 						<a href="#0">
 							<span className="clipboard_symbol">&#128203;</span>
 						</a>
-					</p>
+					</h6>
 					<div className="text-container">
 						<span
 							className="button-like-text text-white"

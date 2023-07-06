@@ -1,16 +1,21 @@
 .page-container {
     display: flex;
   }
-  
+  .dark-mode .page-container {
+    background-color: black;
+  } 
   .box {
     flex: 1;
-    overflow-y: auto;
+
     padding-right: 30px; /* Add some spacing to accommodate the sidebar */
   }
 
   .box{
     background-color: #F8F8F8;
     height:80rem
+  }
+  .dark-mode .box{
+    background-color: black;
   }
   html,
   body {
@@ -24,13 +29,13 @@
   .sidebar {
     position: 'fixed';
      top: '16rem'; 
-     right: '2rem'
+     right: '3rem'
   }
   .sidebar-box {
     position: sticky;
     margin-top: 21rem;
     left: 1210px;
-    transform: translate(5%, -70%);
+    transform: translate(145%, -70%);
     padding: 20px;
     background-color: white;
     color: black;
@@ -55,27 +60,34 @@
     margin-left: 1%;
   }
   .additional {
-    margin-top: 5rem; 
-    margin-left: -6%;
+    margin-top: 70rem; 
+    margin-left: -55%;
+    text-align: center;
+
   }
+  
   .list-items {
     list-style: none;
     padding: 0;
     color:#666666;
   }
-  
+  .dark-mode .list-items{
+    color: #CCCCCC;
+  }
   .list-items li {
     margin-bottom: 0.8rem;
   }
-  .separator {
+  .separatorline {
     flex-grow: 1;
     height: 1px;
+    width: 200px;
     margin-top: 0.5rem;
     margin-bottom: 1rem;
     background-color:#DDDDDD;
   }
+
   .dark-mode {
-    background-color: #333;
+    background-color: black;
     color: #fff;
   }
   

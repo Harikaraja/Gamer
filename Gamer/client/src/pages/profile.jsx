@@ -26,19 +26,16 @@ const Profile = () => {
   };
 
   return (
-    <div className={darkMode ? 'dark-mode' : ''}>
+    <div className={`profile ${darkMode ? 'dark-mode' : ''}`}>
       <Navbar darkMode={darkMode} onDarkModeToggle={handleDarkModeToggle} />
-      <div className="container">
+      <div className={`container ${darkMode ? 'dark-mode' : ''}`}>
         <div className="card-body">
           <div className="row">
-            <EditProfile />
+            <EditProfile darkMode={darkMode} onDarkModeToggle={handleDarkModeToggle} />
           </div>
         </div>
       </div>
       <Footer />
-      <div className="dark-mode-toggle">
-        <button onClick={handleDarkModeToggle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
-      </div>
     </div>
   );
 };

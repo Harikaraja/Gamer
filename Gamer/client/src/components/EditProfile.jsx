@@ -124,7 +124,8 @@ const EditProfile = () => {
   
 
   return (
-    <div className="col-6 shadow p-3 mb-5 bg-black rounded" style={{ width: '45rem' ,marginLeft:'19rem',marginTop:'-10rem' }}>
+    <div className='edit-profile'>
+    <div className="col-6 shadow p-3 mb-5 bg-black rounded " style={{ width: '45rem' ,marginLeft:'19rem',marginTop:'-10rem' }}>
       <center>
         <h5 className="card-title text-muted">Gamer Profile</h5>
       </center>
@@ -192,6 +193,7 @@ const EditProfile = () => {
           Save Changes
         </button>
       </center>
+    </div>
     </div>
   );
 };

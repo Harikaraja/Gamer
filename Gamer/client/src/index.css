@@ -8,7 +8,12 @@ body {
   background-color: #f8f8f8;
   overflow-x: hidden;
 }
-
+h1, h2, h3, h4, h5, h6,p{
+  color: #333;
+}
+.dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5, .dark-mode h6, .dark-mode p {
+  color: #fff;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -18,6 +23,9 @@ code {
   background-color: white;
   padding: 5%;
   padding-bottom: 0px;
+}
+.dark-mode .footer{
+  background-color: black;
 }
 .card-overlay {
   position: fixed;
@@ -102,7 +110,7 @@ code {
 }
 .dark-mode .separator{
   background-color:#36313D;
-  height: 2px;
+  height: 1px;
 }
 .divider {
   display: inline-block;
@@ -113,7 +121,7 @@ code {
 }
 
 .dark-mode .navbar {
-  background-color: #222;
+  background-color: black;
   color: white;
 }
 
@@ -121,10 +129,9 @@ code {
   color: #fff;
 }
 .dark-mode {
-  background-color: #212121;
+  background-color: black;
   color: #ffffff;
 }
-
 .dark-mode .card {
   background-color:#141313 ;
   color: #ffffff;
@@ -177,7 +184,6 @@ code {
 .dark-mode-dropdown li {
   margin-bottom: 10px;
 }
-
 .dropdown-menu li a:hover,
 .dropdown-menu li a:focus,
 .dropdown-menu li a:active {
@@ -359,6 +365,16 @@ code {
   
 }
 
+.dark-mode.nav-item :hover{
+color: white;
+}
 
-
-
+.dark-mode .profile{
+  background-color: black;
+}
+.author_number{
+  color: black;
+}
+.dark-mode .model-body{
+  background-color: black;
+}
