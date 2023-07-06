@@ -20,7 +20,7 @@ export default function Home() {
   const [user, setUser] = useState();
   const [transactions, setTransactions] = useState([]);
   const [snaphistory,setSnaphistory] = useState([]);
-  const [searchKeyword, setSearchKeyword] = useState('');
+  
   const [merchant, setMerchant] = useState([]);
   
   const [inTransitCount, setInTransitCount] = useState(0);
@@ -145,6 +145,10 @@ const [totaltransactions, setTotaltransactions] = useState();
 const itemsPerPage1 = 3; // change the value here sasi
 
 //const [searchKeyword, setSearchKeyword] = useState('');
+
+const [searchKeyword, setSearchKeyword] = useState('');
+
+const [isSearchClicked, setIsSearchClicked] = useState(false);
 
 
 const fetchTransactions = useCallback(() => {
@@ -340,6 +344,12 @@ useEffect(() => {
     setDarkMode(!darkMode);
   };
 
+  const handleSearchButtonClick = () => {
+
+  
+      console.log("searched")
+  }
+  
 
    
   return (
@@ -493,24 +503,32 @@ useEffect(() => {
                     </div>
                   )}
 
+                  
+
               {activeContent === "transactionHistory" && transactions.length > 0 ? (
                 <>
                   <div className="d-flex justify-content-center mb-4 col-9">
-                    <input
-                      className="form-control me-2 w-100 bg-white text-dark"
-                      type="search"
-                      placeholder="Search here..."
-                      aria-label="Search"
-                      value={searchKeyword}
-                      onChange={(e) => setSearchKeyword(e.target.value)}
-                    />
-                    <button className="btn text-white bg-danger inside">Search</button>
+                  <input
+                    className="form-control me-2 w-100 bg-white text-dark"
+                    type="search"
+                    placeholder="Search here..."
+                    aria-label="Search"
+                    value={searchKeyword}
+                    onChange={(e) => setSearchKeyword(e.target.value)}
+                  />
+
+                    
+<button className="btn text-white bg-danger inside" onClick={() => setIsSearchClicked(true)}>
+  Search
+</button>
+
+
                   </div>
 
                   {transactions
                     .filter((transaction) => {
-                      if (searchKeyword === '') return true;
-                      return transaction.orderStatus.toLowerCase().includes(searchKeyword.toLowerCase());
+                      if (!isSearchClicked) return true;
+                          return transaction.orderStatus.toLowerCase().includes(searchKeyword.toLowerCase());
                     })
                     .map((transaction, index) => (
                       <TransactionHistory
