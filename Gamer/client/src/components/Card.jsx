@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
-
+import Loader from "./utils/Loader";
 
 
 const Card = (props) => {
@@ -41,7 +41,7 @@ const Card = (props) => {
 			        
 				}}>
 				<div className="card-body text-center">
-				{!imageLoaded && <div className="loading-spinner"></div>}
+				{!imageLoaded && <div className="loading-spinner"><Loader /></div>}
 					<img  className={`img-account  mb-4 ${imageLoaded ? "" : "hidden"}`}
 						  src={imageSrc}
 						  alt=""

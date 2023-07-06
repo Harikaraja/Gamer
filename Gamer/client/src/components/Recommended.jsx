@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import icon from '../assets/images/icon.png';
 import { Modal, ModalBody, ModalHeader } from 'reactstrap';
-
+import Loader from './utils/Loader';
 import useFetch from '../hooks/useFetch';
 import { Link } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ export default function Recommended(props) {
   console.log("user is: ",user)
 
   const token = localStorage.getItem('token');
-  const fetchData = useFetch();
+  const [fetchData,{loading}] = useFetch();
   //const dispatch = useDispatch();
 
   const fetchUser = useCallback(() => {
@@ -123,7 +123,7 @@ export default function Recommended(props) {
                 overflow: 'hidden',
               }}
             >
-              {!imageLoaded && <div className="loading-spinner"></div>}
+              {!imageLoaded && <div > <Loader /> </div>}
               <img
                 src={imageSrc}
                 data-src="img/items/item-4.jpg"

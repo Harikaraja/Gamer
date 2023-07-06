@@ -10,6 +10,7 @@ import useFetch from '../hooks/useFetch';
 import "../assets/styles/home.css";
 import { useDispatch } from 'react-redux';
 import { gamerProfile } from '../redux/actions/gamerAction';
+import PreLoader from '../components/utils/PreLoader';
 
 export default function Home() {
 
@@ -29,7 +30,8 @@ export default function Home() {
   
 
   const token = localStorage.getItem('token');
-  const fetchData = useFetch();
+  const [fetchData, {loading}] = useFetch();
+
   const dispatch = useDispatch();
 
   const fetchUser = useCallback(() => {
@@ -341,240 +343,252 @@ useEffect(() => {
 
    
   return (
-     
-    <div className={`home ${darkMode ? 'dark-mode' : ''}`}>
-  <Navbar
-    darkMode={darkMode}
-    onDarkModeToggle={handleDarkModeToggle}
-  />
-  <div className="banner">
-    <img
-      src="https://distil.in/demo/snappcoins/img/hero_general.jpg"
-      alt=""
-      className="card-img-top w-100"
-      style={{ height: "275px" }}
-    />
-  </div>
 
-  <div className="container-fluid py-5 px-5 mx-5 ">
-    <div className="row">
-      {user && (
-        <div className="col-md-3 col-xl-3">
-          <Card
-            gamerName={user.userName}
-            walletMoney={user.walletMoney}
-            memberSince={user.joiningTime}
-            inTransitCount={inTransitCount}
-          />
-        </div>
-      )}
+    
+  
+  <div className={`home ${darkMode ? 'dark-mode' : ''}`}>
+  
+  
 
-      <div className="col-md-9 col-xl-9">
-        <div className="content mt-4">
-          <div role="group" aria-label="Content Navigation">
-            <button
-              className={`btn btn-link text-gray font-size-lg ${
-                activeContent === "recommendations" ? "active" : ""
-              }`}
-              onClick={handleRecommendationsClick}
-              style={{
-                border: "none",
-                textDecoration: "none",
-                boxShadow: "none",
-                position: "relative",
-              }}
-            >
-              Recommended
-              {activeContent === "recommendations" && (
-                <span
-                  className="active-line"
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "2px",
-                    backgroundColor: darkMode ? "white" : "black",
-                  }}
+    <>
+
+      <Navbar
+        darkMode={darkMode}
+        onDarkModeToggle={handleDarkModeToggle}
+      />
+
+      <div className="banner">
+        <img
+          src="https://distil.in/demo/snappcoins/img/hero_general.jpg"
+          alt=""
+          className="card-img-top w-100"
+          style={{ height: "275px" }}
+        />
+      </div>
+
+      <div className="container-fluid py-5 px-5 mx-5 ">
+          <div className="row">
+            {user && (
+              <div className="col-md-3 col-xl-3">
+                <Card
+                  gamerName={user.userName}
+                  walletMoney={user.walletMoney}
+                  memberSince={user.joiningTime}
+                  inTransitCount={inTransitCount}
                 />
-              )}
-            </button>
-            <button
-              className={`btn btn-link text-gray font-size-lg ${
-                activeContent === "transactionHistory" ? "active" : ""
-              }`}
-              onClick={handleTransactionHistoryClick}
-              style={{
-                border: "none",
-                textDecoration: "none",
-                boxShadow: "none",
-                position: "relative",
-              }}
-            >
-              Transaction History
-              {activeContent === "transactionHistory" && (
-                <span
-                  className="active-line"
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "2px",
-                    backgroundColor: darkMode ? "white" : "black",
-                  }}
-                />
-              )}
-            </button>
-            <button
-              className={`btn btn-link text-gray font-size-lg ${
-                activeContent === "snaphistory" ? "active" : ""
-              }`}
-              onClick={handlesnapHistoryClick}
-              style={{
-                border: "none",
-                textDecoration: "none",
-                boxShadow: "none",
-                position: "relative",
-              }}
-            >
-              Snap History
-              {activeContent === "snaphistory" && (
-                <span
-                  className="active-line"
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "2px",
-                    backgroundColor: darkMode ? "white" : "black",
-                  }}
-                />
-              )}
-            </button>
-            <div className="separator-container"></div>
-            <div className="separator"></div>
-          </div>
-
-          <div className="mt-4">
-            {activeContent === "recommendations" && (
-              <div className="row">
-                {merchant.map((product, index) => (
-                  <div className="col-xl-4 col-lg-6 col-md-6 col-sm-12" key={index}>
-                    <Recommended
-                      title={product.title}
-                      img={product.image}
-                      desc={product.description}
-                      brand={product.brand}
-                      price={product.price}
-                      index={index}
-                    />
-                  </div>
-                ))}
-
-              <div className='text-center'>
-								<div className="pagination_fg mb-4">
-									{pages.map((i) => {
-										return <PageComp key={i} pagenum={i} handleClick={handleClick} isActive={currentPage === i ? true : false} />
-									})}
-								</div>
-	            </div>
               </div>
             )}
 
-        {activeContent === "transactionHistory" && transactions.length > 0 ? (
-          <>
-            <div className="d-flex justify-content-center mb-4 col-9">
-              <input
-                className="form-control me-2 w-100 bg-white text-dark"
-                type="search"
-                placeholder="Search here..."
-                aria-label="Search"
-                value={searchKeyword}
-                onChange={(e) => setSearchKeyword(e.target.value)}
-              />
-              <button className="btn text-white bg-danger inside">Search</button>
-            </div>
+            <div className="col-md-9 col-xl-9">
+              <div className="content mt-4">
+                <div role="group" aria-label="Content Navigation">
+                  <button
+                    className={`btn btn-link text-gray font-size-lg ${
+                      activeContent === "recommendations" ? "active" : ""
+                    }`}
+                    onClick={handleRecommendationsClick}
+                    style={{
+                      border: "none",
+                      textDecoration: "none",
+                      boxShadow: "none",
+                      position: "relative",
+                    }}
+                  >
+                    Recommended
+                    {activeContent === "recommendations" && (
+                      <span
+                        className="active-line"
+                        style={{
+                          position: "absolute",
+                          bottom: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "2px",
+                          backgroundColor: darkMode ? "white" : "black",
+                        }}
+                      />
+                    )}
+                  </button>
+                  <button
+                    className={`btn btn-link text-gray font-size-lg ${
+                      activeContent === "transactionHistory" ? "active" : ""
+                    }`}
+                    onClick={handleTransactionHistoryClick}
+                    style={{
+                      border: "none",
+                      textDecoration: "none",
+                      boxShadow: "none",
+                      position: "relative",
+                    }}
+                  >
+                    Transaction History
+                    {activeContent === "transactionHistory" && (
+                      <span
+                        className="active-line"
+                        style={{
+                          position: "absolute",
+                          bottom: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "2px",
+                          backgroundColor: darkMode ? "white" : "black",
+                        }}
+                      />
+                    )}
+                  </button>
+                  <button
+                    className={`btn btn-link text-gray font-size-lg ${
+                      activeContent === "snaphistory" ? "active" : ""
+                    }`}
+                    onClick={handlesnapHistoryClick}
+                    style={{
+                      border: "none",
+                      textDecoration: "none",
+                      boxShadow: "none",
+                      position: "relative",
+                    }}
+                  >
+                    Snap History
+                    {activeContent === "snaphistory" && (
+                      <span
+                        className="active-line"
+                        style={{
+                          position: "absolute",
+                          bottom: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "2px",
+                          backgroundColor: darkMode ? "white" : "black",
+                        }}
+                      />
+                    )}
+                  </button>
+                  <div className="separator-container"></div>
+                  <div className="separator"></div>
+                </div>
 
-            {transactions
-              .filter((transaction) => {
-                if (searchKeyword === '') return true;
-                return transaction.orderStatus.toLowerCase().includes(searchKeyword.toLowerCase());
-              })
-              .map((transaction, index) => (
-                <TransactionHistory
-                  key={index}
-                  tdate={transaction.transactionDate}
-                  tId={transaction.transactionId}
-                  status={transaction.orderStatus}
-                />
-              ))}
+                <div className="mt-4">
+                  {activeContent === "recommendations" && (
+                    <div className="row">
+                      {merchant.map((product, index) => (
+                        <div className="col-xl-4 col-lg-6 col-md-6 col-sm-12" key={index}>
+                          <Recommended
+                            title={product.title}
+                            img={product.image}
+                            desc={product.description}
+                            brand={product.brand}
+                            price={product.price}
+                            index={index}
+                          />
+                        </div>
+                      ))}
 
-            <div className='text-center'>
-              <div className="pagination_fg mb-4" >
-                {pages1.map((i) => {
-                  return <PageComp key={i} pagenum={i} handleClick={handleClick1} isActive={currentPage === i ? true : false} />
-                })}
-              </div>
-            </div>
-          </>
-        ) : <></>}
+                    <div className='text-center'>
+                      <div className="pagination_fg mb-4">
+                        {pages.map((i) => {
+                          return <PageComp key={i} pagenum={i} handleClick={handleClick} isActive={currentPage === i ? true : false} />
+                        })}
+                      </div>
+                    </div>
+                    </div>
+                  )}
 
-
-        {activeContent === "snaphistory" && snaphistory.length > 0 ? (
-          <>
-            <div className="d-flex justify-content-center mb-4 col-9">
-              <input
-                className="form-control me-2 w-100 bg-white text-dark"
-                type="search"
-                placeholder="Search here..."
-                aria-label="Search"
-                value={searchKeyword}
-                onChange={(e) => setSearchKeyword(e.target.value)}
-              />
-              <button className="btn text-white bg-danger inside">Search</button>
-            </div>
-            <div className="row">
-              {snaphistory
-                .filter((transaction) => {
-                  if (searchKeyword === '') return true;
-                  return transaction.orderStatus.toLowerCase().includes(searchKeyword.toLowerCase());
-                })
-                .map((transaction, index) => (
-                  <div className="col-xl-4 col-lg-6 col-md-6 col-sm-12" key={index}>
-                    <MyItems
-                      tdate={transaction.transactionDate}
-                      tId={transaction.transactionId}
-                      status={transaction.orderStatus}
+              {activeContent === "transactionHistory" && transactions.length > 0 ? (
+                <>
+                  <div className="d-flex justify-content-center mb-4 col-9">
+                    <input
+                      className="form-control me-2 w-100 bg-white text-dark"
+                      type="search"
+                      placeholder="Search here..."
+                      aria-label="Search"
+                      value={searchKeyword}
+                      onChange={(e) => setSearchKeyword(e.target.value)}
                     />
+                    <button className="btn text-white bg-danger inside">Search</button>
                   </div>
-                ))}
-            </div>
-            <div className='text-center'>
-              <div className="pagination_fg mb-4">
-                {pages2.map((i) => {
-                  return <PageComp key={i} pagenum={i} handleClick={handleClick2} isActive={currentPage === i ? true : false} />
-                })}
+
+                  {transactions
+                    .filter((transaction) => {
+                      if (searchKeyword === '') return true;
+                      return transaction.orderStatus.toLowerCase().includes(searchKeyword.toLowerCase());
+                    })
+                    .map((transaction, index) => (
+                      <TransactionHistory
+                        key={index}
+                        tdate={transaction.transactionDate}
+                        tId={transaction.transactionId}
+                        status={transaction.orderStatus}
+                      />
+                    ))}
+
+                  <div className='text-center'>
+                    <div className="pagination_fg mb-4" >
+                      {pages1.map((i) => {
+                        return <PageComp key={i} pagenum={i} handleClick={handleClick1} isActive={currentPage === i ? true : false} />
+                      })}
+                    </div>
+                  </div>
+                </>
+              ) : <></>}
+
+
+              {activeContent === "snaphistory" && snaphistory.length > 0 ? (
+                <>
+                  <div className="d-flex justify-content-center mb-4 col-9">
+                    <input
+                      className="form-control me-2 w-100 bg-white text-dark"
+                      type="search"
+                      placeholder="Search here..."
+                      aria-label="Search"
+                      value={searchKeyword}
+                      onChange={(e) => setSearchKeyword(e.target.value)}
+                    />
+                    <button className="btn text-white bg-danger inside">Search</button>
+                  </div>
+                  <div className="row">
+                    {snaphistory
+                      .filter((transaction) => {
+                        if (searchKeyword === '') return true;
+                        return transaction.orderStatus.toLowerCase().includes(searchKeyword.toLowerCase());
+                      })
+                      .map((transaction, index) => (
+                        <div className="col-xl-4 col-lg-6 col-md-6 col-sm-12" key={index}>
+                          <MyItems
+                            tdate={transaction.transactionDate}
+                            tId={transaction.transactionId}
+                            status={transaction.orderStatus}
+                          />
+                        </div>
+                      ))}
+                  </div>
+                  <div className='text-center'>
+                    <div className="pagination_fg mb-4">
+                      {pages2.map((i) => {
+                        return <PageComp key={i} pagenum={i} handleClick={handleClick2} isActive={currentPage === i ? true : false} />
+                      })}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <p></p>
+              )}
+              
+                </div>
               </div>
             </div>
-          </>
-        ) : (
-          <p></p>
-        )}
-        
           </div>
-        </div>
       </div>
-    </div>
+
+
+      <Footer darkMode={darkMode} />
+
+    </>
+  
   </div>
 
-
-  <Footer darkMode={darkMode} />
-</div>
-
   
-  
+        
   
   );
+        
 }

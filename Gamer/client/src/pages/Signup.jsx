@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-
+import PreLoader from '../components/utils/PreLoader';
 import { Link, useNavigate} from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 import bg from '../assets/images/bg.png';
@@ -16,7 +16,7 @@ const Signup = ({ darkMode }) => {
     confirmpassword: "",
   });
 
-  const fetchData = useFetch();
+  const [fetchData , {loading} ]= useFetch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -48,8 +48,10 @@ const Signup = ({ darkMode }) => {
   
   return (
     <>
+
+    {loading ? <PreLoader />:
    
-    <div className={`box ${darkMode ? 'dark-mode' : ''}`}>
+      <div className={`box ${darkMode ? 'dark-mode' : ''}`}>
         
         <div className='form-wrapper'>
        
@@ -118,6 +120,7 @@ const Signup = ({ darkMode }) => {
           <img src={bg} alt="loading" width={100 + "%"} height={740 + "px"} />
         </div>
       </div>
+    }
     </>
   );
 }
