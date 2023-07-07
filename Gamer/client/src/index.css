@@ -112,14 +112,7 @@ code {
   margin: 10px 15px 0;
 }
 
-.dark-mode .navbar {
-  background-color: #222;
-  color: white;
-}
 
-.dark-mode .navbar .nav-link {
-  color: #fff;
-}
 .dark-mode {
   background-color: #212121;
   color: #ffffff;
@@ -146,38 +139,6 @@ code {
 .dark-mode .margin{
   color: white;
 }
-.dark-mode-dropdown {
-  background-color: #212121;
-  color: #fff;
-}
-
-.dark-mode-dropdown h5 {
-  color: #fff;
-}
-.dark-mode-dropdown p {
-  color: #fff;
-}
-
-.dark-mode-dropdown a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.dark-mode-dropdown svg {
-  fill: #fff;
-}
-
-.dark-mode-dropdown .dropdown-divider {
-  border-top-color: #fff;
-}
-
-.dark-mode-dropdown img {
-  margin-top: 0;
-}
-.dark-mode-dropdown li {
-  margin-bottom: 10px;
-}
-
 .dropdown-menu li a:hover,
 .dropdown-menu li a:focus,
 .dropdown-menu li a:active {
@@ -355,10 +316,25 @@ code {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 16px;
-  margin-bottom: 16px;
-  
+  margin-bottom: 16px; 
 }
 
-
+.footer{
+  background-color: white;
+  padding: 5%;
+  padding-bottom: 0px;
+}
+.dark-mode .footer{
+  background-color: black;
+}
+h1, h2, h3, h4, h5, h6, p {
+  color: #333;
+}
+.dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5, .dark-mode h6, .dark-mode p{
+  color: #fff;
+}
+.author_number{
+  color: black;
+}
 
 

@@ -10,8 +10,7 @@ import useFetch from '../hooks/useFetch';
 import "../assets/styles/home.css";
 import { useDispatch } from 'react-redux';
 import { gamerProfile } from '../redux/actions/gamerAction';
-import PreLoader from '../components/utils/PreLoader';
-import Loader from '../components/utils/Loader';
+
 
 export default function Home() {
 
@@ -145,11 +144,13 @@ const [currentPage1, setCurrentPage1] = useState(1);
 const [totaltransactions, setTotaltransactions] = useState();
 const itemsPerPage1 = 3; // change the value here sasi
 
-//const [searchKeyword, setSearchKeyword] = useState('');
+
 
 const [searchKeyword, setSearchKeyword] = useState('');
 
-const [isSearchClicked, setIsSearchClicked] = useState(false);
+console.log(searchKeyword)
+
+//const [isSearchClicked, setIsSearchClicked] = useState(false);
 
 
 const fetchTransactions = useCallback(() => {
@@ -163,7 +164,7 @@ const fetchTransactions = useCallback(() => {
   return fetchData(config, { showSuccessToast: false })
     .then(data => {
       setTotaltransactions(data.total_counts);
-      setTottransactions(data.total_trans)
+     // setTottransactions(data.total_trans)
       return data;
     })
     .catch((err) => {
@@ -188,6 +189,30 @@ useEffect(() => {
 }, [fetchTransactions]);
 
 
+const handleSearch = () => {
+  const transactionConfig = {
+    url: `/transaction/displayItems?user_id=${user?._id}`,
+    method: "get",
+    headers: { Authorization: token },
+    params: {
+      pagenum: currentPage1,
+      size: itemsPerPage1,
+      searchTerm: searchKeyword,
+    },
+  };
+
+  fetchData(transactionConfig, { showSuccessToast: false })
+    .then((transactionData) => {
+      setTransactions(transactionData.transactions);
+      setTotaltransactions(transactionData.total_counts);
+      // setTottransactions(transactionData.total_trans)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+
     //pagination implemented for transaction history
     const pagelength1 = Math.ceil(totaltransactions/ itemsPerPage1);
     console.log("TT: ",totaltransactions)
@@ -208,7 +233,8 @@ useEffect(() => {
   
     const handleClick1 = (e) => {
       e.preventDefault();
-      var temppage = e.target.innerHTML;
+      const temppage = e.target.innerHTML;
+      
       if (temppage === "&lt;") {
         setCurrentPage1((prev) => {
           if (prev > 1) {
@@ -228,10 +254,22 @@ useEffect(() => {
       } else if (temppage === "&gt;&gt;") {
         setCurrentPage1(end1);
       } else {
-        setCurrentPage1(parseInt(temppage));
+        // Check if it's a search page
+        if (searchKeyword !== '') {
+          // Calculate the page number based on the index of the clicked page
+          const clickedPage = parseInt(temppage);
+          const searchPage = Math.ceil(clickedPage * itemsPerPage1 / itemsPerPage);
+          
+          setCurrentPage1(searchPage);
+        } else {
+          setCurrentPage1(parseInt(temppage));
+        }
       }
     };
     
+    
+    
+   
   //----------------------------------------------------------------------------------------------------//
   //SNAP HISTORY SECTION
  
@@ -321,10 +359,10 @@ useEffect(() => {
 
   //pending orders
 
-  useEffect(() => {
-    const count = tottransactions.filter(transaction => transaction.orderStatus === 'In Transit').length;
-    setInTransitCount(count);
-  }, [tottransactions]);
+  //useEffect(() => {
+  //  const count = tottransactions.filter(transaction => transaction.orderStatus === 'In Transit').length;
+  //  setInTransitCount(count);
+  //}, [tottransactions]);
 
   //-------------------------------------------------------------------------------------------------------//
 
@@ -344,23 +382,11 @@ useEffect(() => {
   const handleDarkModeToggle = () => {
     setDarkMode(!darkMode);
   };
-
-  const handleSearchButtonClick = () => {
-
-  
-      console.log("searched")
-  }
-  
-
    
-  return (
-
-    
+  return (  
   
   <div className={`home ${darkMode ? 'dark-mode' : ''}`}>
-  
-  
-
+   
     <>
 
       <Navbar
@@ -390,7 +416,7 @@ useEffect(() => {
               </div>
             )}
             {/* default loader should be added */}
-            {loading ? <PreLoader /> :<div className="col-md-9 col-xl-9">
+            <div className="col-md-9 col-xl-9">
               <div className="content mt-4">
                 <div role="group" aria-label="Content Navigation">
                   <button
@@ -508,29 +534,33 @@ useEffect(() => {
 
               {activeContent === "transactionHistory" && transactions.length > 0 ? (
                 <>
-                  <div className="d-flex justify-content-center mb-4 col-9">
-                  <input
-                    className="form-control me-2 w-100 bg-white text-dark"
-                    type="search"
-                    placeholder="Search here..."
-                    aria-label="Search"
-                    value={searchKeyword}
-                    onChange={(e) => setSearchKeyword(e.target.value)}
-                  />
-
-                    
-<button className="btn text-white bg-danger inside" onClick={() => setIsSearchClicked(true)}>
-  Search
-</button>
-
-
-                  </div>
+                         <div className="d-flex justify-content-center mb-4 col-9">
+                  
+                              <input
+                                  className="form-control me-2 w-100 bg-white text-dark"
+                                  type="search"
+                                  placeholder="Search here..."
+                                  aria-label="Search"
+                                  value={searchKeyword}
+                                  onChange={(e) => setSearchKeyword(e.target.value)}
+                                />
+                               
+                               <button className="btn text-white bg-danger inside" onClick={handleSearch}>Search</button>
+                                {/* <div className="input-group mb-3">
+                                    <span className="input-group-text bg-dark text-secondary" style={{ border: "2px solid #36313D", borderColor: "#36313D", borderRight: "none", }} id="basic-addon1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                    </svg></span>
+                                    <input type="text" name="search" id="search" className="form-control" placeholder="Terms..."
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        style={{ borderLeft: "none" }}
+                                        autoFocus autoComplete="off" />
+                                </div> */}
+                            </div>
+                 
 
                   {transactions
-                    .filter((transaction) => {
-                      if (!isSearchClicked) return true;
-                          return transaction.orderStatus.toLowerCase().includes(searchKeyword.toLowerCase());
-                    })
+                    
                     .map((transaction, index) => (
                       <TransactionHistory
                         key={index}
@@ -548,21 +578,24 @@ useEffect(() => {
                     </div>
                   </div>
                 </>
-              ) : <></>}
+              ) : <>
+                
+              </>}
 
 
               {activeContent === "snaphistory" && snaphistory.length > 0 ? (
                 <>
                   <div className="d-flex justify-content-center mb-4 col-9">
-                    <input
-                      className="form-control me-2 w-100 bg-white text-dark"
-                      type="search"
-                      placeholder="Search here..."
-                      aria-label="Search"
-                      value={searchKeyword}
-                      onChange={(e) => setSearchKeyword(e.target.value)}
-                    />
-                    <button className="btn text-white bg-danger inside">Search</button>
+                                  <input
+                                  className="form-control me-2 w-100 bg-white text-dark"
+                                  type="search"
+                                  placeholder="Search here..."
+                                  aria-label="Search"
+                                  value={searchKeyword}
+                                  onChange={(e) => setSearchKeyword(e.target.value)}
+                                />
+                               
+                               <button className="btn text-white bg-danger inside" onClick={handleSearch}>Search</button>
                   </div>
                   <div className="row">
                     {snaphistory
@@ -594,7 +627,7 @@ useEffect(() => {
               
                 </div>
               </div>
-            </div>}
+            </div>
           </div>
       </div>
 

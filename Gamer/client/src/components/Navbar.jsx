@@ -103,6 +103,7 @@ export default function Navbar(props) {
                     marginTop: '1rem',
                     fontSize: '0.9rem',
                     fontFamily: "Albert Sans', sans-serif",
+                    color:'white'
                   }}
                 >
                   Home
@@ -116,6 +117,7 @@ export default function Navbar(props) {
                     marginTop: '1rem',
                     fontSize: '0.9rem',
                     fontFamily: "Albert Sans', sans-serif",
+                    color:'white',
                   }}
                 >
                   Explore

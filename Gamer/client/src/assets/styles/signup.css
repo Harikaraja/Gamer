@@ -89,7 +89,6 @@
 .input1 {
   width: 35px;
   border-radius: 0%;
-  color: black;
 }
 
 .divider {
@@ -205,9 +204,4 @@ a.social_bt.google {
 .button-text {
   flex-grow: 1;
   text-align: center;
-}
-
-
-dark-mode .form-wrapper{
-  background-color: black;
 }
