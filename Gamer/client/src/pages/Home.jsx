@@ -533,7 +533,7 @@ const handleSearch = () => {
 
                   
 
-              {activeContent === "transactionHistory" && transactions.length > 0 ? (
+              {activeContent === "transactionHistory" && 
                 <>
                          <div className="d-flex justify-content-center mb-4 col-9">
                   
@@ -559,17 +559,18 @@ const handleSearch = () => {
                                 </div> */}
                             </div>
                  
-
-                  {transactions
-                    
-                    .map((transaction, index) => (
-                      <TransactionHistory
-                        key={index}
-                        tdate={transaction.transactionDate}
-                        tId={transaction.transactionId}
-                        status={transaction.orderStatus}
-                      />
-                    ))}
+                  {transactions.length > 0 ? <div>
+                    {transactions
+                      
+                      .map((transaction, index) => (
+                        <TransactionHistory
+                          key={index}
+                          tdate={transaction.transactionDate}
+                          tId={transaction.transactionId}
+                          status={transaction.orderStatus}
+                        />
+                      ))}
+                  </div>: ""}
 
                   <div className='text-center'>
                     <div className="pagination_fg mb-4" >
@@ -578,10 +579,7 @@ const handleSearch = () => {
                       })}
                     </div>
                   </div>
-                </>
-              ) : <>
-                
-              </>}
+                </>}
 
 
               {activeContent === "snaphistory" && snaphistory.length > 0 ? (
