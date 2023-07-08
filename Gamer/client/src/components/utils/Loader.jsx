@@ -14,12 +14,13 @@ const Loader = () => {
     >
       <div
         style={{
-          width: '50px',
-          height: '50px',
+          width: '80px',
+          height: '80px',
           borderRadius: '50%',
-          border: '4px solid pink',
-          borderTop: '4px solid transparent',
-          animation: 'spin 1s linear infinite',
+          border: '8px solid pink',
+          borderTop: '8px solid transparent',
+          animation: 'spin 10s linear infinite', // Increase animation duration to 2 seconds
+          animationTimingFunction: 'linear', // Change the timing function to linear
         }}
       ></div>
     </div>

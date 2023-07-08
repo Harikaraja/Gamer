@@ -51,7 +51,7 @@ export default function Recommended(props) {
         ? `${process.env.REACT_APP_URL}/api/merchant/img/${props.img}`
         : 'default-prod.png'
     );
-    //setImage(props.img); // Set the image state variable
+  setImageLoaded(false)
   }, [props.img]);
 
   const handleLikeClick = () => {

@@ -145,7 +145,7 @@ const [totaltransactions, setTotaltransactions] = useState();
 const itemsPerPage1 = 3; // change the value here sasi
 
 
-
+const [isSearchPerformed, setIsSearchPerformed] = useState(false);
 const [searchKeyword, setSearchKeyword] = useState('');
 
 console.log(searchKeyword)
@@ -189,7 +189,7 @@ useEffect(() => {
 }, [fetchTransactions]);
 
 
-const handleSearch = () => {
+/*const handleSearch = () => {
   const transactionConfig = {
     url: `/transaction/displayItems?user_id=${user?._id}`,
     method: "get",
@@ -210,7 +210,7 @@ const handleSearch = () => {
     .catch((err) => {
       console.log(err);
     });
-};
+};*/
 
 
     //pagination implemented for transaction history
@@ -231,27 +231,28 @@ const handleSearch = () => {
 
     console.log(pages1);
   
+   
     const handleClick1 = (e) => {
       e.preventDefault();
       const temppage = e.target.innerHTML;
     
-      if (temppage === "&lt;") {
+      if (temppage === "&lt;" || temppage === "<") {
         setCurrentPage1((prev) => {
           if (prev > 1) {
             return prev - 1;
           }
           return prev;
         });
-      } else if (temppage === "&lt;&lt;") {
+      } else if (temppage === "&lt;&lt;" || temppage === "<<") {
         setCurrentPage1(1);
-      } else if (temppage === "&gt;") {
+      } else if (temppage === "&gt;" || temppage === ">") {
         setCurrentPage1((prev) => {
           if (prev < end1) {
             return prev + 1;
           }
           return prev;
         });
-      } else if (temppage === "&gt;&gt;") {
+      } else if (temppage === "&gt;&gt;" || temppage === ">>") {
         setCurrentPage1(end1);
       } else {
         // Check if it's a search page
@@ -259,16 +260,55 @@ const handleSearch = () => {
           // Calculate the page number based on the index of the clicked page
           const clickedPage = parseInt(temppage);
           const searchPage = Math.ceil(clickedPage * itemsPerPage1 / itemsPerPage);
-    
           setCurrentPage1(searchPage);
         } else {
           setCurrentPage1(parseInt(temppage));
         }
       }
+    
+      // Perform the search if a keyword is present
+      if (searchKeyword !== '') {
+        handleSearch();
+      } else {
+        fetchTransactions();
+      }
     };
     
     
     
+    
+
+
+
+// Update handleSearch to include the logic for regular page clicks
+const handleSearch = () => {
+  const transactionConfig = {
+    url: `/transaction/displayItems?user_id=${user?._id}`,
+    method: "get",
+    headers: { Authorization: token },
+    params: {
+      pagenum: currentPage1,
+      size: itemsPerPage1,
+      searchTerm: searchKeyword,
+    },
+  };
+
+  fetchData(transactionConfig, { showSuccessToast: false })
+    .then((transactionData) => {
+      if (transactionData.transactions.length === 0) {
+        // No transactions found for the searched keyword
+        setTransactions([]);
+        setTotaltransactions(0);
+      } else {
+        setTransactions(transactionData.transactions);
+        setTotaltransactions(transactionData.total_counts);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
     
    
   //----------------------------------------------------------------------------------------------------//
@@ -547,16 +587,7 @@ const handleSearch = () => {
                                 />
                                
                                <button className="btn text-white bg-danger inside" onClick={handleSearch}>Search</button>
-                                {/* <div className="input-group mb-3">
-                                    <span className="input-group-text bg-dark text-secondary" style={{ border: "2px solid #36313D", borderColor: "#36313D", borderRight: "none", }} id="basic-addon1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                                    </svg></span>
-                                    <input type="text" name="search" id="search" className="form-control" placeholder="Terms..."
-                                        value={searchTerm}
-                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                        style={{ borderLeft: "none" }}
-                                        autoFocus autoComplete="off" />
-                                </div> */}
+                               
                             </div>
                  
                   {transactions.length > 0 ? <div>
