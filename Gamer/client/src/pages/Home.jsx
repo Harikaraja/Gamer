@@ -234,7 +234,7 @@ const handleSearch = () => {
     const handleClick1 = (e) => {
       e.preventDefault();
       const temppage = e.target.innerHTML;
-      
+    
       if (temppage === "&lt;") {
         setCurrentPage1((prev) => {
           if (prev > 1) {
@@ -259,13 +259,14 @@ const handleSearch = () => {
           // Calculate the page number based on the index of the clicked page
           const clickedPage = parseInt(temppage);
           const searchPage = Math.ceil(clickedPage * itemsPerPage1 / itemsPerPage);
-          
+    
           setCurrentPage1(searchPage);
         } else {
           setCurrentPage1(parseInt(temppage));
         }
       }
     };
+    
     
     
     
