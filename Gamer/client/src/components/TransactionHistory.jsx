@@ -1,29 +1,21 @@
 import React from 'react';
 //import '../assets/styles/transaction.css';
-import bg from '../assets/images/blog.jpg'
+
 export default function TransactionHistory(props) {
 	console.log("props are: ")
 	console.log(props)
   return (
 	    
-		<div className=''>
-			
-			<ul style={{ listStyle: "none", padding: 0, marginLeft: "90px" }}>
-				{/* Item starts here */}
-				<li className="transaction-item">
-					<div className="d-flex">
-						<img src={bg} alt="" className="transaction-image" />
-						<div className="transaction-details">
-							<p className="transaction-date">{props.tdate}</p>
-							<p className="transaction-id">{props.tId}</p>
-							<p className="transaction-status bgy mb-0">{props.status}</p> 
-						</div>
-					</div>
-				</li>
-
-				
-			</ul>
-		</div>
+	<ul class="comments-list">
+			<li>
+			<div class="alignleft">
+				<a href="#0"><img src="img/items/item-1.jpg" alt="" /></a>
+			</div>
+			<small>{props.tdate}</small>
+			<h3><a href="#" title="">{props.tid}</a></h3>
+			<span class="badge bg-warning text-light">{props.status}</span> | <span><a href="#" class="link-secondary">Cancel</a></span> 
+			</li>                                             
+    </ul>
 	);
 }
 

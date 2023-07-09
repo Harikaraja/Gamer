@@ -1,5 +1,5 @@
 import React from 'react';
-import bg from '../assets/images/avatar.jpg';
+
 
 function MyItems(props) {
   console.log('myitems props are:', props);
@@ -10,39 +10,29 @@ function MyItems(props) {
   const localDate = date.toLocaleDateString(undefined, options);
 
   return (
-    <div className="items-cont" style={{marginLeft:'20px'}}>
-      {/* item begins here */}
-      <div className="row" >
-        <div className="col-md" >
-          <div className="item" >
-            <div className="card" >
-              <div className="image-container"  >
-                <img
-                  src={bg}
-                  alt="images"
-                  style={{ width: '150px', height: '150px', padding: '0', margin: '0.5rem 2rem' }}
-
-                />
-              </div>
-              <div>
-                <center>
-                  <h6>Jungle Rummy</h6>
-                </center>
-                <button
-                  className="button-like-text text-white"
-                  style={{ fontSize: '15px', width: '150px', marginLeft: '1.5rem', padding: '0px' }}
-                >
-                  2300 snaps
-                </button>
-                <p style={{ color: '#48e0a4' }}>Transaction ID: {props.tId}</p>
-                <p style={{ color: '#48e0a4', marginTop: '-30px' }}>Date: {localDate}</p>
-              </div>
-            </div>
+    <div className="col-lg-4 col-md-6" data-cue="slideInUp" data-show={true} style={{
+      animationName: "slideInUp",
+      animationDuration: "300ms",
+      animationTimingFunction: "ease",
+      animationDelay: "0ms",
+      animationDirection: "normal",
+      animationFillMode: "both"
+    }}>
+      <a href="#" class="history">                                        
+          <div class="history_thumb veryfied">                                               
+              <figure>
+                  <img src="avatar1.jpg" data-src="img/avatar1.jpg" alt="" class="lazy loaded" width="100" height="100" data-was-processed="true" />
+              </figure>
           </div>
-        </div>
-        {/* Repeat the above card code two more times to create three cards per row */}
-      </div>
-    </div>
+          <div>
+          <h6>Ludo King</h6>
+          <span class="badge bg-primary">2300 snapps</span><div class="clearfix"></div>
+          <small><strong>Transaction ID:</strong> </small>
+          <div class="clearfix"></div>
+            <small><strong>Date:</strong>{props.tdate}</small>
+          </div>
+      </a>
+  </div>
   );
 }
 
