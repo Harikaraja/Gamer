@@ -1,2 +1,2 @@
-# Gaming-Merchant
-Gaming Merchant microservice
+# Gamer
+Gamer microservice
